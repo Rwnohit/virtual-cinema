@@ -1,5 +1,5 @@
 /**
- * «Ζεστό σαλόνι»: the room you would actually want to watch a film in.
+ * The cosy room: the room you would actually want to watch a film in.
  *
  * It is not the horror room repainted, and that was the whole brief. It is
  * wider than it is deep, it is low and beamed, and it has a bay window pushed
@@ -638,7 +638,7 @@ export function createCozyVenue(options = {}) {
   const seats = [
     venueSeat(origin, {
       id: 'cozy-sofa-left',
-      label: 'Καναπές, αριστερά',
+      label: 'Sofa, left',
       x: SOFA.x - 0.545,
       z: SOFA.z,
       sitY: 0.58,
@@ -648,7 +648,7 @@ export function createCozyVenue(options = {}) {
     }),
     venueSeat(origin, {
       id: 'cozy-sofa-right',
-      label: 'Καναπές, δεξιά',
+      label: 'Sofa, right',
       x: SOFA.x + 0.545,
       z: SOFA.z,
       sitY: 0.58,
@@ -658,7 +658,7 @@ export function createCozyVenue(options = {}) {
     }),
     venueSeat(origin, {
       id: 'cozy-armchair',
-      label: 'Η πολυθρόνα, δίπλα στο τζάκι',
+      label: 'The armchair, by the fire',
       x: CHAIR.x,
       z: CHAIR.z,
       yaw: CHAIR.yaw,
@@ -669,7 +669,7 @@ export function createCozyVenue(options = {}) {
     }),
     venueSeat(origin, {
       id: 'cozy-window',
-      label: 'Το παγκάκι στο παράθυρο',
+      label: 'The bench at the window',
       x: BENCH.x,
       z: BENCH.z,
       // Facing into the room, with the snow behind your shoulder.
@@ -684,40 +684,40 @@ export function createCozyVenue(options = {}) {
   const views = [
     venueView(origin, {
       id: 'sofa',
-      label: 'Από τον καναπέ',
-      hint: 'εκεί που κάθεσαι',
+      label: 'From the sofa',
+      hint: 'where you are sitting',
       drift: 0.05,
       eye: { x: SOFA.x, y: 1.18, z: SOFA.z + 0.16 },
       target: tvTarget,
     }),
     venueView(origin, {
       id: 'fire',
-      label: 'Δίπλα στο τζάκι',
-      hint: 'από τη ζεστή μεριά',
+      label: 'By the fire',
+      hint: 'from the warm side',
       drift: 0.14,
       eye: { x: 3.9, y: 1.3, z: -1.6 },
       target: tvTarget,
     }),
     venueView(origin, {
       id: 'window',
-      label: 'Από το παράθυρο',
-      hint: 'με το χιόνι πίσω σου',
+      label: 'From the window',
+      hint: 'with the snow behind you',
       drift: 0.1,
       eye: { x: BENCH.x - 0.16, y: 1.12, z: BENCH.z },
       target: tvTarget,
     }),
     venueView(origin, {
       id: 'behind-tv',
-      label: 'Πίσω από την τηλεόραση',
-      hint: 'η ανάποδη γωνία',
+      label: 'Behind the television',
+      hint: 'the reverse angle',
       drift: 0.18,
       eye: { x: 0, y: 1.55, z: ROOM.minZ + 0.8 },
       target: { x: SOFA.x, y: 0.95, z: SOFA.z },
     }),
     venueView(origin, {
       id: 'wide',
-      label: 'Πανοραμική',
-      hint: 'όλο το δωμάτιο',
+      label: 'Wide',
+      hint: 'the whole room',
       drift: 0.5,
       eye: { x: -4.2, y: 2.7, z: 3.3 },
       target: { x: 0.8, y: 1.1, z: -1.2 },
@@ -726,8 +726,8 @@ export function createCozyVenue(options = {}) {
 
   return {
     id: 'cozy',
-    label: 'Ζεστό σαλόνι',
-    description: 'Τζάκι, βιβλία, χιόνι στο παράθυρο και μια μεγάλη οθόνη στον τοίχο.',
+    label: 'Cosy room',
+    description: 'A fire, books, snow at the window and a big screen on the wall.',
     group,
     get screen() {
       return display.screen
@@ -773,7 +773,7 @@ export function createCozyVenue(options = {}) {
         x: origin.x + 2.6,
         z: origin.z + ROOM.maxZ - 0.55,
         radius: 1.3,
-        label: 'Πίσω στην αίθουσα',
+        label: 'Back to the hall',
       },
     ],
     applyLights,

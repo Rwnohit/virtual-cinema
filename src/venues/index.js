@@ -2,8 +2,8 @@
  * Venues module: the other places you can be.
  *
  * The hall is no longer the only room. There is a dark living room with rain on
- * the window («Σπίτι τρόμου») and a warm one with a fire in it («Ζεστό
- * σαλόνι»), and the film follows you into both: the television in each room is
+ * the window (the horror house) and a warm one with a fire in it (the cosy
+ * room), and the film follows you into both: the television in each room is
  * the display surface, so a local file, a YouTube link or a Vimeo link plays in
  * there with every feature it has in the auditorium.
  *
@@ -51,14 +51,14 @@ const ORIGINS = Object.freeze({
  * src/sound/mixer.js and BLOOM_FIELDS in src/scene/postfx.js.
  */
 export const VENUE_FIELDS = Object.freeze([
-  { key: 'horror', label: 'Ένταση τρόμου', min: 0, max: 1, step: 0.05, format: 'percent' },
-  { key: 'fire', label: 'Φωτιά στο τζάκι', min: 0, max: 1, step: 0.05, format: 'percent' },
-  { key: 'ambience', label: 'Ήχοι δωματίου', min: 0, max: 1, step: 0.05, format: 'percent' },
+  { key: 'horror', label: 'How frightening', min: 0, max: 1, step: 0.05, format: 'percent' },
+  { key: 'fire', label: 'The fire', min: 0, max: 1, step: 0.05, format: 'percent' },
+  { key: 'ambience', label: 'Room sounds', min: 0, max: 1, step: 0.05, format: 'percent' },
   // One television per room rather than one for both: they are different sets
   // in different rooms, and a slider that means "the one you are standing in
   // front of" is a slider you have to be somewhere to read.
-  { key: 'tvHorror', label: 'Τηλεόραση · σπίτι τρόμου', min: 0.7, max: 1.3, step: 0.05, format: 'x' },
-  { key: 'tvCozy', label: 'Τηλεόραση · ζεστό σαλόνι', min: 0.7, max: 1.3, step: 0.05, format: 'x' },
+  { key: 'tvHorror', label: 'Television · horror house', min: 0.7, max: 1.3, step: 0.05, format: 'x' },
+  { key: 'tvCozy', label: 'Television · cosy room', min: 0.7, max: 1.3, step: 0.05, format: 'x' },
 ])
 
 const DEFAULTS = Object.freeze({
@@ -151,7 +151,7 @@ export function createVenues(context = {}) {
   // its own gesture to wake up.
   const audioContext = sound?.mixer?.context ?? media?.audio?.context ?? null
   // The room channel is where the building's own noises belong, so the viewer's
-  // "Αέρας & κλιματισμός" fader has the last word over the rain as well.
+  // "air and ventilation" fader has the last word over the rain as well.
   const audioTarget = sound?.mixer?.channels?.room?.input ?? audioContext?.destination ?? null
   const voices = createVenueAudio({ context: audioContext, destination: audioTarget })
   voices.setLevel(settings.ambience)
@@ -169,7 +169,7 @@ export function createVenues(context = {}) {
   }
 
   // Where the player was standing when the app booted is the hall's spawn: it
-  // is the one place we know is legal, and it is where "Σινεμά" puts you back.
+  // is the one place we know is legal, and it is where "Cinema" puts you back.
   const feet = player?.controls?.feet ?? null
   const hallSpawn = {
     x: feet?.x ?? 0,
@@ -184,8 +184,8 @@ export function createVenues(context = {}) {
    */
   const cinema = {
     id: 'cinema',
-    label: 'Σινεμά',
-    description: 'Η μεγάλη αίθουσα: 150 θέσεις, κουρτίνες και μια οθόνη 23 μέτρων.',
+    label: 'Cinema',
+    description: 'The big auditorium: 150 seats, curtains and a 23 metre screen.',
     group: null,
     get screen() {
       return context.cinema?.screen ?? null
@@ -204,14 +204,14 @@ export function createVenues(context = {}) {
         x: ROOM_BOUNDS.minX + 1.1,
         z: ROOM_BOUNDS.maxZ - 5,
         radius: 2.2,
-        label: 'Σπίτι τρόμου',
+        label: 'Horror house',
       },
       {
         to: 'cozy',
         x: ROOM_BOUNDS.maxX - 1.1,
         z: ROOM_BOUNDS.maxZ - 5,
         radius: 2.2,
-        label: 'Ζεστό σαλόνι',
+        label: 'Cosy room',
       },
     ],
     /** The hall has a real light rig; the room panel drives it directly. */
@@ -426,7 +426,7 @@ export function createVenues(context = {}) {
 
   /**
    * Hand the room panel's light sliders to whichever place you are in, so
-   * "Φώτα αίθουσας" and "Ζεστό ή ψυχρό" keep meaning something everywhere.
+   * "house lights" and "warm or cool" keep meaning something everywhere.
    * @param {{house?:number, warmth?:number}} [values]
    */
   function applyLights(values) {

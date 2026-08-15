@@ -86,7 +86,7 @@ function report() {
   }
   statusEl.style.display = ''
   statusEl.textContent =
-    `Δεν έχουν φορτωθεί ακόμη: ${missing.join(', ')}\n` +
+    `Not loaded yet: ${missing.join(', ')}\n` +
     status.errors.slice(-3).join('\n')
 }
 
@@ -101,7 +101,7 @@ async function loadModule(name) {
       lastError = err
     }
   }
-  status.errors.push(`[${name}] δεν βρέθηκε module (${lastError?.message ?? 'unknown'})`)
+  status.errors.push(`[${name}] module not found (${lastError?.message ?? 'unknown'})`)
   console.warn(`[cinema] module "${name}" not loaded yet`, lastError)
   return null
 }
@@ -110,7 +110,7 @@ async function start(name, mod, context) {
   if (!mod) return null
   const factory = FACTORIES[name].map((key) => mod[key]).find((fn) => typeof fn === 'function')
   if (!factory) {
-    status.errors.push(`[${name}] λείπει export: ${FACTORIES[name].slice(0, -1).join(' / ')}`)
+    status.errors.push(`[${name}] missing export: ${FACTORIES[name].slice(0, -1).join(' / ')}`)
     return null
   }
   try {
@@ -119,7 +119,7 @@ async function start(name, mod, context) {
     status.handles[name] = handle
     return handle
   } catch (err) {
-    status.errors.push(`[${name}] έσκασε στο ξεκίνημα: ${err.message}`)
+    status.errors.push(`[${name}] threw on startup: ${err.message}`)
     console.error(`[cinema] module "${name}" failed to start`, err)
     return null
   }

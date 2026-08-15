@@ -26,6 +26,7 @@ import { CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer
 import { createEmitter, clamp } from './util.js'
 import { ORIGINAL_MATERIAL_KEY } from './videoScreen.js'
 import { cssFilterFor } from './picture.js'
+import { t } from '../i18n/index.js'
 
 /**
  * The material this screen wore before either of us touched it. Shared with
@@ -424,7 +425,7 @@ export function createEmbedScreen(options = {}) {
     emitter.emit('timeupdate', { time: state.time, duration: state.duration })
   }
 
-  /** Keep the "3 από 24" counter honest, whoever moved the list. */
+  /** Keep the "3 of 24" counter honest, whoever moved the list. */
   function readPlaylist() {
     if (!player?.getPlaylist) return
     const list = player.getPlaylist() || []
@@ -483,7 +484,7 @@ export function createEmbedScreen(options = {}) {
           onError: () => {
             emitter.emit('error', {
               code: 0,
-              message: 'Αυτό το βίντεο του YouTube δεν επιτρέπει προβολή έξω από το YouTube.',
+              message: t('err.embedBlocked'),
             })
           },
         },
@@ -590,7 +591,7 @@ export function createEmbedScreen(options = {}) {
       state.kind = null
       emitter.emit('error', {
         code: 0,
-        message: 'Δεν φόρτωσε ο player του YouTube. Δες τη σύνδεση ή τυχόν ad blocker.',
+        message: t('err.embedNoPlayer'),
         error: err,
       })
       return false

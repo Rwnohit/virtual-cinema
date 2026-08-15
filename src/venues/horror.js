@@ -1,5 +1,5 @@
 /**
- * «Σπίτι τρόμου»: a room somebody left in a hurry, with a television in it.
+ * The horror house: a room somebody left in a hurry, with a television in it.
  *
  * The plan is deliberately not a box. The living room is an L: a corridor goes
  * off the right hand wall into the dark and ends at a door that is ajar, with a
@@ -827,7 +827,7 @@ export function createHorrorVenue(options = {}) {
   const seats = [
     venueSeat(origin, {
       id: 'horror-sofa-left',
-      label: 'Καναπές, αριστερά',
+      label: 'Sofa, left',
       x: SOFA.x - 0.47,
       z: SOFA.z,
       eyeY: 1.18,
@@ -836,7 +836,7 @@ export function createHorrorVenue(options = {}) {
     }),
     venueSeat(origin, {
       id: 'horror-sofa-right',
-      label: 'Καναπές, δεξιά',
+      label: 'Sofa, right',
       x: SOFA.x + 0.47,
       z: SOFA.z,
       eyeY: 1.18,
@@ -845,7 +845,7 @@ export function createHorrorVenue(options = {}) {
     }),
     venueSeat(origin, {
       id: 'horror-armchair',
-      label: 'Η πολυθρόνα',
+      label: 'The armchair',
       x: CHAIR.x,
       z: CHAIR.z,
       yaw: CHAIR.yaw,
@@ -858,24 +858,24 @@ export function createHorrorVenue(options = {}) {
   const views = [
     venueView(origin, {
       id: 'sofa',
-      label: 'Από τον καναπέ',
-      hint: 'εκεί που κάθεσαι',
+      label: 'From the sofa',
+      hint: 'where you are sitting',
       drift: 0.05,
       eye: { x: SOFA.x, y: 1.18, z: SOFA.z + 0.16 },
       target: tvTarget,
     }),
     venueView(origin, {
       id: 'door',
-      label: 'Από την πόρτα',
-      hint: 'μόλις μπήκες',
+      label: 'From the door',
+      hint: 'just as you walked in',
       drift: 0.12,
       eye: { x: -1.9, y: 1.62, z: 3.7 },
       target: tvTarget,
     }),
     venueView(origin, {
       id: 'corridor',
-      label: 'Από τον διάδρομο',
-      hint: 'από το σκοτάδι',
+      label: 'Down the corridor',
+      hint: 'out of the dark',
       drift: 0.05,
       // Inside the corridor, aimed through its mouth: the room is what you see,
       // and the frame around it is a wall you are standing behind.
@@ -884,16 +884,16 @@ export function createHorrorVenue(options = {}) {
     }),
     venueView(origin, {
       id: 'behind-tv',
-      label: 'Πίσω από την τηλεόραση',
-      hint: 'η ανάποδη γωνία',
+      label: 'Behind the television',
+      hint: 'the reverse angle',
       drift: 0.18,
       eye: { x: 0, y: 1.45, z: ROOM.minZ + 0.85 },
       target: { x: SOFA.x, y: 0.95, z: SOFA.z },
     }),
     venueView(origin, {
       id: 'wide',
-      label: 'Πανοραμική',
-      hint: 'όλο το δωμάτιο',
+      label: 'Wide',
+      hint: 'the whole room',
       drift: 0.5,
       eye: { x: -3.3, y: 2.45, z: 3.6 },
       target: { x: 0.6, y: 1.0, z: -1.4 },
@@ -902,8 +902,8 @@ export function createHorrorVenue(options = {}) {
 
   return {
     id: 'horror',
-    label: 'Σπίτι τρόμου',
-    description: 'Ένα σκοτεινό σαλόνι με βροχή στο τζάμι, έναν διάδρομο και μια τηλεόραση που παίζει.',
+    label: 'Horror house',
+    description: 'A dark living room with rain on the glass, a corridor, and a television that is on.',
     group,
     get screen() {
       return display.screen
@@ -947,7 +947,7 @@ export function createHorrorVenue(options = {}) {
         x: origin.x - 1.9,
         z: origin.z + ROOM.maxZ - 0.55,
         radius: 1.3,
-        label: 'Πίσω στην αίθουσα',
+        label: 'Back to the hall',
       },
     ],
     applyLights,

@@ -41,7 +41,7 @@ import { t } from '../i18n/index.js'
 export const PICTURE_FIELDS = [
   {
     key: 'brightness',
-    label: 'Φωτεινότητα',
+    label: 'Brightness',
     min: 0.5,
     max: 1.6,
     step: 0.01,
@@ -50,7 +50,7 @@ export const PICTURE_FIELDS = [
   },
   {
     key: 'contrast',
-    label: 'Αντίθεση',
+    label: 'Contrast',
     min: 0.5,
     max: 1.6,
     step: 0.01,
@@ -59,16 +59,16 @@ export const PICTURE_FIELDS = [
   },
   {
     key: 'saturation',
-    label: 'Ζωντάνια χρωμάτων',
+    label: 'Colour',
     min: 0,
     max: 2,
     step: 0.01,
     default: 1,
-    format: (value) => (value < 0.02 ? 'Ασπρόμαυρο' : percent(value)),
+    format: (value) => (value < 0.02 ? t('value.monochrome') : percent(value)),
   },
   {
     key: 'warmth',
-    label: 'Ζεστό ή ψυχρό',
+    label: 'Warm or cool',
     min: -1,
     max: 1,
     step: 0.01,
@@ -82,7 +82,7 @@ export const PICTURE_FIELDS = [
   },
   {
     key: 'gamma',
-    label: 'Μεσαίοι τόνοι',
+    label: 'Midtones',
     min: 0.6,
     max: 1.6,
     step: 0.01,
@@ -109,12 +109,12 @@ export const PICTURE_DEFAULTS = Object.freeze(
 export const PICTURE_PRESETS = [
   {
     key: 'normal',
-    label: 'Κανονικό',
+    label: t('picture.normal'),
     values: { ...PICTURE_DEFAULTS },
   },
   {
     key: 'brighter',
-    label: 'Πιο φωτεινό',
+    label: t('picture.brighter'),
     values: { brightness: 1.14, contrast: 1.04, saturation: 1.05, warmth: 0, gamma: 1.12 },
   },
   {

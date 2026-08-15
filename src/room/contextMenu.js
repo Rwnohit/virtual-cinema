@@ -7,7 +7,7 @@
  * want without walking back to a panel.
  *
  * It is built fresh on every open, from a function, so the labels always tell
- * the truth ("Παύση" when the film is running, "Σήκω" when you are sitting).
+ * the truth ("Pause" when the film is running, "Stand up" when you are sitting).
  *
  *   const menu = createContextMenu({ target, sound, build: () => [...] })
  *

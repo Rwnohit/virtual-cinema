@@ -21,6 +21,7 @@ import { createEmitter, isCrossOrigin, isHlsUrl } from './util.js'
 import { resolveScreenMesh, measureScreen } from './screenResolver.js'
 import { computeFit, FIT_MODES } from './fit.js'
 import { createPictureGrade, PICTURE_FIELDS, PICTURE_PRESETS } from './picture.js'
+import { t } from '../i18n/index.js'
 
 export { PICTURE_FIELDS, PICTURE_PRESETS, PICTURE_DEFAULTS, clampPicture } from './picture.js'
 
@@ -68,19 +69,19 @@ function createVideoElement({ loop, muted }) {
   return video
 }
 
-/** Plain Greek for whatever the <video> element complains about. */
+/** Plain words for whatever the <video> element complains about. */
 function errorMessage(code) {
   switch (code) {
     case 1:
-      return 'Η φόρτωση του βίντεο σταμάτησε.'
+      return t('err.aborted')
     case 2:
-      return 'Χάθηκε η σύνδεση ενώ κατέβαινε το βίντεο.'
+      return t('err.network')
     case 3:
-      return 'Το αρχείο φαίνεται χαλασμένο και δεν διαβάζεται.'
+      return t('err.decode')
     case 4:
-      return 'Ο browser δεν παίζει αυτή τη μορφή βίντεο. Δοκίμασε MP4 (H.264) ή WebM.'
+      return t('err.format')
     default:
-      return 'Δεν μπόρεσα να παίξω αυτό το αρχείο ή link.'
+      return t('err.unknown')
   }
 }
 
@@ -102,7 +103,7 @@ export function createVideoScreen(options = {}) {
   let mesh = resolveScreenMesh(options.screen ?? options.cinema ?? options.scene)
   if (!mesh) {
     throw new Error(
-      '[media] Δεν βρέθηκε η οθόνη της αίθουσας. Δώσε το mesh στο option "screen" ή βάλε userData.role = "screen".',
+      '[media] The hall screen was not found. Pass the mesh in the "screen" option, or set userData.role = "screen".',
     )
   }
 
@@ -242,7 +243,7 @@ export function createVideoScreen(options = {}) {
       emitter.emit('degraded', {
         reason: 'cors',
         message:
-          'Το link δεν επιτρέπει ανάγνωση ήχου από άλλο site, οπότε ο ήχος παίζει κανονικά αλλά χωρίς χωρικό εφέ.',
+          t('err.crossOriginAudio'),
       })
       replaceElement({ crossOrigin: null })
       video.src = state.currentSrc
@@ -344,7 +345,7 @@ export function createVideoScreen(options = {}) {
     } catch {
       emitter.emit('error', {
         code: 0,
-        message: 'Αυτό το live stream (m3u8) θέλει τη βιβλιοθήκη hls.js για να παίξει εδώ.',
+        message: t('err.hls'),
       })
       return false
     }
@@ -404,7 +405,7 @@ export function createVideoScreen(options = {}) {
       await video.play()
     } catch {
       emitter.emit('blocked', {
-        message: 'Ο browser περιμένει ένα κλικ σου για να ξεκινήσει η ζωντανή προβολή.',
+        message: t('err.tapToStartLive'),
       })
     }
     emitter.emit('sourcechange', { src: 'live', isFile: false, live: true })
@@ -430,7 +431,7 @@ export function createVideoScreen(options = {}) {
     } else if (typeof source === 'string' && source.trim()) {
       url = source.trim()
     } else {
-      emitter.emit('error', { code: 0, message: 'Δώσε ένα αρχείο ταινίας ή ένα link.' })
+      emitter.emit('error', { code: 0, message: t('err.noSource') })
       return
     }
 
@@ -456,7 +457,7 @@ export function createVideoScreen(options = {}) {
         await video.play()
       } catch {
         emitter.emit('blocked', {
-          message: 'Ο browser περιμένει ένα κλικ σου για να ξεκινήσει η ταινία.',
+          message: t('err.tapToStart'),
         })
       }
     }

@@ -42,9 +42,9 @@ export const STAGE = Object.freeze({
  * inside it with black masking on either side.
  */
 export const SCREEN_RATIOS = Object.freeze({
-  scope: Object.freeze({ label: 'Πανοραμική', note: '2.39:1', ratio: 2.39 }),
-  flat: Object.freeze({ label: 'Σινεμά', note: '1.85:1', ratio: 1.85 }),
-  hd: Object.freeze({ label: 'Τηλεόραση', note: '16:9', ratio: 16 / 9 }),
+  scope: Object.freeze({ label: 'Scope', note: '2.39:1', ratio: 2.39 }),
+  flat: Object.freeze({ label: 'Flat', note: '1.85:1', ratio: 1.85 }),
+  hd: Object.freeze({ label: 'Widescreen', note: '16:9', ratio: 16 / 9 }),
 })
 
 export const DEFAULT_SCREEN_RATIO = 'scope'

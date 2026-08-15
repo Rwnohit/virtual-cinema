@@ -41,14 +41,14 @@ const STORAGE_KEY = 'vc.room.lights'
  * The three states of a hall, each one a full set of dials.
  *
  * These are not shortcuts, they are the room's positions: the ceremony moves
- * between "Προβολή" and "Διάλειμμα", so whatever is written here is literally
+ * between "Showtime" and "Interval", so whatever is written here is literally
  * what you see when a film starts and when it finishes. Which is why they can
  * be overwritten from the panel: your screening is yours.
  */
 const PRESETS = {
-  showtime: { label: 'Προβολή', house: 0, screenGain: 1, warmth: 0.3, aisle: 0.3, exit: 0.2, exposure: 1 },
-  half: { label: 'Ημίφως', house: 0.22, screenGain: 0.9, warmth: 0.3, aisle: 0.35, exit: 0.45, exposure: 1 },
-  interval: { label: 'Διάλειμμα', house: 0.85, screenGain: 0.5, warmth: 0.35, aisle: 0.7, exit: 0.7, exposure: 1 },
+  showtime: { label: 'Showtime', house: 0, screenGain: 1, warmth: 0.3, aisle: 0.3, exit: 0.2, exposure: 1 },
+  half: { label: 'Half lights', house: 0.22, screenGain: 0.9, warmth: 0.3, aisle: 0.35, exit: 0.45, exposure: 1 },
+  interval: { label: 'Interval', house: 0.85, screenGain: 0.5, warmth: 0.35, aisle: 0.7, exit: 0.7, exposure: 1 },
 }
 
 /** Which of the settings a preset holds. The dials, and nothing else. */
@@ -56,21 +56,21 @@ const DIAL_KEYS = ['house', 'screenGain', 'warmth', 'aisle', 'exit', 'exposure']
 
 /** Every light in the hall, in the order they appear on the panel. */
 const DIALS = [
-  { key: 'house', label: 'Φώτα αίθουσας', format: (v) => `${Math.round(v * 100)}%` },
-  { key: 'screenGain', label: 'Λάμψη οθόνης', max: 2, format: (v) => `${Math.round(v * 100)}%` },
+  { key: 'house', label: 'House lights', format: (v) => `${Math.round(v * 100)}%` },
+  { key: 'screenGain', label: 'Light off the screen', max: 2, format: (v) => `${Math.round(v * 100)}%` },
   {
     key: 'warmth',
-    label: 'Ζεστό ή ψυχρό',
+    label: 'Warm or cool',
     format: (v) =>
       v < 0.2 ? t('value.warm') : v < 0.45 ? t('value.warmPlus') : v < 0.7 ? t('value.neutral') : t('value.cool'),
   },
   {
     key: 'aisle',
-    label: 'Φωτάκια διαδρόμου',
+    label: 'Aisle lights',
     format: (v) => (v < 0.005 ? t('value.off') : `${Math.round(v * 100)}%`),
   },
-  { key: 'exit', label: 'Πινακίδες εξόδου', format: (v) => `${Math.round(v * 100)}%` },
-  { key: 'exposure', label: 'Φωτεινότητα εικόνας', min: 0.4, max: 2, format: (v) => `${Math.round(v * 100)}%` },
+  { key: 'exit', label: 'Exit signs', format: (v) => `${Math.round(v * 100)}%` },
+  { key: 'exposure', label: 'Overall brightness', min: 0.4, max: 2, format: (v) => `${Math.round(v * 100)}%` },
 ]
 
 const LIMITS = {
@@ -606,7 +606,7 @@ export function createRoom(context = {}) {
 
     // Volume, right where the film is. How loud it is playing is not a setting,
     // it is part of playing, so it sits on the bar next to the time. Everything
-    // that shapes the sound stays behind the "Ήχος" button.
+    // that shapes the sound stays behind the "Sound" button.
     if (sound) {
       const vol = document.createElement('div')
       vol.className = 'rp-vol'
@@ -636,7 +636,7 @@ export function createRoom(context = {}) {
         sound.click?.()
       })
       // Where the volume slider used to unroll. It was asked for by name: the
-      // level itself is one row down under "Ήχος", and the thing you actually
+      // level itself is one row down under "Sound", and the thing you actually
       // reach for on the bar mid film is "take all of this away".
       vol.querySelector('[data-role="clean"]').addEventListener('click', () => {
         sound.click?.()
@@ -717,7 +717,7 @@ export function createRoom(context = {}) {
   /** Venue dials are named after the room they belong to. */
   const venueKeys = { horror: ['horror', 'ambience', 'tvHorror'], cozy: ['fire', 'ambience', 'tvCozy'] }
   const myVenueKeys = venueKeys[place] ?? []
-  /* --- Χώρος -------------------------------------------------------------- */
+  /* --- Place -------------------------------------------------------------- */
   const placePage = dock.addPage({ id: 'venue', label: t('dock.venue'), icon: '🏛' })
 
   if (venues?.list?.length) {
@@ -746,7 +746,7 @@ export function createRoom(context = {}) {
 
   finishPage(placePage)
 
-  /* --- Οθόνη -------------------------------------------------------------- */
+  /* --- Screen ------------------------------------------------------------- */
   const screenPage = dock.addPage({ id: 'screen', label: t('dock.screen'), icon: '🖥' })
 
   if (inCinema && cinema?.curtainFields?.length) {
@@ -889,7 +889,7 @@ export function createRoom(context = {}) {
 
   finishPage(screenPage)
 
-  /* --- Φώτα --------------------------------------------------------------- */
+  /* --- Lights ------------------------------------------------------------- */
   const lightPage = dock.addPage({ id: 'lights', label: t('dock.lights'), icon: '💡' })
 
   const CINEMA_ONLY_DIALS = ['aisle', 'exit']
@@ -964,7 +964,7 @@ export function createRoom(context = {}) {
 
   finishPage(lightPage)
 
-  /* --- Ήχος --------------------------------------------------------------- */
+  /* --- Sound -------------------------------------------------------------- */
   if (sound) {
     const audioPage = dock.addPage({ id: 'sound', label: t('dock.sound'), icon: '🔊' })
 
@@ -1059,7 +1059,7 @@ export function createRoom(context = {}) {
     })
   }
 
-  /* --- Θέα ---------------------------------------------------------------- */
+  /* --- View --------------------------------------------------------------- */
   const viewPage = dock.addPage({ id: 'view', label: t('dock.view'), icon: '👁' })
 
   if (player?.views?.list?.length) {
@@ -1137,7 +1137,7 @@ export function createRoom(context = {}) {
 
   pageRows = []
 
-  /* --- Ουρά --------------------------------------------------------------- */
+  /* --- Queue -------------------------------------------------------------- */
   if (queue) {
     const queuePage = dock.addPage({ id: 'queue', label: t('dock.queue'), icon: '📼' })
 

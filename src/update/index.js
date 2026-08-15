@@ -159,7 +159,7 @@ export function createUpdater(context = {}) {
           <h1>${t('update.changelog')}</h1>
           <p style="margin:0">${t('update.running')} <strong>${current.version}</strong></p>
         </div>
-        <button class="vu-close" type="button" data-role="close" aria-label="Κλείσιμο">×</button>
+        <button class="vu-close" type="button" data-role="close" aria-label="${t('btn.close')}">×</button>
       </div>
       <div data-role="body"><p>${t('update.loading')}</p></div>
     </div>

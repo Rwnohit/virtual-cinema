@@ -65,10 +65,10 @@ const CSS = `
 `
 
 const PRESET_LABELS = {
-  dry: 'Χωρίς αίθουσα',
-  'screening-room': 'Μικρή αίθουσα',
-  cinema: 'Σινεμά',
-  imax: 'Μεγάλη αίθουσα',
+  dry: 'No room',
+  'screening-room': 'Small room',
+  cinema: 'Cinema',
+  imax: 'Large hall',
 }
 
 /**
@@ -116,27 +116,27 @@ export function createMediaControls(media, options = {}) {
   panel.className = 'mc-panel'
   panel.innerHTML = `
     <div class="mc-head">
-      <span class="mc-title">Προβολή ταινίας</span>
-      <button class="mc-btn mc-icon" data-role="fullscreen" title="Πλήρης οθόνη" aria-label="Πλήρης οθόνη">⛶</button>
-      <button class="mc-btn mc-icon" data-role="collapse" title="Μικρό ή μεγάλο" aria-label="Μικρό ή μεγάλο">−</button>
+      <span class="mc-title">Film</span>
+      <button class="mc-btn mc-icon" data-role="fullscreen" title="Full screen" aria-label="Full screen">⛶</button>
+      <button class="mc-btn mc-icon" data-role="collapse" title="Small or large" aria-label="Small or large">−</button>
     </div>
     <div class="mc-body">
       <div class="mc-row">
-        <button class="mc-btn mc-primary" data-role="play" aria-label="Παίξε">▶</button>
+        <button class="mc-btn mc-primary" data-role="play" aria-label="Play">▶</button>
         <span class="mc-time mc-typeable" data-role="current" role="button" tabindex="0"
-          title="Πάτα και γράψε το σημείο που θες">0:00</span>
+          title="Click and type the moment you want">0:00</span>
         <input class="mc-time-input" data-role="time-input" type="text" hidden
-          placeholder="1:21:04" aria-label="Πήγαινε σε χρονικό σημείο">
+          placeholder="1:21:04" aria-label="Go to a moment">
 
-        <input class="mc-range" type="range" data-role="seek" min="0" max="1000" value="0" aria-label="Θέση ταινίας">
+        <input class="mc-range" type="range" data-role="seek" min="0" max="1000" value="0" aria-label="Position in the film">
         <span class="mc-time" data-role="duration">0:00</span>
       </div>
       <div class="mc-row mc-wrap">
-        <button class="mc-btn mc-icon" data-role="mute" aria-label="Σίγαση">🔊</button>
-        <input class="mc-range" type="range" data-role="volume" min="0" max="100" value="85" aria-label="Ένταση">
-        <span class="mc-label">Αίθουσα</span>
-        <input class="mc-range" type="range" data-role="reverb" min="0" max="100" value="22" aria-label="Ηχώ αίθουσας">
-        <select class="mc-select" data-role="preset" aria-label="Τύπος αίθουσας"></select>
+        <button class="mc-btn mc-icon" data-role="mute" aria-label="Mute">🔊</button>
+        <input class="mc-range" type="range" data-role="volume" min="0" max="100" value="85" aria-label="Volume">
+        <span class="mc-label">Room</span>
+        <input class="mc-range" type="range" data-role="reverb" min="0" max="100" value="22" aria-label="Room reverb">
+        <select class="mc-select" data-role="preset" aria-label="Kind of room"></select>
       </div>
       <div class="mc-status" data-role="status"></div>
     </div>
@@ -180,7 +180,7 @@ export function createMediaControls(media, options = {}) {
   function refreshPlayButton() {
     const playing = media.isPlaying
     ui.play.textContent = playing ? '❚❚' : '▶'
-    ui.play.setAttribute('aria-label', playing ? 'Παύση' : 'Παίξε')
+    ui.play.setAttribute('aria-label', playing ? 'Pause' : 'Play')
   }
 
   function refreshVolumeButton() {
@@ -257,7 +257,7 @@ export function createMediaControls(media, options = {}) {
   function commitTimeEntry() {
     const typed = parseTimeInput(ui.timeInput.value)
     if (typed === null) {
-      setStatus('Γράψε το σημείο σαν 1:21:04, ή σκέτα δευτερόλεπτα.', 'warn')
+      setStatus('Write the moment like 1:21:04, or plain seconds.', 'warn')
       // Stay open: the typo is right there and can be fixed in place.
       ui.timeInput.select()
       return
@@ -301,7 +301,7 @@ export function createMediaControls(media, options = {}) {
   function refreshFullscreenButton() {
     const on = !!document.fullscreenElement
     ui.fullscreen.textContent = on ? '⤢' : '⛶'
-    const label = on ? 'Έξοδος από πλήρη οθόνη' : 'Πλήρης οθόνη'
+    const label = on ? 'Leave full screen' : 'Full screen'
     ui.fullscreen.title = label
     ui.fullscreen.setAttribute('aria-label', label)
   }
@@ -334,12 +334,12 @@ export function createMediaControls(media, options = {}) {
       refreshTime()
       setStatus('')
     }),
-    media.on('waiting', () => setStatus('Φορτώνει...')),
+    media.on('waiting', () => setStatus('Loading...')),
     media.on('canplay', () => {
-      if (ui.status.textContent === 'Φορτώνει...') setStatus('')
+      if (ui.status.textContent === 'Loading...') setStatus('')
     }),
     media.on('timeupdate', () => {
-      if (ui.status.textContent === 'Φορτώνει...' && media.isPlaying) setStatus('')
+      if (ui.status.textContent === 'Loading...' && media.isPlaying) setStatus('')
     }),
     media.on('volume', refreshVolumeButton),
     media.on('blocked', (payload) => setStatus(payload.message, 'warn')),

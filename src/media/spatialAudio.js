@@ -57,6 +57,7 @@ import {
   REVERB_PRESETS,
   DEFAULT_REVERB_PRESET,
 } from './reverb.js'
+import { t } from '../i18n/index.js'
 
 /**
  * three.js marks the listener with type === 'AudioListener' and no isXxx flag,
@@ -107,7 +108,7 @@ export function resolveListener(camera, provided, scene) {
 export function createSpatialMovieAudio(options = {}) {
   const { size } = options
   let screenMesh = options.screenMesh
-  if (!screenMesh) throw new Error('[media] createSpatialMovieAudio: λείπει το screenMesh.')
+  if (!screenMesh) throw new Error('[media] createSpatialMovieAudio: screenMesh is missing.')
 
   const emitter = createEmitter()
   const listener = resolveListener(options.camera, options.listener, options.scene)
@@ -223,7 +224,7 @@ export function createSpatialMovieAudio(options = {}) {
   /**
    * Everything the film makes leaves through here. The two panners and the
    * reverb used to hang straight off listener.getInput(), which put the film
-   * outside every fader the sound mixer has: the "Γενική ένταση" slider moved
+   * outside every fader the sound mixer has: the "overall volume" slider moved
    * the room around the film instead of moving the film. One bus fixes both.
    */
   const movieOut = context.createGain()
@@ -417,7 +418,7 @@ export function createSpatialMovieAudio(options = {}) {
       applyVolume()
       emitter.emit('degraded', {
         reason: 'audiograph',
-        message: 'Ο ήχος παίζει κανονικά, αλλά χωρίς χωρικό εφέ σε αυτό το αρχείο.',
+        message: t('err.noSpatial'),
         error: err,
       })
       return false
@@ -507,7 +508,7 @@ export function createSpatialMovieAudio(options = {}) {
       convolver.buffer = await loadImpulseResponse(context, url)
       emitter.emit('reverb', { preset: 'custom', mix: state.mix })
     } catch (err) {
-      emitter.emit('error', { message: 'Δεν φορτώθηκε το αρχείο reverb.', error: err })
+      emitter.emit('error', { message: t('err.reverb'), error: err })
     }
   }
 

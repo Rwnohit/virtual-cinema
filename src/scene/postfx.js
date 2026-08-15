@@ -58,7 +58,7 @@ const percent = (value) => `${Math.round(value * 100)}%`
 export const BLOOM_FIELDS = [
   {
     key: 'enabled',
-    label: 'Λάμψη οθόνης',
+    label: 'Glow',
     type: 'toggle',
     min: 0,
     max: 1,
@@ -67,7 +67,7 @@ export const BLOOM_FIELDS = [
   },
   {
     key: 'strength',
-    label: 'Ένταση',
+    label: 'Strength',
     type: 'range',
     min: 0,
     max: 1.5,
@@ -77,7 +77,7 @@ export const BLOOM_FIELDS = [
   },
   {
     key: 'radius',
-    label: 'Άπλωμα',
+    label: 'Spread',
     type: 'range',
     min: 0,
     max: 1.5,
@@ -87,7 +87,7 @@ export const BLOOM_FIELDS = [
   },
   {
     key: 'threshold',
-    label: 'Όριο φωτεινότητας',
+    label: 'Brightness threshold',
     type: 'range',
     min: 0,
     max: 1,

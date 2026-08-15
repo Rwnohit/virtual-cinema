@@ -8,7 +8,7 @@
  * asked, and only then starts the next one, which brings the ceremony with it.
  *
  *   const queue = createQueue({ media, showtime })
- *   queue.add('/movies/two.mp4', 'Η δεύτερη')
+ *   queue.add('/movies/two.mp4', 'The second one')
  *   queue.gap = 30          // seconds of interval between films
  *
  * The gap is yours to set because it is the one thing a projectionist decides:
@@ -30,7 +30,7 @@ const MAX_GAP = 300
 export const QUEUE_FIELDS = [
   {
     key: 'gap',
-    label: 'Κενό ανάμεσα στις ταινίες',
+    label: 'Gap between films',
     min: MIN_GAP,
     max: MAX_GAP,
     step: 5,

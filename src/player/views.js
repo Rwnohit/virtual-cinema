@@ -40,12 +40,12 @@ export const FIRST_PERSON = 'first-person'
  * always brings the viewer home the short way round.
  */
 export const VIEWS = Object.freeze([
-  { id: FIRST_PERSON, label: 'Πρώτο πρόσωπο', hint: 'τα μάτια σου' },
-  { id: 'back-row', label: 'Τελευταία σειρά', hint: 'πίσω ψηλά' },
-  { id: 'booth', label: 'Θάλαμος προβολής', hint: 'από το φινιστρίνι' },
-  { id: 'side', label: 'Πλάγια θέα', hint: 'πλαϊνός διάδρομος' },
-  { id: 'stage', label: 'Μπροστά από την οθόνη', hint: 'η αίθουσα από τη σκηνή' },
-  { id: 'wide', label: 'Πανοραμική', hint: 'όλη η αίθουσα' },
+  { id: FIRST_PERSON, label: 'First person', hint: 'your own eyes' },
+  { id: 'back-row', label: 'Back row', hint: 'high up at the back' },
+  { id: 'booth', label: 'Projection booth', hint: 'through the port window' },
+  { id: 'side', label: 'From the side', hint: 'the side aisle' },
+  { id: 'stage', label: 'In front of the screen', hint: 'the hall from the stage' },
+  { id: 'wide', label: 'Wide', hint: 'the whole hall' },
 ].map((entry) => Object.freeze(entry)))
 
 /** Speed of the slow sideways float, in radians per second. */

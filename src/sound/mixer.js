@@ -69,31 +69,31 @@ const clamp = (value, min, max) => Math.min(Math.max(Number(value) || 0, min), m
  * knowing a thing about the audio graph. `format` tells it how to print.
  */
 export const MIXER_FIELDS = [
-  { key: 'master', label: 'Γενική ένταση', group: 'Αίθουσα', min: 0, max: 1, step: 0.01, format: 'percent' },
-  { key: 'movie', label: 'Ταινία', group: 'Ταινία', min: 0, max: 1, step: 0.01, format: 'percent' },
-  { key: 'xcurve', label: 'Ψηλά ταινίας (X-curve)', group: 'Ταινία', min: 0, max: 1, step: 0.01, format: 'percent' },
-  { key: 'bass', label: 'Μπάσα (LFE)', group: 'Μπάσα', min: 0, max: 1, step: 0.01, format: 'percent' },
-  { key: 'bassExtension', label: 'Έκταση μπάσου', group: 'Μπάσα', min: 0, max: 1, step: 0.01, format: 'percent' },
+  { key: 'master', label: 'Overall volume', group: 'room', min: 0, max: 1, step: 0.01, format: 'percent' },
+  { key: 'movie', label: 'Film', group: 'film', min: 0, max: 1, step: 0.01, format: 'percent' },
+  { key: 'xcurve', label: 'Film treble (X-curve)', group: 'film', min: 0, max: 1, step: 0.01, format: 'percent' },
+  { key: 'bass', label: 'Bass (LFE)', group: 'bass', min: 0, max: 1, step: 0.01, format: 'percent' },
+  { key: 'bassExtension', label: 'Bass reach', group: 'bass', min: 0, max: 1, step: 0.01, format: 'percent' },
   // 50-120 Hz, not 60-160. Bass management crosses at 80 Hz (THX) and at most
   // 120 Hz, and everything below the crossover is sent to the sub in mono. Park
   // it at 160 Hz and male dialogue goes mono with it, which is exactly the
   // "everything sounds the same wherever I look" the desk used to cause.
-  { key: 'bassCrossover', label: 'Σημείο μπάσου', group: 'Μπάσα', min: 50, max: 120, step: 5, format: 'hz' },
-  { key: 'occupancy', label: 'Πληρότητα αίθουσας', group: 'Κοινό', min: 0, max: 1, step: 0.01, format: 'percent' },
-  { key: 'crowd', label: 'Ένταση κοινού', group: 'Κοινό', min: 0, max: 1, step: 0.01, format: 'percent' },
-  { key: 'crowdSpread', label: 'Άνοιγμα κοινού', group: 'Κοινό', min: 0, max: 1, step: 0.01, format: 'percent' },
-  { key: 'foley', label: 'Βήματα & καθίσματα', group: 'Αίθουσα', min: 0, max: 1, step: 0.01, format: 'percent' },
-  { key: 'room', label: 'Αέρας & κλιματισμός', group: 'Αίθουσα', min: 0, max: 1, step: 0.01, format: 'percent' },
+  { key: 'bassCrossover', label: 'Bass crossover', group: 'bass', min: 50, max: 120, step: 5, format: 'hz' },
+  { key: 'occupancy', label: 'How full the room is', group: 'audience', min: 0, max: 1, step: 0.01, format: 'percent' },
+  { key: 'crowd', label: 'Audience level', group: 'audience', min: 0, max: 1, step: 0.01, format: 'percent' },
+  { key: 'crowdSpread', label: 'Audience spread', group: 'audience', min: 0, max: 1, step: 0.01, format: 'percent' },
+  { key: 'foley', label: 'Footsteps and seats', group: 'room', min: 0, max: 1, step: 0.01, format: 'percent' },
+  { key: 'room', label: 'Air and ventilation', group: 'room', min: 0, max: 1, step: 0.01, format: 'percent' },
   // 0-1, and it has moved twice for the same reason: 0.4 was a dry room at the
   // top of the slider, 0.6 was a polite one. The curve behind it is shaped so
   // that raising the ceiling did not move anything anyone had already set -
   // see applyMix() in spatialAudio.js - so the whole change is new room at the
   // far end, and the far end is well past anything a real cinema does.
-  { key: 'reverb', label: 'Ηχώ αίθουσας', group: 'Αίθουσα', min: 0, max: 1, step: 0.01, format: 'percent' },
+  { key: 'reverb', label: 'Room reverb', group: 'room', min: 0, max: 1, step: 0.01, format: 'percent' },
   // The other half of a big room, and the half no amount of mix can fake: how
   // long the tail lasts. In seconds, because that is what it is, and because
   // "0.5 s" and "2.4 s" are two rooms anybody can hear the difference between.
-  { key: 'reverbTail', label: 'Διάρκεια ηχώς', group: 'Αίθουσα', min: 0.15, max: 3.5, step: 0.05, format: 'seconds' },
+  { key: 'reverbTail', label: 'How long it rings', group: 'room', min: 0.15, max: 3.5, step: 0.05, format: 'seconds' },
 ]
 
 const FIELD_BY_KEY = new Map(MIXER_FIELDS.map((field) => [field.key, field]))
@@ -112,7 +112,7 @@ export const SOUND_PRESETS = {
   // The reference: a standard 500-1500 m3 multiplex, half sold, crossed over
   // at the THX 80 Hz so almost nothing localisable goes to the sub.
   cinema: {
-    label: 'Σινεμά',
+    label: 'Cinema',
     room: 'cinema',
     values: {
       master: 0.72,
@@ -154,7 +154,7 @@ export const SOUND_PRESETS = {
   // Under 200 m3 and empty: 0.25-0.35 s of tail, no audience at all, and the
   // air handling of a room built for four people.
   quiet: {
-    label: 'Ήσυχη αίθουσα',
+    label: 'Quiet room',
     room: 'screening-room',
     values: {
       master: 0.55,
@@ -176,7 +176,7 @@ export const SOUND_PRESETS = {
   // it: 150 bodies are about 0.45 sabins each at 500 Hz, and that is why a
   // sold out screening sounds tighter than the same room at a press preview.
   premiere: {
-    label: 'Πρεμιέρα',
+    label: 'Premiere',
     room: 'cinema',
     values: {
       master: 0.8,
@@ -198,7 +198,7 @@ export const SOUND_PRESETS = {
   // large auditorium and a home system is meant to be flat. A small sub cannot
   // reach low, so it crosses high and stops early.
   home: {
-    label: 'Σαλόνι',
+    label: 'Living room',
     room: 'dry',
     values: {
       master: 0.6,
@@ -241,7 +241,7 @@ const ROOM_MAX_GAIN = 2.0
  * @param {BaseAudioContext} options.context
  * @param {AudioNode} [options.destination] defaults to context.destination
  * @param {AudioNode} [options.movieTap] where the LFE is taken from
- * @param {GainNode} [options.movieFader] the film's own level, the "Ταινία" slider
+ * @param {GainNode} [options.movieFader] the film's own level, the "Film" slider
  * @param {AudioNode} [options.movieOut] everything the film makes, into the master
  * @param {BiquadFilterNode} [options.movieTone] high shelf for the X-curve
  * @param {object} [options.film] the spatial audio handle: crossover and output
@@ -301,7 +301,7 @@ export function createMixer(options = {}) {
   limiter.connect(destination)
 
   // The film joins the desk here. Until this round it went straight to the
-  // listener, which is why "Γενική ένταση" only moved the room around it.
+  // listener, which is why "Overall volume" only moved the room around it.
   // setOutput() is asked first because it also takes the film OFF the listener;
   // connecting movieOut by hand would leave the old route live and play the
   // film twice, once inside the desk and once around it.

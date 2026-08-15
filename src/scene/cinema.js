@@ -283,7 +283,7 @@ function buildScreen(group, mat) {
  * @type {Array<{key:string,label:string,min:number,max:number,step:number,format:string}>}
  */
 export const CURTAIN_FIELDS = [
-  { key: 'curtains', label: 'Κουρτίνες', min: 0, max: 1, step: 0.01, format: 'percent' },
+  { key: 'curtains', label: 'Curtains', min: 0, max: 1, step: 0.01, format: 'percent' },
 ]
 
 /** Folds per side. Enough that a closed curtain reads as cloth and not as poles. */
@@ -709,7 +709,7 @@ export function createCinema(options = {}) {
    * Lay the colour of the current frame on the carpet.
    *
    * @param {{ color: THREE.Color, intensity: number }} reading from lighting.js
-   * @param {number} [gain] the viewer's «Λάμψη οθόνης», so the pool obeys it too
+   * @param {number} [gain] the viewer's "light off the screen", so the pool obeys it too
    */
   function setScreenSpill(reading, gain = 1) {
     if (!reading) return

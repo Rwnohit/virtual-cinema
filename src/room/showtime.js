@@ -21,6 +21,8 @@
  *    does, by hand.
  */
 
+import { t } from '../i18n/index.js'
+
 /** The hall between films: lit enough to find your seat. */
 export const INTERVAL_HOUSE = 0.55
 
@@ -104,7 +106,7 @@ export function createShowtime(options = {}) {
   function begin() {
     if (!enabled) return Promise.resolve(false)
     clear()
-    announce('showing', 'Καλή προβολή')
+    announce('showing', t('flash.enjoy'))
 
     sound?.clack?.({ on: false })
     openCurtains()
@@ -126,7 +128,7 @@ export function createShowtime(options = {}) {
     sound?.clack?.({ on: true })
     const up = timing().lead * SECONDS
     toHouse(up)
-    timer = setTimeout(() => announce('interval', 'Τέλος προβολής'), up)
+    timer = setTimeout(() => announce('interval', t('flash.filmOver')), up)
   }
 
   /**
@@ -142,7 +144,7 @@ export function createShowtime(options = {}) {
 
   /**
    * Loading a film with `autoplay` is the other way in, and the commoner one:
-   * it is what the "Παίξε" button next to the link field does. Without this the
+   * it is what the "Play" button next to the link field does. Without this the
    * ceremony would only happen when you pressed play on an already loaded film,
    * which is the one time people do not expect it.
    */

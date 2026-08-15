@@ -18,9 +18,9 @@ import * as THREE from 'three'
 
 /** Names get picked from here, so a full house does not read as a list. */
 const NAMES = [
-  'Κώστας', 'Μαρία', 'Νίκος', 'Ελένη', 'Γιώργος', 'Δήμητρα', 'Αντώνης', 'Σοφία',
-  'Θανάσης', 'Ραφαέλα', 'Παύλος', 'Χριστίνα', 'Στέλιος', 'Αναστασία', 'Μιχάλης',
-  'Ιωάννα', 'Βασίλης', 'Κατερίνα', 'Λευτέρης', 'Ζωή', 'Πέτρος', 'Ναταλία',
+  'Kostas', 'Maria', 'Nikos', 'Eleni', 'Yiorgos', 'Dimitra', 'Antonis', 'Sofia',
+  'Thanasis', 'Rafaela', 'Pavlos', 'Christina', 'Stelios', 'Anastasia', 'Michalis',
+  'Ioanna', 'Vasilis', 'Katerina', 'Lefteris', 'Zoe', 'Petros', 'Natalia',
   'Alex', 'Mika', 'Jonas', 'Nadia', 'Theo', 'Luca', 'Iris', 'Milo', 'Sasha',
   'Remy', 'Nora', 'Kai', 'Juno', 'Vera', 'Otis', 'Pixel', 'Echo', 'Nova',
 ]
@@ -95,7 +95,7 @@ function drawBubble(name, color) {
 
 /** What the panel builds its slider from. */
 export const AUDIENCE_FIELDS = [
-  { key: 'audience', label: 'Θεατές στις θέσεις', min: 0, max: 1, step: 0.02, format: 'people' },
+  { key: 'audience', label: 'People in the seats', min: 0, max: 1, step: 0.02, format: 'people' },
 ]
 
 /**

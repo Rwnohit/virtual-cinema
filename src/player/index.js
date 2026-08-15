@@ -87,7 +87,7 @@ export function createPlayer(context = {}) {
   /* ---------------------------------------------------------------------- */
 
   /** What a seat is called out loud: a sofa has a name, a seat has a number. */
-  const seatName = (seat) => seat?.label ?? `θέση ${seat?.id ?? ''}`.trim()
+  const seatName = (seat) => seat?.label ?? `${t('hud.seat')} ${seat?.id ?? ''}`.trim()
 
   function sit(seatId) {
     if (controls.isSeated) return false

@@ -139,7 +139,7 @@ export function createScreenLight(options = {}) {
       state.failures += 1
       if (state.failures >= MAX_FAILURES) {
         state.enabled = false
-        console.warn('[media] Το φως της αίθουσας δεν διαβάζει αυτό το βίντεο.', err)
+        console.warn('[media] The room light cannot read this video.', err)
       }
       return null
     }

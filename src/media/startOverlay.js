@@ -93,7 +93,7 @@ const CSS = `
 }
 `
 
-/** "21 λεπτά μέσα" reads better than a running clock nobody can act on. */
+/** "21 minutes in" reads better than a running clock nobody can act on. */
 function minutesIn(seconds) {
   const total = Math.max(0, Math.round(Number(seconds) || 0))
   if (total < 60) return t('lobby.justStarted')

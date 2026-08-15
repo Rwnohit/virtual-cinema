@@ -10,7 +10,7 @@
  *
  * This module never touches the mixing desk in src/sound/. It is handed a
  * destination - the room channel of that desk when there is one - and plays
- * into it, so the viewer's own "Αέρας & κλιματισμός" fader still has the last
+ * into it, so the viewer's own "air and ventilation" fader still has the last
  * word over everything here.
  *
  *   const voices = createVenueAudio({ context, destination })

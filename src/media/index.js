@@ -34,6 +34,7 @@ import {
 } from './reverb.js'
 import { resolveScreenMesh, measureScreen } from './screenResolver.js'
 import { computeFit, FIT_MODES } from './fit.js'
+import { t } from '../i18n/index.js'
 
 export {
   createVideoScreen,
@@ -99,7 +100,7 @@ function sourceFromQuery() {
  * @param {string} [options.reverbPreset='cinema']
  * @param {number} [options.reverbMix]
  * @param {boolean} [options.controls=true] playback panel, bottom of the page
- * @param {boolean} [options.picker=true] "Άνοιξε ταινία" button and drag and drop
+ * @param {boolean} [options.picker=true] "Open a film" button and drag and drop
  * @param {boolean} [options.startOverlay=true] opening screen with the big button
  * @param {object} [options.lighting] the scene's lighting handle, lit by the film
  */
@@ -444,8 +445,7 @@ export function createMedia(options = {}) {
           // reaches it but the hall - reverb, X-curve, the sub - does not.
           emitter.emit('degraded', {
             reason: 'embed',
-            message:
-              'Παίζει από τον player του YouTube: η ένταση τον πιάνει, η ηχώ της αίθουσας όχι.',
+            message: t('err.embedSound'),
           })
         }
         return ok
@@ -496,7 +496,7 @@ export function createMedia(options = {}) {
         await screen.video.play()
       } catch {
         emitter.emit('blocked', {
-          message: 'Ο browser περιμένει ένα κλικ σου για να ξεκινήσει η ταινία.',
+          message: t('err.tapToStart'),
         })
       }
       return media.isPlaying
@@ -563,7 +563,7 @@ export function createMedia(options = {}) {
       // Not "YouTube ..." by name: the browser test forbids a slider whose
       // label says YouTube, because that is how the discrete quality slider
       // got caught. The group heading above the row says which film it means.
-      { key: 'embedRoom', label: 'Πόσο μετράει η θέση σου', min: 0, max: 1, step: 0.01, format: 'percent', default: 1 },
+      { key: 'embedRoom', label: 'How much your seat matters', min: 0, max: 1, step: 0.01, format: 'percent', default: 1 },
     ],
     get embedRoomAmount() {
       return embedRoomAmount
@@ -618,7 +618,7 @@ export function createMedia(options = {}) {
         else await fullscreenTarget().requestFullscreen?.()
       } catch {
         emitter.emit('blocked', {
-          message: 'Ο browser δεν επιτρέπει πλήρη οθόνη αυτή τη στιγμή.',
+          message: t('err.fullscreen'),
         })
       }
       return media.isFullscreen

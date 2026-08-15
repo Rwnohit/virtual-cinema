@@ -97,6 +97,7 @@ const STRINGS = {
     'btn.remove': 'Βγάλ το',
     'btn.later': 'Αργότερα',
     'btn.update': 'Ενημέρωση',
+    'btn.close': 'Κλείσιμο',
 
     /* --- toggles -------------------------------------------------------- */
     'toggle.cinematic': 'Κινηματογραφικό κάδρο (C)',
@@ -147,6 +148,7 @@ const STRINGS = {
     'hud.nextView': 'V για την επόμενη',
     'hud.satDown': 'Κάθισες',
     'hud.stoodUp': 'Σηκώθηκες',
+    'hud.seat': 'θέση',
     'hud.noSeat': 'Δεν υπάρχει ελεύθερη θέση εδώ κοντά',
     'hud.seatTaken': 'Η θέση είναι πιασμένη',
 
@@ -210,10 +212,10 @@ const STRINGS = {
     'queue.skip': 'Πέρνα στο επόμενο',
 
     /* --- everything else that is keyed, not written out ------------------ */
-    'sgroup.Αίθουσα': 'Αίθουσα',
-    'sgroup.Ταινία': 'Ταινία',
-    'sgroup.Μπάσα': 'Μπάσα',
-    'sgroup.Κοινό': 'Κοινό',
+    'sgroup.room': 'Αίθουσα',
+    'sgroup.film': 'Ταινία',
+    'sgroup.bass': 'Μπάσα',
+    'sgroup.audience': 'Κοινό',
     'field.master': 'Γενική ένταση',
     'field.movie': 'Ταινία',
     'field.embedRoom': 'Πόσο μετράει η θέση σου',
@@ -238,6 +240,26 @@ const STRINGS = {
     'picture.brighter': 'Πιο φωτεινό',
     'picture.warm': 'Ζεστό',
     'picture.cool': 'Ψυχρό',
+    'value.monochrome': 'Ασπρόμαυρο',
+
+    /* --- what the room says when something will not play ------------------ */
+    'err.aborted': 'Η φόρτωση του βίντεο σταμάτησε.',
+    'err.network': 'Χάθηκε η σύνδεση ενώ κατέβαινε το βίντεο.',
+    'err.decode': 'Το αρχείο φαίνεται χαλασμένο και δεν διαβάζεται.',
+    'err.format': 'Ο browser δεν παίζει αυτή τη μορφή βίντεο. Δοκίμασε MP4 (H.264) ή WebM.',
+    'err.unknown': 'Δεν μπόρεσα να παίξω αυτό το αρχείο ή link.',
+    'err.noSource': 'Δώσε ένα αρχείο ταινίας ή ένα link.',
+    'err.tapToStart': 'Ο browser περιμένει ένα κλικ σου για να ξεκινήσει η ταινία.',
+    'err.tapToStartLive': 'Ο browser περιμένει ένα κλικ σου για να ξεκινήσει η ζωντανή προβολή.',
+    'err.hls': 'Αυτό το live stream (m3u8) θέλει τη βιβλιοθήκη hls.js για να παίξει εδώ.',
+    'err.crossOriginAudio':
+      'Το link δεν επιτρέπει ανάγνωση ήχου από άλλο site, οπότε ο ήχος παίζει κανονικά αλλά χωρίς χωρικό εφέ.',
+    'err.noSpatial': 'Ο ήχος παίζει κανονικά, αλλά χωρίς χωρικό εφέ σε αυτό το αρχείο.',
+    'err.reverb': 'Δεν φορτώθηκε το αρχείο reverb.',
+    'err.embedBlocked': 'Αυτό το βίντεο του YouTube δεν επιτρέπει προβολή έξω από το YouTube.',
+    'err.embedNoPlayer': 'Δεν φόρτωσε ο player του YouTube. Δες τη σύνδεση ή τυχόν ad blocker.',
+    'err.fullscreen': 'Ο browser δεν επιτρέπει πλήρη οθόνη αυτή τη στιγμή.',
+    'err.embedSound': 'Παίζει από τον player του YouTube: η ένταση τον πιάνει, η ηχώ της αίθουσας όχι.',
     'view.first-person': 'Πρώτο πρόσωπο',
     'view.back-row': 'Τελευταία σειρά',
     'view.booth': 'Θάλαμος προβολής',
@@ -365,6 +387,7 @@ const STRINGS = {
     'btn.remove': 'Remove',
     'btn.later': 'Later',
     'btn.update': 'Update',
+    'btn.close': 'Close',
 
     'toggle.cinematic': 'Cinematic frame (C)',
     'toggle.ceremony': 'Ceremony: lights and curtains',
@@ -411,6 +434,7 @@ const STRINGS = {
     'hud.nextView': 'V for the next one',
     'hud.satDown': 'You sat down',
     'hud.stoodUp': 'You stood up',
+    'hud.seat': 'seat',
     'hud.noSeat': 'No free seat within reach',
     'hud.seatTaken': 'That seat is taken',
 
@@ -470,10 +494,10 @@ const STRINGS = {
     'queue.skip': 'Skip to the next one',
 
     /* --- everything else that is keyed, not written out ------------------ */
-    'sgroup.Αίθουσα': 'The room',
-    'sgroup.Ταινία': 'The film',
-    'sgroup.Μπάσα': 'Bass',
-    'sgroup.Κοινό': 'Audience',
+    'sgroup.room': 'The room',
+    'sgroup.film': 'The film',
+    'sgroup.bass': 'Bass',
+    'sgroup.audience': 'Audience',
     'field.master': 'Overall volume',
     'field.movie': 'Film',
     'field.embedRoom': 'How much your seat matters',
@@ -498,6 +522,26 @@ const STRINGS = {
     'picture.brighter': 'Brighter',
     'picture.warm': 'Warm',
     'picture.cool': 'Cool',
+    'value.monochrome': 'Black and white',
+
+    /* --- what the room says when something will not play ------------------ */
+    'err.aborted': 'Loading the video stopped.',
+    'err.network': 'The connection was lost while the video was coming down.',
+    'err.decode': 'The file looks damaged and cannot be read.',
+    'err.format': 'The browser does not play this video format. Try MP4 (H.264) or WebM.',
+    'err.unknown': 'That file or link would not play.',
+    'err.noSource': 'Give it a film file or a link.',
+    'err.tapToStart': 'The browser is waiting for a click of yours before the film starts.',
+    'err.tapToStartLive': 'The browser is waiting for a click of yours before the live stream starts.',
+    'err.hls': 'This live stream (m3u8) wants the hls.js library to play in here.',
+    'err.crossOriginAudio':
+      'The link does not allow another site to read its sound, so it plays normally but without the spatial effect.',
+    'err.noSpatial': 'The sound plays normally, but without the spatial effect on this file.',
+    'err.reverb': 'The reverb file did not load.',
+    'err.embedBlocked': 'This YouTube video does not allow playback outside YouTube.',
+    'err.embedNoPlayer': 'The YouTube player did not load. Check the connection, or an ad blocker.',
+    'err.fullscreen': 'The browser will not allow full screen right now.',
+    'err.embedSound': 'Playing from the YouTube player: the volume reaches it, the hall reverb does not.',
     'view.first-person': 'First person',
     'view.back-row': 'Back row',
     'view.booth': 'Projection booth',

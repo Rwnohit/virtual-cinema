@@ -24,7 +24,7 @@
  *
  * The film is panned by the media module from the two sides of the screen, but
  * it now comes OUT through this desk's master rather than straight at the
- * listener, so "Γενική ένταση" moves the film with everything else.
+ * listener, so "Overall volume" moves the film with everything else.
  *
  * Browsers keep audio asleep until the first real gesture, so the whole thing
  * stays silent until the viewer clicks, and then fades the room tone in.
@@ -143,7 +143,7 @@ export function createSound(context = {}) {
   const movieNodes = movieAudio?.nodes ?? null
   // lfeSend is the film's own send to the sub. Taking it from a node of its own
   // rather than from the film fader means the desk's bass control lives only on
-  // the desk: pulling "Μπάσα" to zero leaves the film exactly as it was, and
+  // the desk: pulling "Bass" to zero leaves the film exactly as it was, and
   // taking the desk away leaves the film with its bass back. Older builds only
   // expose the fader itself, so fall back to that.
   const movieTap = movieNodes?.lfeSend ?? movieNodes?.movieBus ?? movieNodes?.movieGain ?? null
