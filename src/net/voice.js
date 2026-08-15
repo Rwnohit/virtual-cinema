@@ -15,6 +15,19 @@
 import { ICE_SERVERS } from './config.js';
 import { createVoiceSink, createMicMeter, getAudioContext } from './audio.js';
 
+/**
+ * The three m-lines, by the name both sides agree on.
+ *
+ * The offerer declares them in this order and the answerer adopts them, so the
+ * mid is "0", "1", "2" for everybody. It is the only identifier that survives
+ * the trip: a transceiver object on one side is a different object on the
+ * other, and matching by object was why a shared screen went out and was never
+ * seen.
+ */
+const VOICE_MID = '0';
+const PICTURE_MID = '1';
+const FILM_SOUND_MID = '2';
+
 export class VoiceMesh {
   constructor({ client, peers, tuning = {}, onChange = null } = {}) {
     this.client = client;
@@ -118,11 +131,26 @@ export class VoiceMesh {
       signal: (data) => this.client.signal(remoteId, data),
       tuning: this.tuning,
       onSink: () => this._changed(),
+      onScreenTrack: (track, kind) => this.onScreenTrack?.(remoteId, track, kind),
     });
     this.connections.set(remoteId, conn);
     const track = this.localStream?.getAudioTracks()[0] || null;
     conn.open(track);
+    // Somebody who walks in while a screen is being shared gets it straight
+    // away, on the connection that was just built for them.
+    if (this.screenTracks) conn.setScreen(this.screenTracks.video, this.screenTracks.audio);
     return conn;
+  }
+
+  /**
+   * Send our screen to everybody in the hall, or stop.
+   * @param {{video: MediaStreamTrack|null, audio: MediaStreamTrack|null}|null} tracks
+   */
+  setScreen(tracks) {
+    this.screenTracks = tracks;
+    for (const conn of this.connections.values()) {
+      conn.setScreen(tracks?.video ?? null, tracks?.audio ?? null);
+    }
   }
 
   async _onSignal(msg) {
@@ -188,13 +216,14 @@ export class VoiceMesh {
 /* ------------------------------------------------------- one peer, one pc */
 
 class Connection {
-  constructor({ remoteId, isOfferer, polite, signal, tuning, onSink }) {
+  constructor({ remoteId, isOfferer, polite, signal, tuning, onSink, onScreenTrack }) {
     this.remoteId = remoteId;
     this.isOfferer = isOfferer;
     this.polite = polite;
     this.signalOut = signal;
     this.tuning = tuning;
     this.onSink = onSink;
+    this.onScreenTrack = onScreenTrack;
 
     this.pc = null;
     this.sender = null;
@@ -208,18 +237,54 @@ class Connection {
     const pc = new RTCPeerConnection({ iceServers: ICE_SERVERS, bundlePolicy: 'max-bundle' });
     this.pc = pc;
 
-    // One audio m-line from the start: the mic can arrive later without a
-    // second round of negotiation.
-    const transceiver = pc.addTransceiver('audio', { direction: 'sendrecv' });
-    this.sender = transceiver.sender;
-    if (track) this.sender.replaceTrack(track).catch(() => {});
+    /**
+     * Three m-lines, declared once, and ONLY BY THE OFFERER.
+     *
+     * A transceiver with no track costs nothing and saves everything: adding
+     * one later means renegotiating, and renegotiating in a mesh where several
+     * people may act at once is where the "wrong state" races live. So the
+     * shapes are agreed at the start - a voice, a picture, and the sound that
+     * goes with the picture - and after that every change is a replaceTrack(),
+     * which needs no round trip at all.
+     *
+     * The answering side deliberately declares NOTHING. Measured: with both
+     * sides calling addTransceiver, the answerer ended up with six - its own
+     * three, never associated, and three more created from the offer - and
+     * every incoming track arrived on one of the second set. The screen went
+     * out and simply never appeared. Letting the offer define the m-lines
+     * means one set, on both sides, with matching mids.
+     */
+    if (this.isOfferer) {
+      pc.addTransceiver('audio', { direction: 'sendrecv' });
+      pc.addTransceiver('video', { direction: 'sendrecv' });
+      pc.addTransceiver('audio', { direction: 'sendrecv' });
+    }
+    this.voiceTrack = track ?? null;
+
+    // Mids do not exist until the two sides have agreed on them, so whatever
+    // was asked for before that is applied the moment they do.
+    pc.onsignalingstatechange = () => {
+      if (pc.signalingState === 'stable') this._flush();
+    };
 
     pc.onicecandidate = ({ candidate }) => {
       if (candidate) this.signalOut({ cand: candidate.toJSON ? candidate.toJSON() : candidate });
     };
 
-    pc.ontrack = ({ streams }) => {
-      const stream = streams[0];
+    pc.ontrack = (event) => {
+      // The mid says what it is, and the mid is the one name both sides agree
+      // on. Object identity does not work here: the answering side's own
+      // transceivers are never the ones a track arrives on.
+      const mid = event.transceiver?.mid;
+      if (mid === PICTURE_MID) {
+        this.onScreenTrack?.(event.track, 'video');
+        return;
+      }
+      if (mid === FILM_SOUND_MID) {
+        this.onScreenTrack?.(event.track, 'audio');
+        return;
+      }
+      const stream = event.streams[0];
       if (!stream) return;
       this.sink?.dispose();
       this.sink = createVoiceSink(stream, this.tuning);
@@ -249,9 +314,37 @@ class Connection {
     return pc;
   }
 
+  /** The sender for one agreed m-line, or null before there is an agreement. */
+  senderFor(mid) {
+    return this.pc?.getTransceivers().find((t) => t.mid === mid)?.sender ?? null;
+  }
+
   setTrack(track) {
-    if (!this.sender) return;
-    this.sender.replaceTrack(track).catch((err) => console.warn('[voice] replaceTrack', err));
+    this.voiceTrack = track ?? null;
+    this._flush();
+  }
+
+  /**
+   * Send this peer our screen, or stop sending it. Both null takes it back.
+   * @param {MediaStreamTrack|null} video
+   * @param {MediaStreamTrack|null} audio
+   */
+  setScreen(video, audio) {
+    this.screenTracks = video || audio ? { video: video ?? null, audio: audio ?? null } : null;
+    this._flush();
+  }
+
+  /** Put whatever we are meant to be sending onto the agreed m-lines. */
+  _flush() {
+    const put = (mid, track) => {
+      const sender = this.senderFor(mid);
+      if (!sender) return;
+      if (sender.track === track) return;
+      sender.replaceTrack(track ?? null).catch((err) => console.warn('[voice] replaceTrack', err));
+    };
+    put(VOICE_MID, this.voiceTrack ?? null);
+    put(PICTURE_MID, this.screenTracks?.video ?? null);
+    put(FILM_SOUND_MID, this.screenTracks?.audio ?? null);
   }
 
   async handleSignal(data) {

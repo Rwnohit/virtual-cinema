@@ -464,6 +464,27 @@ export function createMedia(options = {}) {
       return loaded
     },
 
+    /**
+     * Somebody in the hall is sharing their screen. Put it on ours.
+     *
+     * Nothing to synchronise, ever: there is one picture, encoded once, and
+     * everybody is watching the same frames arrive. Whatever is on the
+     * sharer's screen - a film, a player nobody else could open, a slideshow -
+     * is what the room sees.
+     *
+     * @param {MediaStream|null} stream null takes the screen back
+     */
+    async showStream(stream) {
+      if (embed?.active) embed.unload()
+      if (!stream) {
+        screen.clear()
+        emitter.emit('sourcechange', { src: null, isFile: false, live: false })
+        return false
+      }
+      elapsedOnScreen = 0
+      return screen.showStream(stream)
+    },
+
     async play() {
       // Browsers keep the audio clock asleep until a real user gesture.
       await audio.resume()

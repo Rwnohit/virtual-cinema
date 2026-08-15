@@ -500,6 +500,49 @@ export function createRoom(context = {}) {
   let duration = null
   let queueList = null
   let volIcon = null
+  /**
+   * The other way to watch together: one screen, sent to everybody.
+   *
+   * Handed in by main.js after the network module is up, because this module
+   * is built before it. Until then the button simply is not there - a control
+   * that might not work is worse than one that is missing.
+   */
+  let screenShare = null
+  let shareButton = null
+
+  function refreshShare() {
+    if (!shareButton) return
+    const can = !!screenShare?.supported()
+    shareButton.hidden = !can
+    if (!can) return
+    const sharing = !!screenShare.sharing
+    shareButton.classList.toggle('is-on', sharing)
+    shareButton.title = t(sharing ? 'dock.shareStop' : 'dock.share')
+    shareButton.setAttribute('aria-label', shareButton.title)
+    shareButton.querySelector('.ic').textContent = sharing ? '⏹' : '📡'
+  }
+
+  function toggleShare() {
+    if (!screenShare) return
+    if (screenShare.sharing) {
+      screenShare.stop()
+      flash(t('flash.shareOff'))
+      refreshShare()
+      return
+    }
+    // Straight from the click: the browser will not open its picker without a
+    // live user gesture.
+    screenShare
+      .start()
+      .then(() => {
+        flash(t('flash.shareOn'))
+        refreshShare()
+      })
+      .catch((err) => {
+        flash(t(err?.reason === 'no-video' ? 'flash.shareNoVideo' : 'flash.shareCancelled'))
+        refreshShare()
+      })
+  }
   let volBefore = sound?.volume ?? 1
   let quality = null
 
@@ -569,9 +612,16 @@ export function createRoom(context = {}) {
       vol.className = 'rp-vol'
       vol.innerHTML = `
         <button type="button" class="rp-dbtn" data-role="mute" aria-label="${t('dock.volume')}"><span class="ic">🔊</span></button>
+        <button type="button" class="rp-dbtn" data-role="share" title="${t('dock.share')}" aria-label="${t('dock.share')}" hidden><span class="ic">📡</span></button>
         <button type="button" class="rp-dbtn" data-role="clean" title="${t('dock.clean')}" aria-label="${t('dock.clean')}"><span class="ic">🎬</span></button>
       `
       dock.addToBar(vol)
+      shareButton = vol.querySelector('[data-role="share"]')
+      shareButton.addEventListener('click', () => {
+        sound.click?.()
+        toggleShare()
+      })
+      refreshShare()
       volIcon = vol.querySelector('[data-role="mute"] .ic')
       // The speaker is a mute, and a mute has to remember where you were.
       vol.querySelector('[data-role="mute"]').addEventListener('click', () => {
@@ -1528,6 +1578,16 @@ export function createRoom(context = {}) {
     show: () => setPanelVisible(true),
     hide: () => setPanelVisible(false),
     open: (id) => dock.show(id),
+
+    /**
+     * Hand over the screen sharing controller once the network is up.
+     * Called by main.js; see the note on `screenShare`.
+     */
+    bindScreenShare(share) {
+      screenShare = share ?? null
+      refreshShare()
+      return share
+    },
 
     /* --- the shared room. See the note above getStage(). ------------------ */
     getStage,

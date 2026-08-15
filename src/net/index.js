@@ -21,6 +21,7 @@ import { updateListener, unlockAudioOnGesture, getAudioContext } from './audio.j
 import { createHud } from './ui.js';
 import { createShowSync } from './show.js';
 import { createStageSync } from './stage.js';
+import { createScreenShare } from './screen.js';
 
 /** Both exist in every browser, but not when a test imports us from Node. */
 const requestFrame = (fn) =>
@@ -304,6 +305,25 @@ export async function createNetwork(options = {}) {
   /** The room around the film, shared the same way the film is. See stage.js. */
   const stageSync = createStageSync({ client, room: roomHandle });
 
+  /**
+   * One person's screen on everybody's screen. See screen.js.
+   *
+   * It rides the peer connections the voice mesh already keeps open, so there
+   * is no second set of sockets and no second handshake - just two more
+   * m-lines that sit empty until somebody presses the button.
+   */
+  const screenShare = voiceMesh
+    ? createScreenShare({
+        voice: voiceMesh,
+        media,
+        client,
+        onChange: (state) => emit('screen', state),
+      })
+    : null;
+  if (voiceMesh && screenShare) {
+    voiceMesh.onScreenTrack = (from, track, kind) => screenShare.onTrack(from, track, kind);
+  }
+
   // Deferred when there is a menu of halls in front of the viewer: connecting
   // before they have chosen would drop them into a hall they never picked, and
   // everyone already inside it would watch a stranger appear and vanish.
@@ -334,6 +354,8 @@ export async function createNetwork(options = {}) {
     show: showSync,
     /** The room it is running in: curtain, lights, seats. See stage.js. */
     stage: stageSync,
+    /** One screen for the whole hall, with nothing to synchronise. See screen.js. */
+    screen: screenShare,
     get count() {
       return peers.size + 1;
     },
@@ -375,6 +397,7 @@ export async function createNetwork(options = {}) {
       cancelFrame(rafId);
       showSync.dispose();
       stageSync.dispose();
+      screenShare?.dispose();
       hudView?.dispose();
       voiceMesh?.dispose();
       avatars.dispose();

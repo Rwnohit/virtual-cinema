@@ -362,6 +362,8 @@ export function createVideoScreen(options = {}) {
   function clear() {
     destroyHls()
     video.pause()
+    // A live stream lives on srcObject, and load() will not let go of it.
+    if (video.srcObject) video.srcObject = null
     video.removeAttribute('src')
     video.load()
     clearObjectUrl()
@@ -370,6 +372,43 @@ export function createVideoScreen(options = {}) {
     surface.visible = false
     // Hand the screen mesh back before anyone else claims it.
     dimBaseMesh(false)
+  }
+
+  /**
+   * Put a live stream on the screen instead of a file.
+   *
+   * The one caller is somebody in the hall sharing their screen: what arrives
+   * is a MediaStream off a peer connection, and from the element's point of
+   * view it is simply a video that is already playing. Everything downstream -
+   * the texture, the grade, the light it throws on the room - never learns the
+   * difference.
+   *
+   * `srcObject` and `src` are mutually exclusive, so the old one is cleared
+   * rather than left to argue.
+   *
+   * @param {MediaStream} stream
+   */
+  async function showStream(stream) {
+    if (state.disposed || !stream) return false
+
+    destroyHls()
+    clearObjectUrl()
+    state.corsRetried = false
+    video.pause()
+    video.removeAttribute('src')
+    video.removeAttribute('crossorigin')
+    state.currentSrc = 'live'
+    video.srcObject = stream
+
+    try {
+      await video.play()
+    } catch {
+      emitter.emit('blocked', {
+        message: 'Ο browser περιμένει ένα κλικ σου για να ξεκινήσει η ζωντανή προβολή.',
+      })
+    }
+    emitter.emit('sourcechange', { src: 'live', isFile: false, live: true })
+    return true
   }
 
   /**
@@ -544,6 +583,7 @@ export function createVideoScreen(options = {}) {
     surface,
     size: geometry,
     load,
+    showStream,
     clear,
     setFit,
     setScreenSize,

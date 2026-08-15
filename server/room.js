@@ -4,7 +4,7 @@
  */
 
 import { randomUUID } from 'node:crypto';
-import { MSG, MAX_NAME_LENGTH, MAX_PEERS_PER_ROOM, STAGE_KEYS } from './protocol.js';
+import { MSG, MAX_NAME_LENGTH, MAX_PEERS_PER_ROOM, STAGE_KEYS, STAGE_TEXT_KEYS } from './protocol.js';
 
 const PALETTE = [
   '#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff',
@@ -179,9 +179,10 @@ export class Room {
       if (!(key in values)) continue;
       const raw = values[key];
       let next;
-      if (key === 'ratio') {
-        next = String(raw ?? '').slice(0, 24).replace(/[^\w-]/g, '');
-        if (!next) continue;
+      if (STAGE_TEXT_KEYS.includes(key)) {
+        // An empty one is a real value here: "nobody is sharing" has to be
+        // sayable, or a share that stopped would look like one still running.
+        next = String(raw ?? '').slice(0, 40).replace(/[^\w-]/g, '');
       } else {
         const n = Number(raw);
         if (!Number.isFinite(n)) continue;

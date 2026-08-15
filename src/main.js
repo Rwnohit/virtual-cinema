@@ -213,6 +213,10 @@ async function boot() {
     ...context,
     deferJoin: !!context.media?.startOverlay,
   })
+  // The room's bar carries the "share my screen" button, and the room is built
+  // before the network that makes it work. This is the handshake.
+  context.room?.bindScreenShare?.(context.net?.screen)
+  context.net?.on?.('screen', () => context.room?.bindScreenShare?.(context.net?.screen))
 
   window.addEventListener('resize', () => {
     for (const handle of Object.values(status.handles)) {

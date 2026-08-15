@@ -73,7 +73,12 @@ export const STAGE_KEYS = [
   'exposure',
   'audience',
   'ratio',
+  /** Who is sharing their screen right now, or "" for nobody. */
+  'live',
 ];
+
+/** The stage values that are words rather than numbers. */
+export const STAGE_TEXT_KEYS = ['ratio', 'live'];
 
 /** Server snapshot rate. 15 Hz is plenty for people sitting in a cinema. */
 export const TICK_HZ = 15;
