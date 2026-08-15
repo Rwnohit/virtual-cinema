@@ -12,10 +12,5 @@ __*
 public/version.json
 public/CHANGELOG.md
 
-# Τοπικά cache εργαλείων: κρατάνε απόλυτες διαδρομές του μηχανήματος.
-.impeccable/
-.claude/
-.gstack/
-
 # Πού deploy-άρει αυτό το μηχάνημα. Δικό μας, όχι του repo.
 deploy.env
