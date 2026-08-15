@@ -16,3 +16,6 @@ public/CHANGELOG.md
 .impeccable/
 .claude/
 .gstack/
+
+# Πού deploy-άρει αυτό το μηχάνημα. Δικό μας, όχι του repo.
+deploy.env

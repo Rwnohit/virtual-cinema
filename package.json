@@ -13,9 +13,11 @@
     "test:browser": "node tests/browser-smoke.mjs",
     "test:prod": "node tests/prod-smoke.mjs",
     "test:halls": "node tests/halls-smoke.mjs",
+    "test:share": "node tests/share-smoke.mjs",
     "prebuild": "npm run version:stamp",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "ship": "node scripts/ship.mjs"
   },
   "engines": {
     "node": ">=20"
