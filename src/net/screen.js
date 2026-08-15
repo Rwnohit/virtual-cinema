@@ -185,11 +185,32 @@ export function createScreenShare(options = {}) {
    */
   function onTrack(from, track, kind) {
     if (local) return; // we are the one sharing; our own screen stays ours
-    if (!incoming || watching !== from) {
-      incoming = new MediaStream();
-      watching = from;
-    }
-    incoming.addTrack(track);
+
+    /**
+     * An m-line that exists is not a screen being shared.
+     *
+     * `ontrack` fires for EVERY negotiated m-line, the moment it is agreed,
+     * whether or not anything is being sent down it - and ours are agreed at
+     * the start and left empty on purpose. The track that arrives is muted.
+     *
+     * Taking that as "somebody is sharing" was a real bug and a bad one: the
+     * second person in any hall had their cinema screen handed to a live
+     * stream carrying nothing, so an ordinary film would not play for them at
+     * all. It hid behind YouTube, which draws in its own frame and never
+     * touches this element.
+     *
+     * So the rule is the honest one: a track counts when it carries something.
+     */
+    const show = () => {
+      if (track.muted) return;
+      if (!incoming || watching !== from) {
+        incoming = new MediaStream();
+        watching = from;
+      }
+      if (!incoming.getTracks().includes(track)) incoming.addTrack(track);
+      if (kind === 'video') media.showStream(incoming);
+      changed();
+    };
 
     /**
      * "Muted", not "ended".
@@ -209,12 +230,9 @@ export function createScreenShare(options = {}) {
     };
     track.addEventListener('mute', gone);
     track.addEventListener('ended', gone);
-    track.addEventListener('unmute', () => {
-      if (kind === 'video' && incoming) media.showStream(incoming);
-    });
-
-    if (kind === 'video') media.showStream(incoming);
-    changed();
+    // The moment it starts carrying something is the moment it counts.
+    track.addEventListener('unmute', show);
+    show();
   }
 
   return {

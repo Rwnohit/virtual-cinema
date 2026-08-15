@@ -2,6 +2,14 @@
 
 Every version, in plain words. Newest at the top.
 
+## 0.20.1 · 15 August 2026
+
+- 🐛 **Serious, and one day old:** as soon as there were two of you in a hall,
+  the second person could not play a film from a file or a direct link. The
+  video channel that screen sharing uses was taking over their cinema screen
+  even when nobody was sharing anything down it. It hid behind YouTube, which
+  draws in a frame of its own and never touches that element.
+
 ## 0.20.0 · 15 August 2026
 
 - **📡 Share your screen with the hall.** A new button on the bar, next to the
