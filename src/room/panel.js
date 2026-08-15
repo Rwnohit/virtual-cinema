@@ -108,12 +108,10 @@ export const CSS = `
 .rp-time .dur{font-size:12px;opacity:.55;font-variant-numeric:tabular-nums;}
 .rp-track{width:clamp(90px,18vw,220px);}
 
-/* Volume lives on the bar because it is the one thing you reach for without
-   wanting to open anything. The slider unrolls on hover, so it costs no width
-   until you want it. */
+/* The little run of round buttons on the bar: mute, share a screen, clear the
+   screen. It used to hold a volume slider that unrolled on hover, which is
+   why it is called this. */
 .rp-vol{display:flex;align-items:center;}
-.rp-vol .rp-range{width:0;opacity:0;margin:0;transition:width .18s ease,opacity .18s ease;}
-.rp-vol:hover .rp-range,.rp-vol.is-open .rp-range,.rp-vol .rp-range:focus{width:84px;opacity:1;margin:0 6px 0 2px;}
 /* Quality only appears when the film is a YouTube one, so it is hidden by
    default rather than laid out and emptied. */
 .rp-qual{display:none;align-items:center;gap:3px;padding:0 2px;}
@@ -155,22 +153,55 @@ export const CSS = `
   .rp-qual{display:none !important;}
 }
 
-/* --- the library: what is playing tonight ---------------------------------
-   Posters and not a list, because a person choosing a film looks before they
-   read. Three across fits the popover without scrolling past the fold on a
-   short laptop screen. */
-.rp-lib{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-.rp-film{appearance:none;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);
-  color:#f2f2f4;font:inherit;text-align:left;cursor:pointer;border-radius:12px;overflow:hidden;
-  padding:0;display:flex;flex-direction:column;transition:border-color .15s ease,transform .12s ease;}
-.rp-film:hover{border-color:rgba(255,255,255,.42);transform:translateY(-2px);}
-.rp-film:active{transform:translateY(0);}
-.rp-film.is-on{border-color:#f2f2f4;box-shadow:0 0 0 1px #f2f2f4 inset;}
-.rp-film-art{aspect-ratio:16/9;width:100%;background:#0c0c10 center/cover no-repeat;display:block;}
-.rp-film-name{padding:7px 9px 9px;font-size:12px;line-height:1.3;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.rp-film-by{display:block;font-size:10px;opacity:.5;margin-top:2px;}
-@media (max-width:560px){ .rp-lib{grid-template-columns:repeat(2,1fr);} }
+/* --- the library: tonight's programme --------------------------------------
+   One film at a time, big, the way a foyer sells a screening - and the rest on
+   a rail underneath. Choosing from the rail brings a film UP to the hero
+   rather than starting it: in here a click starts the film for everybody in
+   the hall, and that is not something to do by brushing past a thumbnail.
+   The accent is the venue's, read off their own site. */
+.rp-pop.is-library{width:min(760px,calc(100vw - 24px));}
+.rp-lib{--lime:#D1FE17;--on-lime:#0B0C0E;}
+.rp-hero{position:relative;border-radius:14px;overflow:hidden;min-height:250px;isolation:isolate;
+  display:flex;align-items:flex-end;padding:20px;margin-bottom:12px;}
+.rp-hero-bg{position:absolute;inset:0;z-index:-2;background:#0c0c10 center/cover no-repeat;
+  transform:scale(1.06);animation:rp-drift 20s ease-in-out infinite alternate;}
+@keyframes rp-drift{to{transform:scale(1.14) translate3d(-2%,-1%,0);}}
+.rp-hero::before{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(90deg,rgba(10,11,14,.95) 0%,rgba(10,11,14,.72) 46%,rgba(10,11,14,.18) 100%);}
+.rp-hero-copy{max-width:60%;}
+.rp-kick{font:700 10px/1 ui-monospace,"Space Mono",monospace;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--lime);}
+.rp-hero h3{margin:8px 0 6px;font-size:clamp(20px,3vw,28px);font-weight:700;letter-spacing:-.02em;}
+.rp-hero-facts{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:11.5px;
+  color:rgba(242,242,244,.66);margin-bottom:8px;}
+.rp-hero-facts b{color:#f2f2f4;font-weight:600;}
+.rp-hero-facts .sep{opacity:.4;}
+.rp-hero p{margin:0 0 14px;font-size:12.5px;line-height:1.5;color:rgba(242,242,244,.78);
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.rp-hero-play{appearance:none;border:0;border-radius:999px;cursor:pointer;
+  background:var(--lime);color:var(--on-lime);font:600 13.5px/1 inherit;padding:11px 20px;
+  display:inline-flex;align-items:center;gap:8px;transition:transform .16s ease,box-shadow .16s ease;}
+.rp-hero-play:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.55);}
+.rp-hero-play:active{transform:translateY(0);}
+.rp-rail{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent;}
+.rp-slide{flex:0 0 168px;appearance:none;border:0;background:none;padding:0;cursor:pointer;
+  color:#f2f2f4;font:inherit;text-align:left;}
+.rp-slide .art{aspect-ratio:16/9;border-radius:9px;background:#0c0c10 center/cover no-repeat;
+  outline:1px solid rgba(255,255,255,.12);outline-offset:-1px;
+  transition:outline-color .22s ease,transform .22s ease;}
+.rp-slide:hover .art{outline-color:var(--lime);transform:translateY(-3px);}
+.rp-slide.is-on .art{outline-color:var(--lime);outline-width:2px;}
+.rp-slide b{display:block;font-size:12px;font-weight:600;margin-top:7px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.rp-slide span{display:block;font-size:10.5px;color:rgba(242,242,244,.5);margin-top:1px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+/* A short laptop screen is the common case, not the exception. */
+@media (max-height:820px){
+  .rp-hero{min-height:190px;padding:16px;}
+  .rp-hero p{-webkit-line-clamp:2;margin-bottom:10px;}
+}
+@media (max-width:640px){ .rp-hero-copy{max-width:100%;} }
 
 .rp-queue{display:flex;flex-direction:column;gap:5px;}
 .rp-qrow{display:flex;align-items:center;gap:8px;padding:5px 7px;border-radius:9px;
@@ -282,9 +313,16 @@ export function createDock(options = {}) {
   const tabs = new Map()
   let openId = null
 
+  /** Tell the page that was open that it no longer is. */
+  function closeCurrent() {
+    if (openId === null) return
+    tabs.get(openId)?.onClose?.()
+  }
+
   function show(id) {
     const entry = tabs.get(id)
     if (!entry) return
+    if (openId !== id) closeCurrent()
     openId = id
     title.textContent = entry.label
     for (const [key, tab] of tabs) {
@@ -296,6 +334,7 @@ export function createDock(options = {}) {
   }
 
   function hide() {
+    closeCurrent()
     openId = null
     pop.classList.remove('is-open')
     for (const tab of tabs.values()) tab.button.classList.remove('is-on')

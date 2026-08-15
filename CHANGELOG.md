@@ -2,6 +2,21 @@
 
 Every version, in plain words. Newest at the top.
 
+## 0.22.0 · 15 August 2026
+
+- **The programme is the festival's own.** 36 films from the Higgsfield
+  community feed - names, synopses, covers, creators - fetched by
+  `scripts/build-library.mjs`. Nothing is copied: every entry keeps their
+  stream and their poster, and each viewer's browser fetches the film from them.
+- **The Library is now a foyer, not a list.** One film big, with its poster
+  drifting behind it, its **runtime**, its creator and its synopsis. The rest
+  runs along a rail underneath.
+- **Choosing from the rail brings a film up; the button starts it.** In here a
+  click plays for the whole hall, and that should not happen by brushing past a
+  thumbnail.
+- Colours and type are measured off higgsfield.ai, not guessed: lime #D1FE17 on
+  near-black, dark type on the lime.
+
 ## 0.21.0 · 15 August 2026
 
 - **🎞 A Library tab: the programme, on the wall.** Posters you can click, and

@@ -1150,58 +1150,119 @@ export function createRoom(context = {}) {
    * the whole hall the way any other film does - see src/net/show.js.
    */
   if (media) {
-    const libraryPage = dock.addPage({ id: 'library', label: t('dock.library'), icon: '🎞' })
-    const grid = document.createElement('div')
-    grid.className = 'rp-lib'
-    libraryPage.appendChild(grid)
+    const libraryPage = dock.addPage({
+      id: 'library',
+      label: t('dock.library'),
+      icon: '🎞',
+      // The programme wants room to breathe; the other pages do not.
+      onOpen: () => dock.pop.classList.add('is-library'),
+      onClose: () => dock.pop.classList.remove('is-library'),
+    })
+    const lib = document.createElement('div')
+    lib.className = 'rp-lib'
+    lib.innerHTML = `
+      <div class="rp-hero">
+        <span class="rp-hero-bg" data-role="art"></span>
+        <div class="rp-hero-copy">
+          <span class="rp-kick" data-role="kick"></span>
+          <h3 data-role="title"></h3>
+          <div class="rp-hero-facts" data-role="facts"></div>
+          <p data-role="desc"></p>
+          <button type="button" class="rp-hero-play" data-role="play"></button>
+        </div>
+      </div>
+      <div class="rp-rail" data-role="rail"></div>
+    `
+    libraryPage.appendChild(lib)
 
-    const empty = document.createElement('div')
-    empty.className = 'rp-hint'
-    empty.textContent = t('library.loading')
-    libraryPage.appendChild(empty)
+    const el = (role) => lib.querySelector(`[data-role="${role}"]`)
+    const status = document.createElement('div')
+    status.className = 'rp-hint'
+    status.textContent = t('library.loading')
+    libraryPage.appendChild(status)
+
+    /** "95 λεπτά" and not "5700": a runtime is the first thing you check. */
+    const runtime = (seconds) => {
+      const total = Math.round(Number(seconds) || 0)
+      if (!total) return null
+      if (total < 60) return `${total}${t('library.secondsShort')}`
+      return `${Math.round(total / 60)} ${t('library.minutes')}`
+    }
+
+    let featured = null
+    function feature(film) {
+      featured = film
+      el('art').style.backgroundImage = film.poster ? `url("${film.poster}")` : ''
+      el('kick').textContent = t('library.tonight')
+      el('title').textContent = film.title || t('library.untitled')
+      el('desc').textContent = film.description || ''
+      el('play').textContent = `▶  ${t('library.startForAll')}`
+
+      // Runtime first, then who made it: the two things a person weighs before
+      // giving up an hour and a half of their evening.
+      const facts = el('facts')
+      facts.innerHTML = ''
+      const bits = [runtime(film.seconds), film.by ? `${t('library.byWhom')} ${film.by}` : null].filter(Boolean)
+      bits.forEach((bit, index) => {
+        if (index) {
+          const sep = document.createElement('span')
+          sep.className = 'sep'
+          sep.textContent = '·'
+          facts.appendChild(sep)
+        }
+        const span = document.createElement(index === 0 ? 'b' : 'span')
+        span.textContent = bit
+        facts.appendChild(span)
+      })
+    }
+
+    el('play').addEventListener('click', () => {
+      if (!featured) return
+      sound?.click?.()
+      flash(featured.title || t('library.untitled'))
+      media.load(featured.src, { autoplay: true })
+    })
 
     fetch('library.json', { cache: 'no-store' })
       .then((response) => (response.ok ? response.json() : null))
       .then((data) => {
-        const films = Array.isArray(data?.films) ? data.films : []
+        const films = (Array.isArray(data?.films) ? data.films : []).filter((f) => typeof f?.src === 'string')
         if (!films.length) {
-          empty.textContent = t('library.empty')
+          status.textContent = t('library.empty')
+          lib.style.display = 'none'
           return
         }
-        empty.remove()
-        for (const film of films) {
-          if (typeof film?.src !== 'string') continue
-          const card = document.createElement('button')
-          card.type = 'button'
-          card.className = 'rp-film'
-          card.innerHTML = `
-            <span class="rp-film-art"></span>
-            <span class="rp-film-name"><span data-role="title"></span><small class="rp-film-by"></small></span>
-          `
-          const art = card.querySelector('.rp-film-art')
+        status.textContent = t('library.hint')
+        feature(films[0])
+
+        const rail = el('rail')
+        films.forEach((film, index) => {
+          const slide = document.createElement('button')
+          slide.type = 'button'
+          slide.className = `rp-slide${index === 0 ? ' is-on' : ''}`
+          slide.innerHTML = '<span class="art"></span><b></b><span></span>'
           // Through style rather than an <img>, so a poster that never loads
           // leaves a clean dark tile instead of a broken picture icon.
-          if (film.poster) art.style.backgroundImage = `url("${film.poster}")`
-          card.querySelector('[data-role="title"]').textContent = film.title || t('library.untitled')
-          card.querySelector('.rp-film-by').textContent = film.by || ''
-          card.addEventListener('click', () => {
+          if (film.poster) slide.querySelector('.art').style.backgroundImage = `url("${film.poster}")`
+          slide.querySelector('b').textContent = film.title || t('library.untitled')
+          slide.querySelector('span:last-child').textContent = [runtime(film.seconds), film.by]
+            .filter(Boolean)
+            .join(' · ')
+          // Brought UP to the hero, not started. A click here would otherwise
+          // change the film for everybody in the hall, mid screening.
+          slide.addEventListener('click', () => {
             sound?.click?.()
-            for (const other of grid.children) other.classList.remove('is-on')
-            card.classList.add('is-on')
-            flash(film.title || t('library.untitled'))
-            media.load(film.src, { autoplay: true })
+            for (const other of rail.children) other.classList.remove('is-on')
+            slide.classList.add('is-on')
+            feature(film)
           })
-          grid.appendChild(card)
-        }
+          rail.appendChild(slide)
+        })
       })
       .catch(() => {
-        empty.textContent = t('library.empty')
+        status.textContent = t('library.empty')
+        lib.style.display = 'none'
       })
-
-    const hint = document.createElement('div')
-    hint.className = 'rp-hint'
-    hint.textContent = t('library.hint')
-    libraryPage.appendChild(hint)
   }
 
   /* --- Queue -------------------------------------------------------------- */

@@ -21,9 +21,12 @@ check('every film has a link', (catalogue?.films ?? []).every((f) => /^https?:/.
 
 // A film nobody can fetch is a poster with nothing behind it.
 const first = catalogue.films[0]
-const head = await fetch(first.src, { method: 'HEAD' })
-check('the first film really is there', head.ok && /video\//.test(head.headers.get('content-type') || ''), `${head.status} ${head.headers.get('content-type')}`)
-check('it can be seeked', (head.headers.get('accept-ranges') || '') === 'bytes')
+// With an Origin, the way a browser asks. A CDN only answers the cross-origin
+// question when it is actually asked one.
+const head = await fetch(first.src, { method: 'HEAD', headers: { origin: ORIGIN } })
+const type = head.headers.get('content-type') || ''
+check('the first film really is there', head.ok && /video\/|mpegurl/i.test(type), `${head.status} ${type}`)
+check('a browser is allowed to fetch it', (head.headers.get('access-control-allow-origin') || '') === '*')
 
 const browser = await playwright.chromium.launch({
   headless: process.env.HEADLESS === '1',
@@ -52,11 +55,26 @@ const host = await visitor('ALFA', 1)
 const guest = await visitor('BETA', 1)
 
 await host.evaluate(() => window.__cinema.handles.room.open('library'))
-await host.waitForTimeout(1500)
-const posters = await host.locator('.rp-pop .rp-film').count()
-check('the programme is on the wall', posters >= 3, `${posters} posters`)
+await host.waitForTimeout(1800)
+const posters = await host.locator('.rp-pop .rp-slide').count()
+check('the programme is on the wall', posters >= 3, `${posters} on the rail`)
+const hero = await host.evaluate(() => ({
+  title: document.querySelector('.rp-hero h3')?.textContent ?? '',
+  facts: document.querySelector('.rp-hero-facts')?.textContent ?? '',
+  art: !!document.querySelector('.rp-hero-bg')?.style.backgroundImage,
+}))
+check('the featured film is named', hero.title.length > 2, hero.title)
+check('it says how long and by whom', /\d/.test(hero.facts) && hero.facts.length > 6, hero.facts)
+check('and it has a poster behind it', hero.art)
 
-await host.locator('.rp-pop .rp-film').first().click()
+// Picking from the rail promotes, it does not start: nobody should change the
+// film for a whole hall by brushing past a thumbnail.
+await host.locator('.rp-pop .rp-slide').nth(1).click()
+await host.waitForTimeout(400)
+const promoted = await host.evaluate(() => document.querySelector('.rp-hero h3')?.textContent ?? '')
+check('the rail promotes rather than plays', promoted !== hero.title, `${hero.title} -> ${promoted}`)
+
+await host.locator('.rp-hero-play').click()
 check('the film starts for the one who picked it', !!(await poll(host, () => (window.__cinema.handles.media.currentTime || 0) > 1)))
 check('and for everybody else in the hall', !!(await poll(guest, () => (window.__cinema.handles.media.currentTime || 0) > 1)))
 check(
