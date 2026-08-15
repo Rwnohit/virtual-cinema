@@ -38,6 +38,13 @@ function toFilm(item) {
   if (!media) return null
   return {
     id: item.publication_id || item.project_id,
+    /**
+     * The one grouping in the feed that is about the work rather than about
+     * the site. `categories` turned out to be housekeeping - "banner",
+     * "spotlight" - and `tags` are free text with a long thin tail, three
+     * films each. `type` covers all of them and means something to a viewer.
+     */
+    kind: item.type || null,
     title: (item.name || '').trim() || 'Untitled',
     description: (item.description || '').trim().slice(0, 400) || null,
     // The poster is the film's own cover where there is one, and a frame of it

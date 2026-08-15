@@ -198,7 +198,17 @@ export const CSS = `
   scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent;}
 .rp-slide{appearance:none;border:0;background:none;padding:0;cursor:pointer;
   color:#f2f2f4;font:inherit;text-align:left;}
+.rp-find{display:flex;gap:9px;align-items:center;margin:0 0 9px;}
+.rp-find input{flex:1;min-width:0;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);border-radius:999px;color:#f2f2f4;
+  padding:9px 15px;font:inherit;font-size:13px;}
+.rp-find input:focus{outline:none;border-color:var(--lime);background:rgba(255,255,255,.1);}
+.rp-find input::placeholder{color:rgba(242,242,244,.35);}
 .rp-filters{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin:0 0 10px;}
+.rp-sep{width:1px;height:18px;background:rgba(255,255,255,.14);margin:0 3px;}
+/* Nothing matched. Says so where the films would have been, not in a corner. */
+.rp-nohits{padding:26px 8px;text-align:center;color:rgba(242,242,244,.45);font-size:13px;
+  grid-column:1/-1;}
 .rp-filter{appearance:none;border:1px solid rgba(255,255,255,.14);background:transparent;
   color:rgba(242,242,244,.6);border-radius:999px;padding:6px 13px;font:500 12px inherit;
   cursor:pointer;transition:color .16s ease,border-color .16s ease,background .16s ease;}

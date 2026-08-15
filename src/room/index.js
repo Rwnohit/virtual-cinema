@@ -1178,6 +1178,10 @@ export function createRoom(context = {}) {
           </div>
         </div>
       </div>
+      <div class="rp-find">
+        <input type="search" data-role="find" autocomplete="off" spellcheck="false">
+        <span class="rp-count" data-role="count"></span>
+      </div>
       <div class="rp-filters" data-role="filters"></div>
       <div class="rp-rail" data-role="rail"></div>
     `
@@ -1205,7 +1209,11 @@ export function createRoom(context = {}) {
       if (!hold) return
       const playing = !!media.isPlaying
       hold.textContent = playing ? `⏸  ${t('library.hold')}` : `▶  ${t('library.resume')}`
-      hold.hidden = !media.hasSource
+      // Only once there is a screening to interrupt. `hasSource` is true the
+      // moment an element has been handed a film, which is a beat before there
+      // is anything to resume - and a "Resume" button over an empty screen is
+      // an offer the room cannot keep.
+      hold.hidden = !(media.hasSource && media.duration > 0)
     }
     libraryRefresh = refreshHold
 
@@ -1283,6 +1291,19 @@ export function createRoom(context = {}) {
       { key: 'long', label: 'library.byLength', sort: (a, b) => (b.seconds || 0) - (a.seconds || 0) },
     ]
 
+    /**
+     * The kinds the feed actually distinguishes, and the only grouping in it
+     * that is about the work rather than about their site. Anything that is
+     * not a film or a series lands in "the rest" rather than inventing a name
+     * for it.
+     */
+    const KINDS = [
+      { key: '', label: 'library.allKinds', has: () => true },
+      { key: 'film', label: 'library.films2', has: (f) => f.kind === 'film' },
+      { key: 'series', label: 'library.series', has: (f) => f.kind === 'series' },
+      { key: 'other', label: 'library.other', has: (f) => f.kind !== 'film' && f.kind !== 'series' },
+    ]
+
     fetch('library.json', { cache: 'no-store' })
       .then((response) => (response.ok ? response.json() : null))
       .then((data) => {
@@ -1298,9 +1319,41 @@ export function createRoom(context = {}) {
         const rail = el('rail')
         const filters = el('filters')
 
-        function draw(order) {
+        /** What the viewer has narrowed the programme down to. */
+        const view = { order: ORDERS[0], kind: KINDS[0], query: '' }
+
+        /**
+         * Search across the three things a person remembers about a film: what
+         * it was called, who made it, and roughly what it was about. Accents
+         * are stripped both sides, so "oneiric" finds "ONEIRIC" and a Greek
+         * viewer typing without accents still gets there.
+         */
+        const plain = (text) =>
+          String(text ?? '')
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[̀-ͯ]/g, '')
+
+        function matches(film) {
+          if (!view.kind.has(film)) return false
+          if (!view.query) return true
+          const hay = plain(`${film.title} ${film.by ?? ''} ${film.description ?? ''}`)
+          return view.query.split(/\s+/).every((word) => hay.includes(word))
+        }
+
+        function draw() {
+          const order = view.order
           rail.innerHTML = ''
-          for (const film of [...films].sort(order.sort)) {
+          const showing = [...films].filter(matches).sort(order.sort)
+          el('count').textContent = `${showing.length} ${t('library.films')}`
+          if (!showing.length) {
+            const none = document.createElement('div')
+            none.className = 'rp-nohits'
+            none.textContent = t('library.noHits')
+            rail.appendChild(none)
+            return
+          }
+          for (const film of showing) {
             const slide = document.createElement('button')
             slide.type = 'button'
             slide.className = `rp-slide${film === featured ? ' is-on' : ''}`
@@ -1324,25 +1377,44 @@ export function createRoom(context = {}) {
           }
         }
 
-        ORDERS.forEach((order, index) => {
-          const chip = document.createElement('button')
-          chip.type = 'button'
-          chip.className = `rp-filter${index === 0 ? ' is-on' : ''}`
-          chip.textContent = t(order.label)
-          chip.addEventListener('click', () => {
-            sound?.click?.()
-            for (const other of filters.querySelectorAll('.rp-filter')) other.classList.remove('is-on')
-            chip.classList.add('is-on')
-            draw(order)
+        /** One row of chips where exactly one is on at a time. */
+        function chipRow(list, current, pick) {
+          const made = []
+          list.forEach((entry, index) => {
+            const chip = document.createElement('button')
+            chip.type = 'button'
+            chip.className = `rp-filter${index === 0 ? ' is-on' : ''}`
+            chip.textContent = t(entry.label)
+            chip.addEventListener('click', () => {
+              sound?.click?.()
+              for (const other of made) other.classList.remove('is-on')
+              chip.classList.add('is-on')
+              pick(entry)
+              draw()
+            })
+            made.push(chip)
+            filters.appendChild(chip)
           })
-          filters.appendChild(chip)
-        })
-        const count = document.createElement('span')
-        count.className = 'rp-count'
-        count.textContent = `${films.length} ${t('library.films')}`
-        filters.appendChild(count)
+        }
 
-        draw(ORDERS[0])
+        chipRow(KINDS, view.kind, (kind) => {
+          view.kind = kind
+        })
+        const sep = document.createElement('span')
+        sep.className = 'rp-sep'
+        filters.appendChild(sep)
+        chipRow(ORDERS, view.order, (order) => {
+          view.order = order
+        })
+
+        const find = el('find')
+        find.placeholder = t('library.search')
+        find.addEventListener('input', () => {
+          view.query = plain(find.value).trim()
+          draw()
+        })
+
+        draw()
       })
       .catch(() => {
         status.textContent = t('library.empty')

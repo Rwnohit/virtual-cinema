@@ -2,6 +2,17 @@
 
 Every version, in plain words. Newest at the top.
 
+## 0.24.0 · 15 August 2026
+
+- **Search.** Type a title, a creator or a bit of the plot. Accents are
+  ignored on both sides, so it finds things whichever way you type them.
+- **Categories, and they are the feed's own**: Films (58), Series (10), the
+  rest (20). Their `categories` field turned out to be housekeeping - "banner",
+  "spotlight" - and their tags are three films each, so neither would have
+  been a category anyone could use.
+- 🐛 A "Resume" button was offering itself over an empty screen, before there
+  was any screening to resume.
+
 ## 0.23.0 · 15 August 2026
 
 - **All 88 films, not 36.** The builder stopped early and was quietly hiding

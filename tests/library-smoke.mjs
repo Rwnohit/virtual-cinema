@@ -74,11 +74,22 @@ await host.waitForTimeout(400)
 const promoted = await host.evaluate(() => document.querySelector('.rp-hero h3')?.textContent ?? '')
 check('the rail promotes rather than plays', promoted !== hero.title, `${hero.title} -> ${promoted}`)
 
-// Filters reorder the grid rather than reloading it.
+// The chip row runs: All, Films, Series, The rest | most watched, most liked,
+// feature length. Named here rather than counted at each use, because the
+// first version of this counted wrong and quietly tested nothing.
+const KIND_ALL = 0
+const KIND_SERIES = 2
+const SORT_VIEWS = 4
+const SORT_LENGTH = 6
+const chip = (n) => host.locator('.rp-pop .rp-filter').nth(n)
+
+// Sorting reorders the grid rather than reloading it.
 const firstByViews = await host.evaluate(() => document.querySelector('.rp-slide b')?.textContent ?? '')
-await host.locator('.rp-pop .rp-filter').nth(2).click()
+await chip(SORT_LENGTH).click()
 await host.waitForTimeout(500)
 const firstByLength = await host.evaluate(() => document.querySelector('.rp-slide b')?.textContent ?? '')
+await chip(SORT_VIEWS).click()
+await host.waitForTimeout(300)
 check('the filters reorder the programme', firstByViews !== firstByLength, `${firstByViews} -> ${firstByLength}`)
 check(
   'the grid scrolls down rather than sideways',
@@ -87,6 +98,26 @@ check(
     return !!rail && rail.scrollHeight > rail.clientHeight + 40
   }),
 )
+
+// Categories narrow the programme, search narrows it further.
+const all = await host.evaluate(() => document.querySelectorAll('.rp-slide').length)
+await chip(KIND_SERIES).click()
+await host.waitForTimeout(400)
+const series = await host.evaluate(() => document.querySelectorAll('.rp-slide').length)
+check('the categories narrow it down', series > 0 && series < all, `${all} -> ${series} series`)
+await chip(KIND_ALL).click()
+await host.waitForTimeout(300)
+
+await host.fill('.rp-find input', 'hell')
+await host.waitForTimeout(500)
+const found = await host.evaluate(() => [...document.querySelectorAll('.rp-slide b')].map((b) => b.textContent))
+check('search finds a film by name', found.some((n) => /hell/i.test(n)) && found.length < all, `${found.length}: ${found.slice(0, 3)}`)
+
+await host.fill('.rp-find input', 'zzzzqq')
+await host.waitForTimeout(500)
+check('and says so when nothing matches', await host.evaluate(() => !!document.querySelector('.rp-nohits')))
+await host.fill('.rp-find input', '')
+await host.waitForTimeout(400)
 
 await host.locator('.rp-hero-play').click()
 // Pressing start puts the programme away.
