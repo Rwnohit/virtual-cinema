@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Virtual Cinema · τρεις προτάσεις για το μενού</title>
+<title>Virtual Cinema · three proposals for the menu</title>
 <style>
   :root{
     --ink:#f2f2f4; --dim:rgba(242,242,244,.62); --faint:rgba(242,242,244,.4);
@@ -57,7 +57,7 @@
     background:var(--ink);border:0;cursor:pointer;}
   .grp{font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--faint);margin-top:2px;}
 
-  /* --------------------------------------------------------- Α · Κονσόλα */
+  /* --------------------------------------------------------- A · Console */
   .a-panel{position:absolute;right:22px;top:22px;width:292px;max-height:calc(100% - 44px);
     display:flex;flex-direction:column;background:var(--glass);border:1px solid var(--line);
     border-radius:14px;backdrop-filter:blur(16px);box-shadow:0 24px 60px rgba(0,0,0,.55);overflow:hidden;}
@@ -77,7 +77,7 @@
   .a-foot{padding:9px 13px;border-top:1px solid var(--line-soft);display:flex;gap:6px;align-items:center;}
   .a-foot .k{font-size:11px;color:var(--faint);flex:1;}
 
-  /* ------------------------------------------------------- Β · Καρτέλες */
+  /* ------------------------------------------------------- B · Tabs */
   .b-panel{position:absolute;right:22px;top:22px;width:352px;height:392px;display:flex;
     background:var(--glass);border:1px solid var(--line);border-radius:16px;
     backdrop-filter:blur(16px);box-shadow:0 24px 60px rgba(0,0,0,.55);overflow:hidden;}
@@ -96,7 +96,7 @@
   .b-page{flex:1;overflow-y:auto;padding:12px 15px;display:none;flex-direction:column;gap:10px;}
   .b-page.on{display:flex;}
 
-  /* ------------------------------------------------------- Γ · Κονσόλα κάτω */
+  /* ------------------------------------------------------- C · Console at the bottom */
   .c-bar{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);
     display:flex;align-items:center;gap:4px;padding:6px;background:var(--glass);
     border:1px solid var(--line);border-radius:15px;backdrop-filter:blur(16px);
@@ -124,182 +124,182 @@
 <body>
 
 <header>
-  <h1>Τρεις προτάσεις για το μενού</h1>
-  <p>Ίδιες ακριβώς ρυθμίσεις και στις τρεις, αλλαγή μόνο στην οργάνωση. Πάτα τις καρτέλες
-     και τα κουμπιά, δουλεύουν. Διάλεξε μία και τη φτιάχνω κανονικά μέσα στην εφαρμογή.</p>
+  <h1>Three proposals for the menu</h1>
+  <p>Exactly the same settings in all three, only the organisation changes. Press the tabs
+     and the buttons, they work. Pick one and it gets built properly inside the app.</p>
 </header>
 
-<!-- =============================================================== Α ==== -->
+<!-- =============================================================== A ==== -->
 <section>
   <div class="caption">
-    <span class="tag">Α</span>
-    <h2>Κονσόλα</h2>
-    <p>Όλα σε μία στήλη, σε φακέλους που ανοιγοκλείνουν.</p>
+    <span class="tag">A</span>
+    <h2>Console</h2>
+    <p>Everything in one column, in folders that open and close.</p>
   </div>
 
   <div class="stage">
     <div class="a-panel">
-      <div class="a-head"><span class="dot"></span><b>Αίθουσα</b><span class="mini">v0.6.0</span></div>
+      <div class="a-head"><span class="dot"></span><b>The room</b><span class="mini">v0.6.0</span></div>
       <div class="a-scroll">
 
         <details class="a-fold" open>
-          <summary>Χώρος</summary>
+          <summary>Place</summary>
           <div class="body">
             <div class="row">
-              <button class="chip on">Σινεμά</button>
-              <button class="chip">Σπίτι τρόμου</button>
-              <button class="chip">Ζεστό σαλόνι</button>
+              <button class="chip on">Cinema</button>
+              <button class="chip">Horror house</button>
+              <button class="chip">Cosy room</button>
             </div>
-            <div class="fld"><div class="lg"><span>Ένταση τρόμου</span><span class="v">35%</span></div><input type="range" value="35"></div>
-            <div class="fld"><div class="lg"><span>Φωτιά στο τζάκι</span><span class="v">75%</span></div><input type="range" value="75"></div>
+            <div class="fld"><div class="lg"><span>How frightening</span><span class="v">35%</span></div><input type="range" value="35"></div>
+            <div class="fld"><div class="lg"><span>The fire</span><span class="v">75%</span></div><input type="range" value="75"></div>
           </div>
         </details>
 
         <details class="a-fold" open>
-          <summary>Οθόνη</summary>
+          <summary>Screen</summary>
           <div class="body">
             <div class="row">
-              <button class="chip on">Πανοραμική<small>2.39:1</small></button>
-              <button class="chip">Σινεμά<small>1.85:1</small></button>
-              <button class="chip">Τηλεόραση<small>16:9</small></button>
+              <button class="chip on">Scope<small>2.39:1</small></button>
+              <button class="chip">Cinema<small>1.85:1</small></button>
+              <button class="chip">Widescreen<small>16:9</small></button>
             </div>
-            <div class="fld"><div class="lg"><span>Κουρτίνες</span><span class="v">Ανοιχτές</span></div><input type="range" value="0"></div>
-            <div class="grp">Εικόνα</div>
+            <div class="fld"><div class="lg"><span>Curtains</span><span class="v">Open</span></div><input type="range" value="0"></div>
+            <div class="grp">Picture</div>
             <div class="row">
-              <button class="chip on">Κανονικό</button><button class="chip">Φωτεινό</button>
-              <button class="chip">Ζεστό</button><button class="chip">Ψυχρό</button>
+              <button class="chip on">Normal</button><button class="chip">Brighter</button>
+              <button class="chip">Warm</button><button class="chip">Cool</button>
             </div>
-            <div class="fld"><div class="lg"><span>Φωτεινότητα</span><span class="v">1.00×</span></div><input type="range" value="50"></div>
-            <div class="fld"><div class="lg"><span>Λάμψη</span><span class="v">0.40×</span></div><input type="range" value="27"></div>
+            <div class="fld"><div class="lg"><span>Brightness</span><span class="v">1.00×</span></div><input type="range" value="50"></div>
+            <div class="fld"><div class="lg"><span>Glow</span><span class="v">0.40×</span></div><input type="range" value="27"></div>
           </div>
         </details>
 
         <details class="a-fold">
-          <summary>Φώτα</summary>
+          <summary>Lights</summary>
           <div class="body">
             <div class="row">
-              <button class="chip on">Προβολή</button><button class="chip">Ημίφως</button><button class="chip">Διάλειμμα</button>
+              <button class="chip on">Showtime</button><button class="chip">Half lights</button><button class="chip">Interval</button>
             </div>
-            <div class="fld"><div class="lg"><span>Φώτα αίθουσας</span><span class="v">0%</span></div><input type="range" value="0"></div>
-            <div class="fld"><div class="lg"><span>Λάμψη οθόνης</span><span class="v">100%</span></div><input type="range" value="50"></div>
+            <div class="fld"><div class="lg"><span>House lights</span><span class="v">0%</span></div><input type="range" value="0"></div>
+            <div class="fld"><div class="lg"><span>Screen glow</span><span class="v">100%</span></div><input type="range" value="50"></div>
           </div>
         </details>
 
         <details class="a-fold">
-          <summary>Ήχος</summary>
+          <summary>Sound</summary>
           <div class="body">
-            <div class="row"><button class="chip on">Σινεμά</button><button class="chip">IMAX</button><button class="chip">Σαλόνι</button></div>
-            <div class="fld"><div class="lg"><span>Μπάσα</span><span class="v">60%</span></div><input type="range" value="60"></div>
-            <div class="fld"><div class="lg"><span>Κόσμος</span><span class="v">40%</span></div><input type="range" value="40"></div>
+            <div class="row"><button class="chip on">Cinema</button><button class="chip">IMAX</button><button class="chip">Living room</button></div>
+            <div class="fld"><div class="lg"><span>Bass</span><span class="v">60%</span></div><input type="range" value="60"></div>
+            <div class="fld"><div class="lg"><span>Crowd</span><span class="v">40%</span></div><input type="range" value="40"></div>
           </div>
         </details>
 
       </div>
-      <div class="a-foot"><span class="k">L πάνελ · V θέα · C κάδρο</span><button class="chip" style="flex:0 0 auto;padding:5px 10px;">Τι άλλαξε</button></div>
+      <div class="a-foot"><span class="k">L panel · V view · C frame</span><button class="chip" style="flex:0 0 auto;padding:5px 10px;">What changed</button></div>
     </div>
   </div>
 
-  <p class="note"><b>Γιατί αυτό:</b> ό,τι θέλεις είναι πάντα ένα κλικ μακριά και βλέπεις πολλά
-     μαζί. <b>Το κόστος:</b> με ανοιχτούς φακέλους ξανακυλάει, που είναι ακριβώς το σημερινό
-     παράπονο. Καλό αν σου αρέσει να πειράζεις πολλά ταυτόχρονα.</p>
+  <p class="note"><b>Why this:</b> whatever you want is always one click away and you see a lot
+     at once. <b>The cost:</b> with the folders open it scrolls again, which is exactly the current
+     complaint. Good if you like changing several things at once.</p>
 </section>
 
-<!-- =============================================================== Β ==== -->
+<!-- =============================================================== B ==== -->
 <section>
   <div class="caption">
-    <span class="tag">Β</span>
-    <h2>Καρτέλες</h2>
-    <p>Μία σελίδα τη φορά. Σταθερό ύψος, τίποτα δεν κυλάει.</p>
+    <span class="tag">B</span>
+    <h2>Tabs</h2>
+    <p>One page at a time. Fixed height, nothing scrolls.</p>
   </div>
 
   <div class="stage">
     <div class="b-panel">
       <nav class="b-rail">
-        <button class="b-tab on" data-p="1"><span class="ic">🏛</span>Χώρος</button>
-        <button class="b-tab" data-p="2"><span class="ic">🖥</span>Οθόνη</button>
-        <button class="b-tab" data-p="3"><span class="ic">💡</span>Φώτα</button>
-        <button class="b-tab" data-p="4"><span class="ic">🔊</span>Ήχος</button>
-        <button class="b-tab" data-p="5"><span class="ic">👁</span>Θέα</button>
+        <button class="b-tab on" data-p="1"><span class="ic">🏛</span>Place</button>
+        <button class="b-tab" data-p="2"><span class="ic">🖥</span>Screen</button>
+        <button class="b-tab" data-p="3"><span class="ic">💡</span>Lights</button>
+        <button class="b-tab" data-p="4"><span class="ic">🔊</span>Sound</button>
+        <button class="b-tab" data-p="5"><span class="ic">👁</span>View</button>
       </nav>
       <div class="b-body">
-        <div class="b-title"><span id="b-name">Χώρος</span><span>v0.6.0</span></div>
+        <div class="b-title"><span id="b-name">Place</span><span>v0.6.0</span></div>
 
         <div class="b-page on" data-p="1">
           <div class="row">
-            <button class="chip on">Σινεμά</button><button class="chip">Σπίτι τρόμου</button><button class="chip">Ζεστό σαλόνι</button>
+            <button class="chip on">Cinema</button><button class="chip">Horror house</button><button class="chip">Cosy room</button>
           </div>
-          <div class="fld"><div class="lg"><span>Ένταση τρόμου</span><span class="v">35%</span></div><input type="range" value="35"></div>
-          <div class="fld"><div class="lg"><span>Φωτιά στο τζάκι</span><span class="v">75%</span></div><input type="range" value="75"></div>
-          <div class="fld"><div class="lg"><span>Ήχοι δωματίου</span><span class="v">85%</span></div><input type="range" value="85"></div>
-          <div class="fld"><div class="lg"><span>Τηλεόραση</span><span class="v">1.00×</span></div><input type="range" value="50"></div>
+          <div class="fld"><div class="lg"><span>How frightening</span><span class="v">35%</span></div><input type="range" value="35"></div>
+          <div class="fld"><div class="lg"><span>The fire</span><span class="v">75%</span></div><input type="range" value="75"></div>
+          <div class="fld"><div class="lg"><span>Room sounds</span><span class="v">85%</span></div><input type="range" value="85"></div>
+          <div class="fld"><div class="lg"><span>Widescreen</span><span class="v">1.00×</span></div><input type="range" value="50"></div>
         </div>
 
         <div class="b-page" data-p="2">
           <div class="row">
-            <button class="chip on">Πανοραμική<small>2.39:1</small></button><button class="chip">Σινεμά<small>1.85:1</small></button><button class="chip">Τηλεόραση<small>16:9</small></button>
+            <button class="chip on">Scope<small>2.39:1</small></button><button class="chip">Cinema<small>1.85:1</small></button><button class="chip">Widescreen<small>16:9</small></button>
           </div>
-          <div class="fld"><div class="lg"><span>Κουρτίνες</span><span class="v">Ανοιχτές</span></div><input type="range" value="0"></div>
-          <div class="grp">Εικόνα</div>
-          <div class="row"><button class="chip on">Κανονικό</button><button class="chip">Φωτεινό</button><button class="chip">Ζεστό</button><button class="chip">Ψυχρό</button></div>
-          <div class="fld"><div class="lg"><span>Φωτεινότητα</span><span class="v">1.00×</span></div><input type="range" value="50"></div>
-          <div class="fld"><div class="lg"><span>Αντίθεση</span><span class="v">1.00×</span></div><input type="range" value="50"></div>
-          <div class="fld"><div class="lg"><span>Λάμψη</span><span class="v">0.40×</span></div><input type="range" value="27"></div>
+          <div class="fld"><div class="lg"><span>Curtains</span><span class="v">Open</span></div><input type="range" value="0"></div>
+          <div class="grp">Picture</div>
+          <div class="row"><button class="chip on">Normal</button><button class="chip">Brighter</button><button class="chip">Warm</button><button class="chip">Cool</button></div>
+          <div class="fld"><div class="lg"><span>Brightness</span><span class="v">1.00×</span></div><input type="range" value="50"></div>
+          <div class="fld"><div class="lg"><span>Contrast</span><span class="v">1.00×</span></div><input type="range" value="50"></div>
+          <div class="fld"><div class="lg"><span>Glow</span><span class="v">0.40×</span></div><input type="range" value="27"></div>
         </div>
 
         <div class="b-page" data-p="3">
-          <div class="row"><button class="chip on">Προβολή</button><button class="chip">Ημίφως</button><button class="chip">Διάλειμμα</button></div>
-          <div class="fld"><div class="lg"><span>Φώτα αίθουσας</span><span class="v">0%</span></div><input type="range" value="0"></div>
-          <div class="fld"><div class="lg"><span>Λάμψη οθόνης</span><span class="v">100%</span></div><input type="range" value="50"></div>
-          <div class="fld"><div class="lg"><span>Ζεστό ή ψυχρό</span><span class="v">Ζεστό</span></div><input type="range" value="0"></div>
-          <div class="fld"><div class="lg"><span>Φωτάκια διαδρόμου</span><span class="v">Κλειστά</span></div><input type="range" value="0"></div>
+          <div class="row"><button class="chip on">Showtime</button><button class="chip">Half lights</button><button class="chip">Interval</button></div>
+          <div class="fld"><div class="lg"><span>House lights</span><span class="v">0%</span></div><input type="range" value="0"></div>
+          <div class="fld"><div class="lg"><span>Screen glow</span><span class="v">100%</span></div><input type="range" value="50"></div>
+          <div class="fld"><div class="lg"><span>Warm or cool</span><span class="v">Warm</span></div><input type="range" value="0"></div>
+          <div class="fld"><div class="lg"><span>Aisle lights</span><span class="v">Closed</span></div><input type="range" value="0"></div>
         </div>
 
         <div class="b-page" data-p="4">
-          <div class="row"><button class="chip on">Σινεμά</button><button class="chip">IMAX</button><button class="chip">Σαλόνι</button></div>
-          <div class="grp">Ταινία</div>
-          <div class="fld"><div class="lg"><span>Ένταση</span><span class="v">85%</span></div><input type="range" value="85"></div>
-          <div class="fld"><div class="lg"><span>Μπάσα</span><span class="v">60%</span></div><input type="range" value="60"></div>
-          <div class="grp">Κοινό</div>
-          <div class="fld"><div class="lg"><span>Πόσο γεμάτη</span><span class="v">40%</span></div><input type="range" value="40"></div>
+          <div class="row"><button class="chip on">Cinema</button><button class="chip">IMAX</button><button class="chip">Living room</button></div>
+          <div class="grp">Film</div>
+          <div class="fld"><div class="lg"><span>Level</span><span class="v">85%</span></div><input type="range" value="85"></div>
+          <div class="fld"><div class="lg"><span>Bass</span><span class="v">60%</span></div><input type="range" value="60"></div>
+          <div class="grp">Audience</div>
+          <div class="fld"><div class="lg"><span>How full</span><span class="v">40%</span></div><input type="range" value="40"></div>
         </div>
 
         <div class="b-page" data-p="5">
-          <div class="row"><button class="chip on">Πρώτο πρόσωπο</button><button class="chip">Τελευταία σειρά</button></div>
-          <div class="row" style="margin-top:6px"><button class="chip">Θάλαμος</button><button class="chip">Πλάγια</button></div>
-          <div class="row" style="margin-top:6px"><button class="chip">Μπροστά</button><button class="chip">Πανοραμική</button></div>
-          <div class="grp">Κάδρο</div>
-          <div class="row"><button class="chip">Κινηματογραφικό κάδρο · C</button></div>
+          <div class="row"><button class="chip on">First person</button><button class="chip">Back row</button></div>
+          <div class="row" style="margin-top:6px"><button class="chip">Booth</button><button class="chip">From the side</button></div>
+          <div class="row" style="margin-top:6px"><button class="chip">In front</button><button class="chip">Scope</button></div>
+          <div class="grp">Frame</div>
+          <div class="row"><button class="chip">Cinematic frame · C</button></div>
         </div>
       </div>
     </div>
   </div>
 
-  <p class="note"><b>Γιατί αυτό:</b> ποτέ δεν κυλάει και πάντα ξέρεις σε τι κοιτάς. Το πάνελ
-     έχει σταθερό μέγεθος όσο κι αν μεγαλώσει η εφαρμογή. <b>Το κόστος:</b> για να αλλάξεις
-     φως και ήχο μαζί, θέλει δύο κλικ.</p>
+  <p class="note"><b>Why this:</b> it never scrolls and you always know what you are looking at. The panel
+     keeps its size however much the app grows. <b>The cost:</b> to change
+     light and sound together takes two clicks.</p>
 </section>
 
-<!-- =============================================================== Γ ==== -->
+<!-- =============================================================== C ==== -->
 <section>
   <div class="caption">
-    <span class="tag">Γ</span>
-    <h2>Κονσόλα κάτω</h2>
-    <p>Μια μπάρα σαν τηλεχειριστήριο. Η εικόνα μένει ελεύθερη.</p>
+    <span class="tag">C</span>
+    <h2>Console at the bottom</h2>
+    <p>A bar like a remote control. The picture is left alone.</p>
   </div>
 
   <div class="stage">
     <div class="c-pop on" id="c-pop">
-      <h4 id="c-pop-title">Φώτα</h4>
+      <h4 id="c-pop-title">Lights</h4>
       <div class="c-cols">
-        <div class="fld"><div class="lg"><span>Φώτα αίθουσας</span><span class="v">0%</span></div><input type="range" value="0"></div>
-        <div class="fld"><div class="lg"><span>Λάμψη οθόνης</span><span class="v">100%</span></div><input type="range" value="50"></div>
-        <div class="fld"><div class="lg"><span>Ζεστό ή ψυχρό</span><span class="v">Ζεστό</span></div><input type="range" value="0"></div>
-        <div class="fld"><div class="lg"><span>Φωτάκια διαδρόμου</span><span class="v">Κλειστά</span></div><input type="range" value="0"></div>
-        <div class="fld"><div class="lg"><span>Πινακίδες εξόδου</span><span class="v">70%</span></div><input type="range" value="70"></div>
-        <div class="fld"><div class="lg"><span>Κουρτίνες</span><span class="v">Ανοιχτές</span></div><input type="range" value="0"></div>
+        <div class="fld"><div class="lg"><span>House lights</span><span class="v">0%</span></div><input type="range" value="0"></div>
+        <div class="fld"><div class="lg"><span>Screen glow</span><span class="v">100%</span></div><input type="range" value="50"></div>
+        <div class="fld"><div class="lg"><span>Warm or cool</span><span class="v">Warm</span></div><input type="range" value="0"></div>
+        <div class="fld"><div class="lg"><span>Aisle lights</span><span class="v">Closed</span></div><input type="range" value="0"></div>
+        <div class="fld"><div class="lg"><span>Exit signs</span><span class="v">70%</span></div><input type="range" value="70"></div>
+        <div class="fld"><div class="lg"><span>Curtains</span><span class="v">Open</span></div><input type="range" value="0"></div>
       </div>
       <div class="row" style="margin-top:12px">
-        <button class="chip on">Προβολή</button><button class="chip">Ημίφως</button><button class="chip">Διάλειμμα</button>
+        <button class="chip on">Showtime</button><button class="chip">Half lights</button><button class="chip">Interval</button>
       </div>
     </div>
 
@@ -309,23 +309,23 @@
         <input value="1:21:04"><input type="range" class="c-track" value="46"><span style="font-size:12px;color:var(--dim)">2:54:10</span>
       </div>
       <span class="c-sep"></span>
-      <button class="c-btn" data-pop="Χώρος"><span class="ic">🏛</span>Χώρος</button>
-      <button class="c-btn" data-pop="Οθόνη"><span class="ic">🖥</span>Οθόνη</button>
-      <button class="c-btn on" data-pop="Φώτα"><span class="ic">💡</span>Φώτα</button>
-      <button class="c-btn" data-pop="Ήχος"><span class="ic">🔊</span>Ήχος</button>
-      <button class="c-btn" data-pop="Θέα"><span class="ic">👁</span>Θέα</button>
+      <button class="c-btn" data-pop="Place"><span class="ic">🏛</span>Place</button>
+      <button class="c-btn" data-pop="Screen"><span class="ic">🖥</span>Screen</button>
+      <button class="c-btn on" data-pop="Lights"><span class="ic">💡</span>Lights</button>
+      <button class="c-btn" data-pop="Sound"><span class="ic">🔊</span>Sound</button>
+      <button class="c-btn" data-pop="View"><span class="ic">👁</span>View</button>
     </div>
   </div>
 
-  <p class="note"><b>Γιατί αυτό:</b> η ώρα και το play είναι πάντα εκεί, και όσο δεν αγγίζεις
-     τίποτα η οθόνη είναι εντελώς καθαρή. Ταιριάζει με το «θέλω να γράφω την ώρα».
-     <b>Το κόστος:</b> τα πάνελ ανοίγουν πάνω από την εικόνα, οπότε κρύβουν το κάτω μέρος της
-     ταινίας όσο τα κοιτάς.</p>
+  <p class="note"><b>Why this:</b> the time and play are always there, and as long as you touch
+     nothing the screen is completely clean. It suits wanting to type the time.
+     <b>The cost:</b> the panels open over the picture, so they hide the bottom of the
+     film while you are looking at them.</p>
 </section>
 
 <script>
-  // Β: the tabs actually switch, so the option can be judged by using it.
-  const names = { 1: 'Χώρος', 2: 'Οθόνη', 3: 'Φώτα', 4: 'Ήχος', 5: 'Θέα' }
+  // B: the tabs actually switch, so the option can be judged by using it.
+  const names = { 1: 'Place', 2: 'Screen', 3: 'Lights', 4: 'Sound', 5: 'View' }
   document.querySelectorAll('.b-tab').forEach((tab) => {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.b-tab').forEach((t) => t.classList.toggle('on', t === tab))
@@ -334,7 +334,7 @@
     })
   })
 
-  // Γ: the bar opens and closes its popover.
+  // C: the bar opens and closes its popover.
   document.querySelectorAll('.c-btn[data-pop]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const pop = document.getElementById('c-pop')

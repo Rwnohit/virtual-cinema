@@ -31,37 +31,37 @@ function exportsAnyOf(source, names) {
 }
 
 for (const [name, candidates] of Object.entries(MODULE_ENTRIES)) {
-  test(`module "${name}" εκθέτει factory που καλεί το main.js`, (t) => {
+  test(`module "${name}" exposes the factory main.js calls`, (t) => {
     const entry = firstExisting(candidates)
     if (!entry) {
-      t.skip(`δεν υπάρχει ακόμη (${candidates.join(' ή ')})`)
+      t.skip(`not there yet (${candidates.join(' or ')})`)
       return
     }
     const source = read(entry)
     assert.ok(
       exportsAnyOf(source, FACTORIES[name]),
-      `${entry}: χρειάζεται export ${FACTORIES[name].join(' / ')} ή default`
+      `${entry}: wants an export of ${FACTORIES[name].join(' / ')}, or a default`
     )
   })
 }
 
-test('η σκηνή ορίζει οθόνη και θέσεις', (t) => {
+test('the scene defines a screen and seats', (t) => {
   const entry = firstExisting(['src/scene/constants.js', 'src/scene/index.js', 'src/scene.js'])
   if (!entry) {
-    t.skip('δεν υπάρχει ακόμη το module της σκηνής')
+    t.skip('the scene module is not there yet')
     return
   }
   const source = read(entry)
-  assert.match(source, /SCREEN|screen/i, `${entry}: δεν βρέθηκε ορισμός οθόνης`)
-  assert.match(source, /SEAT|seat/i, `${entry}: δεν βρέθηκε ορισμός θέσεων`)
+  assert.match(source, /SCREEN|screen/i, `${entry}: no screen definition found`)
+  assert.match(source, /SEAT|seat/i, `${entry}: no seat definition found`)
 })
 
-test('το media module παίζει βίντεο σε texture', (t) => {
+test('the media module plays video into a texture', (t) => {
   const entry = firstExisting(MODULE_ENTRIES.media)
   if (!entry) {
-    t.skip('δεν υπάρχει ακόμη το module του βίντεο')
+    t.skip('the video module is not there yet')
     return
   }
   const source = read(entry)
-  assert.match(source, /VideoTexture|createElement\(['"]video['"]\)|<video/i, `${entry}: δεν βρέθηκε στοιχείο βίντεο`)
+  assert.match(source, /VideoTexture|createElement\(['"]video['"]\)|<video/i, `${entry}: no video element found`)
 })

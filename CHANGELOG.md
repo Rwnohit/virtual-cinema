@@ -18,6 +18,9 @@ Every version, in plain words. Newest at the top.
   person. On a home upload that means a few people, not a full hall. And
   **Netflix and Disney+ come out black**, which is the whole point of their
   protection.
+- 🐛 **Three things still came out in Greek for an English viewer**: the
+  captions of the ceremony, the names of the picture presets, and every message
+  about something not playing. All of them go through the language switch now.
 
 ## 0.19.0 · 15 August 2026
 

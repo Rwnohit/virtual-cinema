@@ -51,6 +51,10 @@ async function visitor(name, hall) {
   const page = await browser.newPage({ viewport: { width: 900, height: 700 } })
   page.on('pageerror', (e) => errors.push(`${name} PAGEERROR ${e.message}`))
   page.on('console', (m) => m.type() === 'error' && errors.push(`${name} ${m.text()}`))
+  // Pin the language, because the checks below read the room's own words back.
+  // Left to itself it follows the browser, and then the assertions depend on
+  // whatever locale the machine running the tests happens to have.
+  await page.addInitScript(() => window.localStorage.setItem('vc.lang', 'en'))
   await page.goto(ORIGIN, { waitUntil: 'domcontentloaded' })
   for (let i = 0; i < 80; i++) {
     if (await page.evaluate(() => window.__cinema?.ready === true)) break
@@ -152,7 +156,7 @@ check('the menu lists four halls', rooms.halls?.length === 4, JSON.stringify(roo
   await one.waitForTimeout(400)
   await one.evaluate(() => {
     const rows = [...document.querySelectorAll('.rp-pop .rp-page.is-on .rp-field')]
-    const row = rows.find((r) => /θεατ|seats/i.test(r.querySelector('.rp-name')?.textContent ?? ''))
+    const row = rows.find((r) => /seats/i.test(r.querySelector('.rp-name')?.textContent ?? ''))
     const input = row?.querySelector('input')
     if (!input) throw new Error('no audience slider on the View page')
     input.value = '0.5'
@@ -177,7 +181,7 @@ check('the menu lists four halls', rooms.halls?.length === 4, JSON.stringify(roo
   const solo = await visitor('EPSI', 'hall-4')
   await solo.setInputFiles('.ms-dock [data-role="file"]', 'public/sample.webm')
   const warned = await poll(solo, () => document.querySelector('.rp-notice.is-on')?.textContent?.trim() || '', null, 30)
-  check('a private film is called out', /μόνο εσ|only you/i.test(String(warned)), String(warned).slice(0, 40) || 'nothing')
+  check('a private film is called out', /only you/i.test(String(warned)), String(warned).slice(0, 40) || 'nothing')
   // Still there once the ceremony has had its say, which is what killed the
   // old one-and-a-half second flash.
   await solo.waitForTimeout(4000)

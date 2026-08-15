@@ -1,23 +1,23 @@
 /**
- * Browser smoke test: αίθουσα φορτώνει + η ταινία παίζει.
+ * Browser smoke test: the hall loads and the film plays.
  *
  *   npm run test:browser
  *
- * Σηκώνει vite + server, ανοίγει τη σελίδα με Playwright και ελέγχει ότι:
- *   1. το window.__cinema φτάνει σε ready χωρίς σφάλμα boot
- *   2. υπάρχει καμβάς με πραγματικές διαστάσεις (η σκηνή ζωγραφίστηκε)
- *   3. το βίντεο προχωράει (currentTime αυξάνεται)
- *   4. το W A S D μετακινεί και βγάζει βήματα
- *   5. τα φώτα της αίθουσας ανεβαίνουν και κατεβαίνουν
- *   6. οι ήχοι της αίθουσας βγάζουν πραγματικό σήμα
- *   7. η οθόνη αλλάζει και στα τρία μεγέθη
- *   8. το δεξί κλικ ανοίγει το δικό μας μενού
- *   9. τα links YouTube / Vimeo αναγνωρίζονται
- *  10. μπαίνεις στην αίθουσα χωρίς να βάλεις ταινία
- *  11. η ματιά δεν πηδάει και δεν κάνει τούμπα
- *  12. η ενημέρωση περιμένει να την πατήσεις
+ * Brings up vite and the server, opens the page with Playwright, and checks:
+ *   1. window.__cinema reaches ready with no boot error
+ *   2. there is a canvas with real dimensions (the scene drew)
+ *   3. the video advances (currentTime goes up)
+ *   4. W A S D moves you and makes footsteps
+ *   5. the house lights go up and come down
+ *   6. the room sounds produce a real signal
+ *   7. the screen changes through all three formats
+ *   8. right click opens our own menu
+ *   9. YouTube and Vimeo links are recognised
+ *  10. you can walk in without putting a film on
+ *  11. the look neither jumps nor flips over
+ *  12. the update waits to be pressed
  *
- * Χρειάζεται Playwright. Αν δεν είναι εγκατεστημένο, βγαίνει SKIPPED (exit 0):
+ * Wants Playwright. Without it, the run comes out SKIPPED (exit 0):
  *   npm i -D playwright && npx playwright install chromium
  */
 
@@ -37,8 +37,8 @@ let playwright
 try {
   playwright = await import('playwright')
 } catch {
-  console.log('SKIPPED: δεν βρέθηκε Playwright.')
-  console.log('Εγκατάσταση: npm i -D playwright && npx playwright install chromium')
+  console.log('SKIPPED: Playwright was not found.')
+  console.log('Install: npm i -D playwright && npx playwright install chromium')
   process.exit(0)
 }
 
@@ -50,18 +50,18 @@ const server = serverEntry
 
 let browser
 
-// ΤΑΒΑΝΙ ΖΩΗΣ. Ο headless browser ζωγραφίζει την αίθουσα με SwiftShader, δηλαδή
-// με τον επεξεργαστή: όσο ζει, τρώει CPU. Ένα τεστ που κόλλησε (ή που έχασε τον
-// γονιό του όταν έκλεισε το terminal) έμενε ορφανό για μέρες με το «Chrome
-// Headless» στο Task Manager στο τέρμα. Ό,τι κι αν γίνει, εδώ πεθαίνουν όλα.
+// A CEILING ON ITS LIFE. The headless browser draws the hall with
+// SwiftShader, which means on the processor: for as long as it lives, it
+// eats CPU. A run that hung, or lost its parent when the terminal closed,
+// was left orphaned for days. Whatever happens, everything dies here.
 const BUDGET_MS = 6 * 60 * 1000
 let torndown = false
 function teardown(reason) {
   if (torndown) return
   torndown = true
   if (reason) console.log(`\n${reason}`)
-  // Ο browser κλείνει ασύγχρονα, οπότε στέλνουμε ΚΑΙ σκέτο kill στη διεργασία
-  // του: σε βίαιο τερματισμό δεν προλαβαίνει να τρέξει το close().
+  // The browser closes asynchronously, so its process gets a plain kill as
+  // well: on a violent exit there is no time for close() to run.
   try {
     browser?.process()?.kill()
   } catch {}
@@ -70,29 +70,29 @@ function teardown(reason) {
   server?.stop()
 }
 const watchdog = setTimeout(() => {
-  teardown(`ΤΕΛΟΣ ΧΡΟΝΟΥ: το τεστ ξεπέρασε τα ${BUDGET_MS / 60000} λεπτά — όλα κλείνουν.`)
+  teardown(`OUT OF TIME: the run passed ${BUDGET_MS / 60000} minutes, everything closes.`)
   setTimeout(() => process.exit(1), 1500).unref()
 }, BUDGET_MS)
 watchdog.unref()
 process.on('exit', () => teardown())
 for (const signal of ['SIGINT', 'SIGTERM', 'SIGHUP', 'SIGBREAK']) {
   process.on(signal, () => {
-    teardown(`Διακοπή (${signal}).`)
+    teardown(`Interrupted (${signal}).`)
     setTimeout(() => process.exit(130), 1000).unref()
   })
 }
 try {
   const clientPort = await waitForPort([CLIENT_PORT, 5174, 5175], 40000)
-  if (!clientPort) throw new Error(`ο vite δεν σηκώθηκε:\n${client.output()}`)
+  if (!clientPort) throw new Error(`vite did not come up:\n${client.output()}`)
   if (server) await waitForPort([SERVER_PORT], 15000)
 
   browser = await playwright.chromium.launch({
     args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'],
   })
-  // Μικρότερο παράθυρο επίτηδες: ο headless browser ζωγραφίζει με τον
-  // επεξεργαστή, και σε 1280x800 με τον composer του bloom από πάνω η σελίδα
-  // έπεφτε στη μέση του ελέγχου. Η αίθουσα δεν χρειάζεται να είναι μεγάλη για
-  // να μετρηθεί.
+  // A smaller window on purpose: the headless browser draws on the
+  // processor, and at 1280x800 with the bloom composer on top the page
+  // died halfway through the run. The hall does not have to be big to
+  // be measured.
   const page = await browser.newPage({ viewport: { width: 1024, height: 640 } })
   const pageErrors = []
   page.on('pageerror', (err) => pageErrors.push(err.message))
@@ -100,16 +100,16 @@ try {
   await page.goto(`http://127.0.0.1:${clientPort}/`, { waitUntil: 'domcontentloaded' })
   await page.waitForFunction(() => window.__cinema?.ready === true, null, { timeout: 30000 })
 
-  // Το bloom κρατάει έναν μεγάλο buffer με antialiasing, που σε SwiftShader
-  // είναι το ακριβότερο πράγμα στη σελίδα. Οι τιμές του ελέγχονται παρακάτω
-  // κανονικά, απλώς δεν ζωγραφίζεται όσο τρέχει ο έλεγχος.
+  // Bloom holds a big antialiased buffer, which on SwiftShader is the
+  // most expensive thing on the page. Its values are checked properly
+  // further down, it simply is not drawn while the run is going.
   await page.evaluate(() => window.__cinema.handles.scene?.postfx?.setBloom?.({ enabled: false }))
 
   const boot = await page.evaluate(() => window.__cinema)
-  check('η σκηνή φόρτωσε', boot.started.scene === true, boot.errors.join(' | '))
-  check('φόρτωσαν όλα τα modules', Object.values(boot.started).every(Boolean), boot.errors.join(' | '))
+  check('the scene loaded', boot.started.scene === true, boot.errors.join(' | '))
+  check('every module loaded', Object.values(boot.started).every(Boolean), boot.errors.join(' | '))
 
-  // Η αρχική οθόνη πρέπει να σε βάζει μέσα σκέτο, χωρίς να απαιτεί ταινία.
+  // The opening screen has to let you straight in, with no film demanded.
   const overlay = await page.evaluate(() => ({
     cta: document.querySelector('.mo-cta')?.textContent?.trim() ?? null,
     pick: !!document.querySelector('.mo-second'),
@@ -121,7 +121,7 @@ try {
     hasSource: window.__cinema.handles.media.hasSource,
   }))
   check(
-    'μπαίνω στην αίθουσα χωρίς ταινία',
+    'I get into the hall without a film',
     !!overlay.cta && overlay.pick && entered.gone && entered.hasSource === false,
     `«${overlay.cta}»`,
   )
@@ -130,11 +130,11 @@ try {
     const el = document.querySelector('#app canvas') ?? document.querySelector('canvas')
     return el ? { width: el.width, height: el.height } : null
   })
-  check('υπάρχει καμβάς WebGL', Boolean(canvas && canvas.width > 0 && canvas.height > 0), JSON.stringify(canvas))
+  check('there is a WebGL canvas', Boolean(canvas && canvas.width > 0 && canvas.height > 0), JSON.stringify(canvas))
 
-  // Το δείγμα ταινίας του public/, ώστε ο έλεγχος να μη θέλει δικό μας αρχείο.
-  // Η τελετή προβολής κρατάει την ταινία μέχρι να σβήσουν τα φώτα, οπότε εδώ
-  // μπαίνει στην άκρη: έχει δικό της έλεγχο πιο κάτω.
+  // The sample film in public/, so the run does not want a file of our own.
+  // The ceremony holds the film until the lights are out, so it is put
+  // aside here: it has a check of its own further down.
   const loaded = await page.evaluate(async () => {
     const media = window.__cinema.handles.media
     const showtime = window.__cinema.handles.room?.showtime
@@ -144,17 +144,17 @@ try {
     await new Promise((r) => setTimeout(r, 1200))
     return { width: media.video.videoWidth, height: media.video.videoHeight }
   })
-  check('η ταινία μπήκε στην οθόνη', loaded.width > 0 && loaded.height > 0, `${loaded.width}x${loaded.height}`)
+  check('the film went onto the screen', loaded.width > 0 && loaded.height > 0, `${loaded.width}x${loaded.height}`)
 
   const before = await page.evaluate(() => document.querySelector('video')?.currentTime ?? null)
   await sleep(2500)
   const after = await page.evaluate(() => document.querySelector('video')?.currentTime ?? null)
-  if (before === null) check('η ταινία παίζει', false, 'δεν βρέθηκε στοιχείο <video>')
-  else check('η ταινία παίζει', after > before, `currentTime ${before} -> ${after}`)
+  if (before === null) check('the film plays', false, 'no <video> element found')
+  else check('the film plays', after > before, `currentTime ${before} -> ${after}`)
 
-  // --- πρώτο πρόσωπο -----------------------------------------------------
-  // Ο headless browser αρνείται το κλείδωμα του ποντικιού και το περπάτημα
-  // εξαρτάται από αυτό, οπότε το δηλώνουμε εμείς για να δοκιμαστούν τα πλήκτρα.
+  // --- first person ------------------------------------------------------
+  // The headless browser refuses to lock the mouse and walking depends on
+  // it, so we declare it ourselves in order to exercise the keys.
   await page.evaluate(() => {
     window.__probe = { steps: 0 }
     const controls = window.__cinema.handles.player.controls
@@ -171,24 +171,24 @@ try {
     steps: window.__probe.steps,
   }))
   const walked = Math.hypot(to.x - from.x, to.z - from.z)
-  check('το W περπατάει', walked > 0.2, `${walked.toFixed(2)} μέτρα`)
-  check('ακούγονται βήματα', to.steps > 0, `${to.steps} βήματα`)
+  check('W walks', walked > 0.2, `${walked.toFixed(2)} metres`)
+  check('footsteps are heard', to.steps > 0, `${to.steps} steps`)
 
-  // --- κάθισμα ------------------------------------------------------------
+  // --- sitting down -------------------------------------------------------
   await page.keyboard.press('e')
   await sleep(800)
   const seated = await page.evaluate(() => window.__cinema.handles.player.isSeated)
-  check('το E σε βάζει στη θέση', seated === true)
+  check('E puts you in the seat', seated === true)
   await page.keyboard.press('e')
   await sleep(400)
 
-  // --- φώτα αίθουσας ------------------------------------------------------
+  // --- house lights -------------------------------------------------------
   const lights = await page.evaluate(async () => {
     const room = window.__cinema.handles.room
     const rig = window.__cinema.handles.scene.lighting
     const read = () => rig.lights.houseLights[0].intensity
-    // Ο dimmer ανεβαίνει ανά καρέ και ο headless browser ζωγραφίζει αργά,
-    // οπότε περιμένουμε να φτάσει, με ταβάνι χρόνου.
+    // The dimmer climbs per frame and the headless browser draws slowly,
+    // so we wait for it to arrive, with a ceiling on the wait.
     const until = async (ok) => {
       for (let i = 0; i < 90; i += 1) {
         if (ok(read())) break
@@ -196,21 +196,21 @@ try {
       }
       return read()
     }
-    // Από γνωστό σημείο: η τελετή αφήνει τα φώτα εκεί που τα θέλει εκείνη.
+    // From a known place: the ceremony leaves the lights where it wants them.
     rig.setHouseLights(0, { immediate: true })
     room.setHouseLights(1)
     const up = await until((value) => value > 100)
-    // Το κατέβασμα με τον dimmer θέλει δεκάδες καρέ, και ο headless browser
-    // ζωγραφίζει ένα το δευτερόλεπτο. Το ότι κατεβαίνει το είδαμε ήδη, εδώ
-    // ελέγχουμε ότι φτάνει μέχρι κάτω.
+    // Coming down on the dimmer wants dozens of frames, and the headless
+    // browser draws one a second. That it comes down we have seen already,
+    // here we check that it reaches the bottom.
     room.setHouseLights(0)
     rig.setHouseLights(0, { immediate: true })
     const down = await until((value) => value < 5)
     return { up, down, settings: rig.getSettings() }
   })
-  check('τα φώτα ανάβουν και σβήνουν', lights.up > 100 && lights.down < 5, `${Math.round(lights.up)} -> ${Math.round(lights.down)}`)
+  check('the lights come up and go out', lights.up > 100 && lights.down < 5, `${Math.round(lights.up)} -> ${Math.round(lights.down)}`)
 
-  // Καμία φωτεινή κηλίδα στο πάτωμα όσο παίζει η ταινία, αλλά με δικό της κουμπί.
+  // No bright patch on the floor while the film runs, but it has its own dial.
   const aisle = await page.evaluate(async () => {
     const rig = window.__cinema.handles.scene.lighting
     const room = window.__cinema.handles.room
@@ -222,12 +222,12 @@ try {
     return { off, on, dials: document.querySelectorAll('.rp-pop .rp-range').length }
   })
   check(
-    'τα φωτάκια του διαδρόμου ξεκινούν κλειστά και ανοίγουν',
+    'the aisle lights start off and can be turned on',
     aisle.off && aisle.on && aisle.dials >= 6,
-    `${aisle.dials} μπάρες`,
+    `${aisle.dials} dials`,
   )
 
-  // --- ήχοι αίθουσας ------------------------------------------------------
+  // --- room sounds --------------------------------------------------------
   const foley = await page.evaluate(async () => {
     const { createFoley } = await import('/src/sound/foley.js')
     const peak = async (fire) => {
@@ -249,12 +249,12 @@ try {
     }
   })
   check(
-    'οι ήχοι βγάζουν σήμα',
+    'the sounds produce a signal',
     foley.step > 0.01 && foley.seat > 0.01 && foley.click > 0.005 && foley.silence === 0,
     JSON.stringify(foley),
   )
 
-  // --- μεγέθη οθόνης ------------------------------------------------------
+  // --- screen formats -----------------------------------------------------
   const formats = await page.evaluate(async () => {
     const room = window.__cinema.handles.room
     const scene = window.__cinema.handles.scene
@@ -264,7 +264,7 @@ try {
       await new Promise((r) => setTimeout(r, 250))
       out[name] = {
         width: +scene.screenSize.width.toFixed(2),
-        // Το πλάτος της εικόνας πρέπει να ακολουθεί τη μάσκα.
+        // The width of the picture has to follow the mask.
         surface: +window.__cinema.handles.media.screen.surface.scale.x.toFixed(2),
       }
     }
@@ -272,14 +272,14 @@ try {
     return out
   })
   check(
-    'η οθόνη αλλάζει μέγεθος',
+    'the screen changes format',
     formats.scope.width > formats.flat.width &&
       formats.flat.width > formats.hd.width &&
       formats.hd.surface <= formats.hd.width + 0.01,
     JSON.stringify(formats),
   )
 
-  // --- δεξί κλικ -----------------------------------------------------------
+  // --- right click ---------------------------------------------------------
   const menu = await page.evaluate(() => {
     document.dispatchEvent(
       new MouseEvent('contextmenu', { clientX: 500, clientY: 320, bubbles: true, cancelable: true }),
@@ -287,17 +287,17 @@ try {
     const root = document.querySelector('.cm-root')
     const open = !!root?.classList.contains('is-open')
     const items = [...(root?.querySelectorAll('.cm-item .cm-label') || [])].map((n) => n.textContent)
-    // Διαλέγοντας κάτι, το μενού πρέπει να κλείνει μόνο του.
+    // Choosing something has to close the menu on its own.
     root?.querySelector('.cm-item:not([disabled])')?.click()
     return { open, items, closed: !root.classList.contains('is-open') }
   })
   check(
-    'το δεξί κλικ ανοίγει το μενού',
+    'right click opens the menu',
     menu.open && menu.closed && menu.items.length >= 4,
     menu.items.join(' / '),
   )
 
-  // --- links από YouTube ---------------------------------------------------
+  // --- YouTube links -------------------------------------------------------
   const links = await page.evaluate(async () => {
     const { detectEmbed } = await import('/src/media/embedScreen.js')
     return {
@@ -308,17 +308,17 @@ try {
     }
   })
   check(
-    'αναγνωρίζει τα links YouTube και Vimeo',
+    'YouTube and Vimeo links are recognised',
     links.short === 'youtube' && links.watch === 'youtube' && links.vimeo === 'vimeo' && links.file === null,
     JSON.stringify(links),
   )
 
-  // --- η ματιά --------------------------------------------------------------
+  // --- the look --------------------------------------------------------------
   const look = await page.evaluate(async () => {
     const c = window.__cinema.handles.player.controls
     c.setLocked(true)
-    // Οι πρώτες κινήσεις μετά το κλείδωμα αγνοούνται επίτηδες (είναι ο browser
-    // που στρώνει, όχι το χέρι), οπότε το τεστ τις περιμένει να περάσουν.
+    // The first movements after the lock are ignored on purpose (that is the
+    // browser settling, not the hand), so the test waits them out.
     await new Promise((r) => setTimeout(r, 220))
     const start = { yaw: c.yaw, pitch: c.pitch }
     const move = (x, y) => document.dispatchEvent(new MouseEvent('mousemove', { movementX: x, movementY: y }))
@@ -326,12 +326,12 @@ try {
     for (let i = 0; i < 20; i += 1) move(40, 0)
     const turned = c.yaw - start.yaw
 
-    // Ένα αφύσικο πήδημα του browser πρέπει να αγνοηθεί ολόκληρο.
+    // An unnatural jump from the browser has to be ignored whole.
     const beforeSpike = { yaw: c.yaw, pitch: c.pitch }
     move(9000, 9000)
     const spikeIgnored = c.yaw === beforeSpike.yaw && c.pitch === beforeSpike.pitch
 
-    // Και δεν γίνεται τούμπα όσο κι αν κοιτάξω πάνω ή κάτω.
+    // And it does not tumble however far up or down I look.
     for (let i = 0; i < 60; i += 1) move(0, -80)
     const top = c.pitch
     for (let i = 0; i < 120; i += 1) move(0, 80)
@@ -339,15 +339,15 @@ try {
     return { turned, spikeIgnored, top, bottom, limit: c.config.maxPitch }
   })
   check(
-    'η ματιά ακολουθεί χωρίς πηδήματα',
+    'the look follows without jumping',
     Math.abs(look.turned + 1.6) < 0.01 &&
       look.spikeIgnored &&
       Math.abs(look.top - look.limit) < 0.01 &&
       Math.abs(look.bottom + look.limit) < 0.01,
-    `στροφή ${look.turned.toFixed(2)} rad, όριο ±${look.limit.toFixed(2)}`,
+    `turned ${look.turned.toFixed(2)} rad, limit ${look.limit.toFixed(2)}`,
   )
 
-  // --- ενημέρωση με το χέρι --------------------------------------------------
+  // --- updating by hand ------------------------------------------------------
   const updates = await page.evaluate(async () => {
     const updater = window.__cinema.handles.update
     const quietAtBoot = !document.querySelector('.vu-pill')?.classList.contains('is-on')
@@ -360,12 +360,12 @@ try {
     return { quietAtBoot, shows, entries, version: updater.version }
   })
   check(
-    'η ενημέρωση περιμένει εμένα, και ο changelog διαβάζεται',
+    'the update waits for me, and the changelog can be read',
     updates.quietAtBoot && updates.shows && updates.entries >= 2,
-    `v${updates.version}, ${updates.entries} εκδόσεις`,
+    `v${updates.version}, ${updates.entries} versions`,
   )
 
-  // --- ο μίκτης, η εικόνα και η λάμψη ---------------------------------------
+  // --- the desk, the picture and the glow -----------------------------------
   const desk = await page.evaluate(() => {
     const sound = window.__cinema.handles.sound
     const screen = window.__cinema.handles.media.screen
@@ -383,27 +383,27 @@ try {
     }
   })
   check(
-    'ο μίκτης, η εικόνα και η λάμψη ακούνε',
+    'the desk, the picture and the glow all answer',
     Math.abs(desk.bass - 0.8) < 0.01 &&
       Math.abs(desk.brightness - 1.3) < 0.01 &&
       Math.abs(desk.bloom - 0.9) < 0.01 &&
       desk.sliders >= 25,
-    `${desk.mixFields} ήχου + ${desk.pictureFields} εικόνας, ${desk.sliders} μπάρες στο πάνελ`,
+    `${desk.mixFields} sound + ${desk.pictureFields} picture, ${desk.sliders} dials on the panel`,
   )
 
-  // --- οι δύο νέοι χώροι ----------------------------------------------------
+  // --- the two other places -------------------------------------------------
   const places = await page.evaluate(async () => {
     const venues = window.__cinema.handles.venues
     const media = window.__cinema.handles.media
-    // Το δείγμα είναι έξι δευτερόλεπτα και ο έλεγχος κρατάει περισσότερο, οπότε
-    // χωρίς loop το «παίζει ακόμη» θα αποτύγχανε για λάθος λόγο.
+    // The sample is six seconds and the run lasts longer, so without a loop
+    // the "still playing" check would fail for the wrong reason.
     if (media.video) media.video.loop = true
     await media.play()
     const out = []
     for (const id of ['horror', 'cozy', 'cinema']) {
       await venues.go(id, { fade: false })
-      // Ο headless browser ζωγραφίζει ~1 καρέ το δευτερόλεπτο και το βίντεο
-      // ξεκινάει με τον δικό του ρυθμό, οπότε περιμένουμε αντί να μαντεύουμε.
+      // The headless browser draws about a frame a second and the video
+      // starts at its own pace, so we wait rather than guess.
       for (let i = 0; i < 30 && !media.isPlaying; i += 1) {
         await new Promise((r) => setTimeout(r, 300))
         if (!media.isPlaying) media.play()
@@ -414,7 +414,7 @@ try {
   })
   const screens = places.out.map((p) => p.screen)
   check(
-    'η ταινία με ακολουθεί στους άλλους χώρους',
+    'the film follows me into the other places',
     places.list.length === 3 &&
       new Set(screens).size === 3 &&
       places.out.every((p) => p.playing) &&
@@ -422,7 +422,7 @@ try {
     screens.join(' -> '),
   )
 
-  // --- η ρόδα, το σημάδι και ο καθρεφτισμός ---------------------------------
+  // --- the wheel, the sight and the spill -----------------------------------
   const lens = await page.evaluate(async () => {
     const controls = window.__cinema.handles.player.controls
     const camera = window.__cinema.handles.scene.camera
@@ -438,8 +438,8 @@ try {
 
     for (let i = 0; i < 40; i += 1) wheel(120)
     const leftFrame = !controls.cinematic
-    // Ο φακός ανοίγει ανά καρέ και ο headless browser ζωγραφίζει ελάχιστα,
-    // οπότε περιμένουμε να φτάσει αντί για σταθερό χρόνο.
+    // The lens opens per frame and the headless browser draws very little,
+    // so we wait for it to arrive rather than sleep a fixed time.
     for (let i = 0; i < 40 && Math.abs(camera.fov - wide) > 0.5; i += 1) {
       await new Promise((r) => setTimeout(r, 300))
     }
@@ -454,11 +454,11 @@ try {
     return { wide: +wide.toFixed(1), back: +back.toFixed(1), enteredFrame, leftFrame, before, after }
   })
   check(
-    'η ρόδα ζουμάρει, μπαίνει στο κάδρο και βγαίνει',
+    'the wheel zooms, enters the frame and leaves it',
     lens.enteredFrame && lens.leftFrame && Math.abs(lens.wide - lens.back) < 0.6,
-    `fov ${lens.wide} -> κάδρο -> ${lens.back}`,
+    `fov ${lens.wide} -> frame -> ${lens.back}`,
   )
-  check('το Caps Lock κρύβει το σημάδι', lens.before === true && lens.after === false)
+  check('Caps Lock hides the sight', lens.before === true && lens.after === false)
 
   const spill = await page.evaluate(() => {
     const cinema = window.__cinema.handles.scene.cinema
@@ -473,12 +473,12 @@ try {
     }
   })
   check(
-    'η οθόνη βάφει το πάτωμα και τον χώρο',
+    'the screen paints the floor and the room',
     spill.hasMesh && spill.opacity > 0 && spill.bounce > 10,
     `opacity ${spill.opacity}, bounce ${spill.bounce}, ambient #${spill.ambient}`,
   )
 
-  // --- λίστες YouTube -------------------------------------------------------
+  // --- YouTube playlists ----------------------------------------------------
   const lists = await page.evaluate(async () => {
     const { detectEmbed } = await import('/src/media/embedScreen.js')
     return {
@@ -489,17 +489,17 @@ try {
     }
   })
   check(
-    'διαβάζει λίστες YouTube και αλλάζει ποιότητα',
+    'it reads YouTube playlists and changes quality',
     lists.playlist === 'PLabc123456' && lists.inWatch === 'PLabc123456' && lists.plain === null && lists.quality === 2560,
     JSON.stringify(lists),
   )
 
-  // --- η τελετή προβολής ----------------------------------------------------
-  // ΕΞΩ ΑΠΟ ΤΗΝ ΑΙΘΟΥΣΑ πρώτα. Η τελετή είναι συμπεριφορά ΕΝΟΣ θεατή, και τα
-  // επόμενα τεστ την οδηγούν με το χέρι: seek στο τέλος, play, ξανά seek. Με
-  // ανοιχτή σύνδεση, η αίθουσα (σωστά) απαντάει σε κάθε ένα από αυτά και σε
-  // γυρίζει εκεί που νομίζει ότι είναι η προβολή — οπότε θα μετρούσαμε τον
-  // συγχρονισμό, όχι την τελετή. Ο συγχρονισμός έχει δικό του τεστ:
+  // --- the screening ceremony -----------------------------------------------
+  // OUT OF THE HALL first. The ceremony is the behaviour of ONE viewer, and
+  // the checks below drive it by hand: seek to the end, play, seek again.
+  // With the socket open, the hall (rightly) answers every one of those and
+  // pulls you back to where it thinks the screening is, so we would be
+  // measuring sync and not the ceremony. Sync has a test of its own:
   // `npm run test:halls`.
   await page.evaluate(() => window.__cinema.handles.net?.client?.close())
   await sleep(400)
@@ -511,23 +511,23 @@ try {
     const showtime = room.showtime
     if (!showtime) return { missing: true }
 
-    // Ξεκινάμε από «διάλειμμα»: φώτα αναμμένα, κουρτίνα κλειστή.
+    // Start from the interval: lights up, curtain closed.
     showtime.enabled = true
     media.pause()
-    // Από την αρχή της ταινίας: αν έχει μείνει στο τέλος, το «πέντε
-    // δευτερόλεπτα πριν» χτυπάει αμέσως και η αίθουσα ξανανάβει.
+    // From the start of the film: left at the end, the five-seconds-before
+    // rule fires at once and the hall comes back up.
     media.seek(0)
     room.applyPreset('interval')
     cinema.setCurtains(1, { immediate: true })
     await new Promise((r) => setTimeout(r, 300))
     const before = { house: room.settings.house, curtains: cinema.curtains, state: showtime.state }
 
-    // Ένα πάτημα play: η ταινία ξεκινάει ΑΜΕΣΩΣ, η κουρτίνα ανοίγει, και τα
-    // φώτα κατεβαίνουν από πάνω της.
+    // One press of play: the film starts AT ONCE, the curtain opens, and the
+    // lights come down over the top of it.
     await media.play()
     const during = { curtains: cinema.curtains, state: showtime.state, playing: media.isPlaying }
 
-    // Ο σβήστης κρατάει δευτερόλεπτα: poll, ποτέ σταθερό sleep.
+    // The fade takes seconds: poll for it, never sleep a fixed time.
     let dimmed = room.settings.house
     for (let i = 0; i < 40 && dimmed > 0.05; i += 1) {
       await new Promise((r) => setTimeout(r, 250))
@@ -536,17 +536,17 @@ try {
     return { before, during, dimmed, playing: media.isPlaying, state: showtime.state }
   })
   check(
-    'το play παίζει αμέσως, ανοίγει η κουρτίνα και τα φώτα κατεβαίνουν από πάνω',
+    'play plays at once, the curtain opens and the lights come down over it',
     !ceremony.missing &&
       ceremony.before.house > 0.4 &&
       ceremony.before.curtains === 1 &&
       ceremony.during.curtains === 0 &&
       ceremony.during.playing &&
       ceremony.dimmed <= 0.05,
-    `${ceremony.before?.state} -> ${ceremony.state} · φώτα ${ceremony.dimmed}`,
+    `${ceremony.before?.state} -> ${ceremony.state} · lights ${ceremony.dimmed}`,
   )
 
-  // --- και το διάλειμμα πριν από το τέλος -----------------------------------
+  // --- and the interval before the end --------------------------------------
   const earlyInterval = await page.evaluate(async () => {
     const room = window.__cinema.handles.room
     const cinema = window.__cinema.handles.scene.cinema
@@ -556,7 +556,7 @@ try {
 
     const total = media.duration
     if (!Number.isFinite(total) || total <= 0) return { noDuration: true }
-    // Λίγο πριν τους τελευταίους πέντε πόντους της ταινίας.
+    // Just before the last five seconds of the film.
     media.seek(Math.max(0, total - 4.5))
     if (!media.isPlaying) await media.play()
 
@@ -573,16 +573,16 @@ try {
     return { state, house, curtains: cinema.curtains }
   })
   check(
-    'τα φώτα ανεβαίνουν πριν το τέλος, χωρίς να κλείσει η κουρτίνα',
+    'the lights come up before the end, without the curtain closing',
     !earlyInterval.missing &&
       !earlyInterval.noDuration &&
       earlyInterval.state !== 'showing' &&
       earlyInterval.house > 0.3 &&
       earlyInterval.curtains === 0,
-    `${earlyInterval.state} · φώτα ${earlyInterval.house} · κουρτίνα ${earlyInterval.curtains}`,
+    `${earlyInterval.state} · lights ${earlyInterval.house} · curtain ${earlyInterval.curtains}`,
   )
 
-  // --- και η αίθουσα διορθώνεται μόνη της -----------------------------------
+  // --- and the hall puts itself right ---------------------------------------
   const selfHeal = await page.evaluate(async () => {
     const room = window.__cinema.handles.room
     const cinema = window.__cinema.handles.scene.cinema
@@ -595,9 +595,9 @@ try {
     await media.play()
     await new Promise((r) => setTimeout(r, 400))
 
-    // Σπάμε την αίθουσα όσο παίζει: κουρτίνα κλειστή, φώτα αναμμένα, και η
-    // τελετή να νομίζει ότι είμαστε σε διάλειμμα. Ακριβώς ό,τι βλέπει ο θεατής
-    // όταν η τελετή έχει χαθεί.
+    // Break the hall while it plays: curtain closed, lights up, and the
+    // ceremony believing we are in the interval. Exactly what a viewer sees
+    // when the ceremony has been lost.
     cinema.setCurtains(1, { immediate: true })
     room.applyPreset('interval')
     showtime.toInterval()
@@ -617,16 +617,16 @@ try {
     return { broken, healed, house }
   })
   check(
-    'αν χαλάσει η αίθουσα με την ταινία να παίζει, ξαναστρώνει μόνη της',
+    'a broken hall with the film running puts itself right',
     !selfHeal.missing &&
       selfHeal.broken.curtains === 1 &&
       selfHeal.healed.state === 'showing' &&
       selfHeal.healed.curtains === 0 &&
       selfHeal.house < 0.3,
-    `${selfHeal.broken?.state} -> ${selfHeal.healed?.state} · φώτα ${selfHeal.house}`,
+    `${selfHeal.broken?.state} -> ${selfHeal.healed?.state} · lights ${selfHeal.house}`,
   )
 
-  // --- ο κόσμος στις θέσεις -------------------------------------------------
+  // --- the crowd in the seats -----------------------------------------------
   const crowd = await page.evaluate(async () => {
     const audience = window.__cinema.handles.audience
     const sound = window.__cinema.handles.sound
@@ -645,15 +645,15 @@ try {
     }
   })
   check(
-    'γεμίζουν οι θέσεις με ονόματα',
+    'the seats fill up with names',
     crowd.empty === 0 && crowd.some === crowd.count && crowd.count > 10 && crowd.occupancy > 0.2,
-    `${crowd.count} από ${crowd.max}, occupancy ${crowd.occupancy.toFixed(2)}`,
+    `${crowd.count} of ${crowd.max}, occupancy ${crowd.occupancy.toFixed(2)}`,
   )
 
-  // --- δύο γλώσσες ----------------------------------------------------------
+  // --- two languages ---------------------------------------------------------
   const langs = await page.evaluate(async () => {
     const i18n = await import('/src/i18n/index.js')
-    // Τα κουμπιά των σελίδων, όχι η ένταση: αυτή είναι ένα εικονίδιο.
+    // The page buttons, not the volume: that one is an icon.
     const label = () => document.querySelector('.rp-dbtn:not([data-role]) span:not(.ic)')?.textContent ?? ''
     i18n.setLanguage('el')
     await new Promise((r) => setTimeout(r, 200))
@@ -667,18 +667,20 @@ try {
     return { greek, english, stored: localStorage.getItem('vc.lang'), sliderInEnglish: slider }
   })
   check(
-    'το μενού μιλάει και τις δύο γλώσσες',
+    'the menu speaks both languages',
+    // 'Χώρος' is the Greek for 'Place'. It is written out because this check
+    // exists to prove the Greek half of the switch is alive.
     langs.greek === 'Χώρος' && langs.english === 'Place' && langs.greek !== langs.english,
     `«${langs.greek}» / «${langs.english}»`,
   )
 
-  // --- η ουρά ---------------------------------------------------------------
+  // --- the queue -------------------------------------------------------------
   const queued = await page.evaluate(async () => {
     const room = window.__cinema.handles.room
     const queue = room.queue
     if (!queue) return { missing: true }
     queue.clear()
-    queue.add('/sample.webm', 'Δεύτερη')
+    queue.add('/sample.webm', 'The second one')
     queue.add('https://www.youtube.com/watch?v=abc12345678', null)
     queue.gap = 15
     await new Promise((r) => setTimeout(r, 200))
@@ -690,19 +692,19 @@ try {
     return { rows, labels, afterRemove, empty: queue.length, gap: queue.gap }
   })
   check(
-    'η ουρά κρατάει ταινίες και το κενό είναι δικό μου',
+    'the queue holds films and the gap is mine to set',
     !queued.missing && queued.rows === 2 && queued.afterRemove === 1 && queued.empty === 0 && queued.gap === 15,
-    `${queued.labels?.join(' · ')}, κενό ${queued.gap}s`,
+    `${queued.labels?.join(' · ')}, gap ${queued.gap}s`,
   )
 
-  // --- επαναφορά, ποιότητα και κουρτίνες ------------------------------------
+  // --- undo, quality and curtains -------------------------------------------
   const undo = await page.evaluate(async () => {
     const room = window.__cinema.handles.room
     const rig = window.__cinema.handles.scene.lighting
     const i18n = await import('/src/i18n/index.js')
 
-    // Η τελετή αφήνει τα φώτα να ταξιδεύουν. Περίμενε να σταθούν ΚΑΙ ξαναχτίσε
-    // το πάνελ, αλλιώς το «πίσω» δείχνει σε τιμή που πρόλαβε να αλλάξει.
+    // The ceremony leaves the lights travelling. Wait for them to settle AND
+    // rebuild the panel, or undo points at a value that moved underneath it.
     let last = null
     for (let i = 0; i < 40; i += 1) {
       const now = room.settings.house
@@ -733,9 +735,9 @@ try {
     return { hiddenAtRest, moved, back, offersUndo, resetAll, house: rig.getSettings().house }
   })
   check(
-    'κάθε ρύθμιση γυρίζει πίσω',
+    'every setting goes back',
     undo.hiddenAtRest && undo.offersUndo && undo.moved !== undo.back && undo.resetAll,
-    `${undo.moved} -> ${undo.back}, κουμπί σελίδας: ${undo.resetAll ? 'ναι' : 'όχι'}`,
+    `${undo.moved} -> ${undo.back}, page button: ${undo.resetAll ? 'yes' : 'no'}`,
   )
 
   const quality = await page.evaluate(async () => {
@@ -747,7 +749,7 @@ try {
     return { steps, at1080, auto: media.qualityStep, sliderGone: !document.querySelector('input[aria-label*="YouTube"]') }
   })
   check(
-    'η ποιότητα YouTube είναι σταθερές επιλογές',
+    'YouTube quality is a fixed set of choices',
     quality.steps.length === 5 && quality.at1080.step === '1080' && quality.at1080.pixels === 1920 && quality.auto === 'auto' && quality.sliderGone,
     quality.steps.join(' / '),
   )
@@ -758,7 +760,7 @@ try {
     const open = cinema.curtains
     cinema.setCurtains(1)
     const asked = cinema.curtains
-    // Πόσα καρέ θέλει για να διασχίσει: αργό επίτηδες.
+    // How many frames it wants to cross: slow on purpose.
     let frames = 0
     const fold = cinema.group.getObjectByName('CurtainLeft')?.children?.[0]
     const from = fold?.position.x ?? 0
@@ -770,21 +772,21 @@ try {
     return { open, asked, moved: Math.abs((fold?.position.x ?? 0) - from) > 0.05 }
   })
   check(
-    'οι κουρτίνες ανοίγουν και κλείνουν',
+    'the curtains open and close',
     curtains.open === 0 && curtains.asked === 1 && curtains.moved,
     `${curtains.open} -> ${curtains.asked}`,
   )
 
-  check('καθαρή κονσόλα', pageErrors.length === 0, pageErrors.join(' | '))
+  check('a clean console', pageErrors.length === 0, pageErrors.join(' | '))
 
-  // Το στιγμιότυπο είναι δώρο, όχι έλεγχος: με SwiftShader είναι το ακριβότερο
-  // πράγμα που ζητάμε, και δεν έχει νόημα να ρίχνει έναν έλεγχο που πέρασε.
+  // The screenshot is a gift, not a check: on SwiftShader it is the most
+  // expensive thing we ask for, and it must not fail a run that passed.
   try {
     fs.mkdirSync(at('tests/artifacts'), { recursive: true })
     await page.screenshot({ path: at('tests/artifacts/cinema.png'), timeout: 60000 })
-    console.log(`\nΣτιγμιότυπο: ${at('tests/artifacts/cinema.png')}`)
+    console.log(`\nScreenshot: ${at('tests/artifacts/cinema.png')}`)
   } catch (err) {
-    console.log(`\n(χωρίς στιγμιότυπο: ${err.message.split('\n')[0]})`)
+    console.log(`\n(no screenshot: ${err.message.split('\n')[0]})`)
   }
 } catch (err) {
   check('boot', false, err.message)
@@ -795,5 +797,5 @@ try {
 }
 
 const failed = results.filter((r) => !r.ok)
-console.log(`\n${results.length - failed.length}/${results.length} πέρασαν`)
+console.log(`\n${results.length - failed.length}/${results.length} passed`)
 process.exit(failed.length ? 1 : 0)

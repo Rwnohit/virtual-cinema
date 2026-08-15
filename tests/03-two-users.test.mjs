@@ -21,10 +21,10 @@ import {
 const TEST_PORT = 8799
 const DEFAULT_PORT = 8787
 
-test('δύο χρήστες συνδέονται ταυτόχρονα στον server', { timeout: 60000 }, async (t) => {
+test('two users connect to the server at the same time', { timeout: 60000 }, async (t) => {
   const entry = firstExisting(SERVER_ENTRIES)
   if (!entry) {
-    t.skip(`δεν υπάρχει ακόμη ο server (${SERVER_ENTRIES.join(' ή ')})`)
+    t.skip(`the server is not there yet (${SERVER_ENTRIES.join(' or ')})`)
     return
   }
 
@@ -40,16 +40,16 @@ test('δύο χρήστες συνδέονται ταυτόχρονα στον s
 
   try {
     const port = await waitForPort([TEST_PORT, DEFAULT_PORT], 20000)
-    assert.ok(port, `ο server δεν άνοιξε πόρτα σε 20s.\n${server.output()}`)
-    // Χωρίς αυτό, ένας ήδη ανοιχτός server στην 8787 θα περνούσε για δικός μας.
-    assert.ok(server.alive(), `ο server τερμάτισε στο ξεκίνημα.\n${server.output()}`)
+    assert.ok(port, `the server opened no port within 20s.\n${server.output()}`)
+    // Without this, a server already running on 8787 would pass for ours.
+    assert.ok(server.alive(), `the server exited during startup.\n${server.output()}`)
 
     alice = await openSocket(port)
-    assert.ok(alice, `ο 1ος χρήστης δεν συνδέθηκε.\n${server.output()}`)
+    assert.ok(alice, `the first user did not connect.\n${server.output()}`)
 
     const path = new URL(alice.url).pathname
     bob = await openSocket(port, [path === '/' ? '' : path])
-    assert.ok(bob, `ο 2ος χρήστης δεν συνδέθηκε.\n${server.output()}`)
+    assert.ok(bob, `the second user did not connect.\n${server.output()}`)
 
     // Both sockets stay open while a join message goes through.
     const hello = JSON.stringify({ type: 'join', room: 'qa', name: 'QA' })
@@ -57,14 +57,14 @@ test('δύο χρήστες συνδέονται ταυτόχρονα στον s
     bob.send(hello)
     await sleep(1500)
 
-    assert.equal(alice.readyState, WebSocket.OPEN, 'ο 1ος χρήστης αποσυνδέθηκε')
-    assert.equal(bob.readyState, WebSocket.OPEN, 'ο 2ος χρήστης αποσυνδέθηκε')
-    assert.ok(server.alive(), `ο server τερμάτισε με δύο χρήστες.\n${server.output()}`)
+    assert.equal(alice.readyState, WebSocket.OPEN, 'the first user was disconnected')
+    assert.equal(bob.readyState, WebSocket.OPEN, 'the second user was disconnected')
+    assert.ok(server.alive(), `the server exited with two users on it.\n${server.output()}`)
 
     const relayed = alice.messages.length + bob.messages.length
-    t.diagnostic(`μηνύματα από τον server: ${relayed}`)
+    t.diagnostic(`messages from the server: ${relayed}`)
     if (!relayed) {
-      t.diagnostic('κανένα μήνυμα: δες το tests/QA-MANUAL.md για τον χειροκίνητο έλεγχο presence/φωνής')
+      t.diagnostic('no messages: see tests/QA-MANUAL.md for the manual presence and voice pass')
     }
   } finally {
     closeSocket(alice)
