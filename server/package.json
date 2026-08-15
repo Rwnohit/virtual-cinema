@@ -1,0 +1,7 @@
+{
+  "name": "cinema-multiplayer-server",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "description": "Runs from the project root: npm run server. The ws dependency lives in ../package.json, do not install it again here."
+}

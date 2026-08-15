@@ -1,0 +1,18 @@
+node_modules
+dist
+dist-ssr
+.vite
+*.local
+.DS_Store
+tests/artifacts
+__*
+*.log
+
+# Γράφονται από το scripts/write-version.mjs σε κάθε dev / build.
+public/version.json
+public/CHANGELOG.md
+
+# Τοπικά cache εργαλείων: κρατάνε απόλυτες διαδρομές του μηχανήματος.
+.impeccable/
+.claude/
+.gstack/
