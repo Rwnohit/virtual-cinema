@@ -1,0 +1,86 @@
+{
+  "title": "Higgsfield Originals",
+  "note": "Swap this one file for your own catalogue and the cinema fills with it.",
+  "films": [
+    {
+      "id": "682ae406-c7d5-4098-96b4-23995304aefa",
+      "title": "Emerald Drift",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_38ZAUXWiiQTOspAdHI26zyxtHWW/4505691e-7ff2-4269-8c71-ed831d33e4ed.png",
+      "src": "https://d8j0ntlcm91z4.cloudfront.net/user_38ZAUXWiiQTOspAdHI26zyxtHWW/hf_20260722_140218_682ae406-c7d5-4098-96b4-23995304aefa.mp4",
+      "seconds": 12,
+      "by": "Higgsfield"
+    },
+    {
+      "id": "f2d8d920-85a9-41b7-9920-33cbfc2f5cd3",
+      "title": "Night Passage",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_38ZAUXWiiQTOspAdHI26zyxtHWW/364015ae-a202-4b8d-b32a-01934718047a.png",
+      "src": "https://d8j0ntlcm91z4.cloudfront.net/user_38ZAUXWiiQTOspAdHI26zyxtHWW/hf_20260722_134929_f2d8d920-85a9-41b7-9920-33cbfc2f5cd3.mp4",
+      "seconds": 8,
+      "by": "Higgsfield"
+    },
+    {
+      "id": "d0228abe-4b58-4f76-beda-27ab474ae696",
+      "title": "The Long Room",
+      "poster": null,
+      "src": "https://d8j0ntlcm91z4.cloudfront.net/user_38ZAUXWiiQTOspAdHI26zyxtHWW/hf_20260714_050933_d0228abe-4b58-4f76-beda-27ab474ae696.mp4",
+      "seconds": 15,
+      "by": "Higgsfield"
+    },
+    {
+      "id": "0382ff9e-fda4-4021-955c-084985b6c7d8",
+      "title": "Quiet Machine",
+      "poster": null,
+      "src": "https://d8j0ntlcm91z4.cloudfront.net/user_38ZAUXWiiQTOspAdHI26zyxtHWW/hf_20260714_044025_0382ff9e-fda4-4021-955c-084985b6c7d8.mp4",
+      "seconds": 10,
+      "by": "Higgsfield"
+    },
+    {
+      "id": "753e9476-d87a-4651-a3c3-f4cbfd84fae0",
+      "title": "Amber Hours",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_38ZAUXWiiQTOspAdHI26zyxtHWW/43b95bda-f729-4d1c-bf52-370a3d2a5167.png",
+      "src": "https://d8j0ntlcm91z4.cloudfront.net/user_38ZAUXWiiQTOspAdHI26zyxtHWW/hf_20260708_212714_753e9476-d87a-4651-a3c3-f4cbfd84fae0.mp4",
+      "seconds": 15,
+      "by": "Higgsfield"
+    },
+    {
+      "id": "1128250c-88b7-4ca9-8d00-174b060e4761",
+      "title": "Second Light",
+      "poster": "https://d8j0ntlcm91z4.cloudfront.net/user_38ZAUXWiiQTOspAdHI26zyxtHWW/hf_20260707_215308_d3453c4e-79b3-42ed-97cd-5be405f4364a.png",
+      "src": "https://d8j0ntlcm91z4.cloudfront.net/user_38ZAUXWiiQTOspAdHI26zyxtHWW/hf_20260707_215608_1128250c-88b7-4ca9-8d00-174b060e4761.mp4",
+      "seconds": 15,
+      "by": "Higgsfield"
+    },
+    {
+      "id": "c1d123b0-9f17-4b9b-89be-8c4c59d9fde0",
+      "title": "Slow Water",
+      "poster": "https://d8j0ntlcm91z4.cloudfront.net/user_38ZAUXWiiQTOspAdHI26zyxtHWW/hf_20260707_215308_d3453c4e-79b3-42ed-97cd-5be405f4364a.png",
+      "src": "https://d8j0ntlcm91z4.cloudfront.net/user_38ZAUXWiiQTOspAdHI26zyxtHWW/hf_20260707_215608_c1d123b0-9f17-4b9b-89be-8c4c59d9fde0.mp4",
+      "seconds": 15,
+      "by": "Higgsfield"
+    },
+    {
+      "id": "05c87250-8af2-4d7b-9db8-f04ca85f6392",
+      "title": "The Waiting Hall",
+      "poster": "https://d8j0ntlcm91z4.cloudfront.net/user_38ZAUXWiiQTOspAdHI26zyxtHWW/hf_20260707_214702_00381a03-9fc1-4d98-973e-2d8192a1c85e.png",
+      "src": "https://d8j0ntlcm91z4.cloudfront.net/user_38ZAUXWiiQTOspAdHI26zyxtHWW/hf_20260707_215020_05c87250-8af2-4d7b-9db8-f04ca85f6392.mp4",
+      "seconds": 15,
+      "by": "Higgsfield"
+    },
+    {
+      "id": "829f280b-16b7-47f1-b420-85c931e3e5e6",
+      "title": "Paper Moon",
+      "poster": "https://d8j0ntlcm91z4.cloudfront.net/user_38ZAUXWiiQTOspAdHI26zyxtHWW/hf_20260707_214702_00381a03-9fc1-4d98-973e-2d8192a1c85e.png",
+      "src": "https://d8j0ntlcm91z4.cloudfront.net/user_38ZAUXWiiQTOspAdHI26zyxtHWW/hf_20260707_215020_829f280b-16b7-47f1-b420-85c931e3e5e6.mp4",
+      "seconds": 15,
+      "by": "Higgsfield"
+    },
+    {
+      "id": "1dfd715f-465e-4651-af48-f9d4c69a42a5",
+      "title": "Blue Interval",
+      "poster": "https://d8j0ntlcm91z4.cloudfront.net/user_38ZAUXWiiQTOspAdHI26zyxtHWW/hf_20260707_212935_61983116-8b79-4d2d-bc9c-728426d4bd93.png",
+      "src": "https://d8j0ntlcm91z4.cloudfront.net/user_38ZAUXWiiQTOspAdHI26zyxtHWW/hf_20260707_213207_1dfd715f-465e-4651-af48-f9d4c69a42a5.mp4",
+      "seconds": 6,
+      "by": "Higgsfield"
+    }
+  ]
+}

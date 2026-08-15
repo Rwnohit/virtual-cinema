@@ -155,6 +155,23 @@ export const CSS = `
   .rp-qual{display:none !important;}
 }
 
+/* --- the library: what is playing tonight ---------------------------------
+   Posters and not a list, because a person choosing a film looks before they
+   read. Three across fits the popover without scrolling past the fold on a
+   short laptop screen. */
+.rp-lib{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.rp-film{appearance:none;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);
+  color:#f2f2f4;font:inherit;text-align:left;cursor:pointer;border-radius:12px;overflow:hidden;
+  padding:0;display:flex;flex-direction:column;transition:border-color .15s ease,transform .12s ease;}
+.rp-film:hover{border-color:rgba(255,255,255,.42);transform:translateY(-2px);}
+.rp-film:active{transform:translateY(0);}
+.rp-film.is-on{border-color:#f2f2f4;box-shadow:0 0 0 1px #f2f2f4 inset;}
+.rp-film-art{aspect-ratio:16/9;width:100%;background:#0c0c10 center/cover no-repeat;display:block;}
+.rp-film-name{padding:7px 9px 9px;font-size:12px;line-height:1.3;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.rp-film-by{display:block;font-size:10px;opacity:.5;margin-top:2px;}
+@media (max-width:560px){ .rp-lib{grid-template-columns:repeat(2,1fr);} }
+
 .rp-queue{display:flex;flex-direction:column;gap:5px;}
 .rp-qrow{display:flex;align-items:center;gap:8px;padding:5px 7px;border-radius:9px;
   background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);font-size:12px;}

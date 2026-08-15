@@ -1137,6 +1137,73 @@ export function createRoom(context = {}) {
 
   pageRows = []
 
+  /* --- Library ------------------------------------------------------------ */
+  /**
+   * What is playing tonight.
+   *
+   * The catalogue is ONE file, `/library.json`, and that is the whole point of
+   * the shape: a venue that wants its own programme replaces that file (or
+   * points it at their own feed) and the cinema fills with it. Nothing else in
+   * the app has to know anything about where films come from.
+   *
+   * Picking one is exactly the same act as pasting its link, so it travels to
+   * the whole hall the way any other film does - see src/net/show.js.
+   */
+  if (media) {
+    const libraryPage = dock.addPage({ id: 'library', label: t('dock.library'), icon: '🎞' })
+    const grid = document.createElement('div')
+    grid.className = 'rp-lib'
+    libraryPage.appendChild(grid)
+
+    const empty = document.createElement('div')
+    empty.className = 'rp-hint'
+    empty.textContent = t('library.loading')
+    libraryPage.appendChild(empty)
+
+    fetch('library.json', { cache: 'no-store' })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((data) => {
+        const films = Array.isArray(data?.films) ? data.films : []
+        if (!films.length) {
+          empty.textContent = t('library.empty')
+          return
+        }
+        empty.remove()
+        for (const film of films) {
+          if (typeof film?.src !== 'string') continue
+          const card = document.createElement('button')
+          card.type = 'button'
+          card.className = 'rp-film'
+          card.innerHTML = `
+            <span class="rp-film-art"></span>
+            <span class="rp-film-name"><span data-role="title"></span><small class="rp-film-by"></small></span>
+          `
+          const art = card.querySelector('.rp-film-art')
+          // Through style rather than an <img>, so a poster that never loads
+          // leaves a clean dark tile instead of a broken picture icon.
+          if (film.poster) art.style.backgroundImage = `url("${film.poster}")`
+          card.querySelector('[data-role="title"]').textContent = film.title || t('library.untitled')
+          card.querySelector('.rp-film-by').textContent = film.by || ''
+          card.addEventListener('click', () => {
+            sound?.click?.()
+            for (const other of grid.children) other.classList.remove('is-on')
+            card.classList.add('is-on')
+            flash(film.title || t('library.untitled'))
+            media.load(film.src, { autoplay: true })
+          })
+          grid.appendChild(card)
+        }
+      })
+      .catch(() => {
+        empty.textContent = t('library.empty')
+      })
+
+    const hint = document.createElement('div')
+    hint.className = 'rp-hint'
+    hint.textContent = t('library.hint')
+    libraryPage.appendChild(hint)
+  }
+
   /* --- Queue -------------------------------------------------------------- */
   if (queue) {
     const queuePage = dock.addPage({ id: 'queue', label: t('dock.queue'), icon: '📼' })

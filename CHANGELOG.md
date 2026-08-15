@@ -2,6 +2,18 @@
 
 Every version, in plain words. Newest at the top.
 
+## 0.21.0 · 15 August 2026
+
+- **🎞 A Library tab: the programme, on the wall.** Posters you can click, and
+  picking one starts that film **for the whole hall**, from the same moment -
+  exactly as pasting its link does.
+- **The catalogue is ONE file.** `/library.json` holds the titles, posters and
+  links. A venue that wants its own programme replaces that one file, or points
+  it at their own feed, and the cinema fills with it. Nothing else has to know
+  where films come from.
+- Films served this way get what YouTube never could: **the hall's own sound**
+  reaches them - reverb, sub, the two screen channels.
+
 ## 0.20.1 · 15 August 2026
 
 - 🐛 **Serious, and one day old:** as soon as there were two of you in a hall,
