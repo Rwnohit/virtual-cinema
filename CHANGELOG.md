@@ -1,324 +1,322 @@
-# Τι άλλαξε
+# What changed
 
-Κάθε έκδοση, με απλά λόγια. Η νεότερη πάνω πάνω.
+Every version, in plain words. Newest at the top.
 
-## 0.20.0 · 15 Αυγούστου 2026
+## 0.20.0 · 15 August 2026
 
-- **📡 Μοιράσου την οθόνη σου με την αίθουσα.** Νέο κουμπί στη μπάρα, δίπλα στο
-  ηχείο. Διαλέγεις καρτέλα ή παράθυρο, και **όλοι βλέπουν ακριβώς ό,τι βλέπεις
-  εσύ** — με τον ήχο του.
-  - **Δεν υπάρχει τίποτα να συγχρονιστεί.** Είναι μία εικόνα που στέλνεται σε
-    όλους, όχι τέσσερις players που προσπαθούν να συμφωνήσουν. Αυτό λύνει και
-    το «κολλάει» και το «ο ένας είναι μπροστά από τον άλλο».
-  - **Παίζει ΟΤΙΔΗΠΟΤΕ**: αρχείο από τον υπολογιστή σου, YouTube, οτιδήποτε
-    έχεις ανοιχτό. Λύνει και το «τα δικά μου αρχεία δεν μοιράζονται».
-  - Μετρημένο: ο δεύτερος θεατής πήρε **1350x1050** και το χρώμα που έστειλε ο
-    πρώτος, pixel προς pixel.
-- **Τι κοστίζει, ειλικρινά:** η εικόνα φεύγει από τη ΔΙΚΗ ΣΟΥ γραμμή, ένα
-  αντίγραφο για τον καθένα. Με οικιακό upload μιλάμε για λίγα άτομα, όχι για
-  γεμάτη αίθουσα. Και **Netflix/Disney+ βγαίνουν μαύρα** — αυτό είναι το νόημα
-  της προστασίας τους.
+- **📡 Share your screen with the hall.** A new button on the bar, next to the
+  speaker. You pick a tab or a window, and **everybody sees exactly what you
+  see**, with its sound.
+  - **There is nothing to keep in sync.** It is one picture sent to everyone,
+    not four players trying to agree. That settles both the freezing and the
+    "one of us is ahead of the other".
+  - **It plays ANYTHING**: a file off your computer, YouTube, whatever you have
+    open. It also settles "my own files cannot be shared".
+  - Measured: the second viewer got **1350x1050** and the colour the first one
+    sent, pixel for pixel.
+- **What it costs, honestly:** the picture leaves YOUR line, one copy per
+  person. On a home upload that means a few people, not a full hall. And
+  **Netflix and Disney+ come out black**, which is the whole point of their
+  protection.
 
-## 0.19.0 · 15 Αυγούστου 2026
+## 0.19.0 · 15 August 2026
 
-- **Η αίθουσα είναι ΕΝΑΣ χώρος τώρα.** Κουρτίνα, φώτα, θεατές στις θέσεις και
-  μέγεθος οθόνης είναι κοινά: ό,τι αλλάζεις το βλέπουν όλοι, και όποιος μπει
-  αργότερα βρίσκει την αίθουσα όπως την αφήσατε.
-  - Δικά σου μένουν μόνο ο **ήχος** και η **εικόνα** σου. Δεν έχει νόημα τα
-    ακουστικά του ενός να ρυθμίζουν τα ηχεία του άλλου.
-- 🐛 **Το «κολλάει».** Αν έπαιζες ταινία που η αίθουσα δεν μπορούσε να δει
-  (αρχείο από τον υπολογιστή σου), η αίθουσα σου έκανε **παύση από μόνη της**.
-- 🐛 **Το βίντεο τραύλιζε.** Ο συγχρονισμός διόρθωνε κάθε 1,5 δευτερόλεπτο· αν ο
-  ένας player φόρτωνε αργά, έμπαινε σε φαύλο κύκλο. Τώρα διορθώνει σπάνια και
-  μόνο όταν είναι σίγουρος.
-- 🐛 **Play και pause αμέσως μετά την είσοδο** αγνοούνταν. Τώρα το σύστημα
-  ξεχωρίζει «το έκανα εγώ» από «μου το είπε η αίθουσα» με το νόημα, όχι με
-  χρονόμετρο.
+- **The hall is ONE room now.** Curtain, lights, people in the seats and screen
+  format are shared: whatever you change, everybody sees, and anyone who comes
+  in later finds the hall the way you left it.
+  - Only your **sound** and your **picture** stay yours. There is no sense in
+    one person's headphones setting another person's speakers.
+- 🐛 **The freezing.** If you were playing a film the hall could not see (a file
+  off your own computer), the hall **paused you all by itself**.
+- 🐛 **The video stuttered.** Sync corrected every 1.5 seconds; if one player
+  was loading slowly, it fell into a vicious circle. Now it corrects rarely and
+  only when it is sure.
+- 🐛 **Play and pause immediately after walking in** were ignored. The system
+  now tells "I did that" from "the hall told me" by meaning, not by a timer.
 
-## 0.18.0 · 15 Αυγούστου 2026
+## 0.18.0 · 15 August 2026
 
-- 🐛 **Αν έμπαινες στην αίθουσα και έβαζες ταινία ΑΜΕΣΩΣ, η ταινία δεν έφτανε
-  στους άλλους.** Για ένα δευτερόλεπτο μετά την είσοδο, ό,τι έκανες πεταγόταν.
-  Αυτό ήταν το πρόβλημα της οθόνης που έστειλες.
-- 🔴 **Ταινία από τον υπολογιστή σου δεν μπορεί να μοιραστεί** — και τώρα το
-  λέει καθαρά: **μόνιμη κίτρινη ειδοποίηση** στο πάνω μέρος, που δεν σβήνει
-  μέχρι να βάλεις link. Πριν ήταν ένα μήνυμα 1,6 δευτερολέπτων που το έσβηνε
-  το «Καλή προβολή» πριν προλάβεις να το δεις.
-- **Το πεδίο «Από link» είναι πλέον ανοιχτό από την αρχή**, με τη γραμμή
-  «βάλε link και το βλέπει ΟΛΗ η αίθουσα». Το κουμπί για αρχείο λέει τώρα
-  «Αρχείο από τον υπολογιστή (μόνο για σένα)».
-- 🐛 Έφευγε σφάλμα στην κονσόλα όταν ο browser αρνιόταν το ποντίκι σε παράθυρο
-  που δεν ήταν μπροστά. Δεν ήταν λάθος, ήταν φυσιολογικό.
+- 🐛 **If you walked in and put a film on IMMEDIATELY, the film never reached
+  the others.** For a second after entering, whatever you did was thrown away.
+- 🔴 **A film off your own computer cannot be shared**, and now it says so
+  plainly: a **permanent yellow notice** at the top, which does not go away
+  until you use a link. Before, it was a 1.6 second message that "Enjoy the
+  film" wiped out before you could read it.
+- **The link field is now open from the start**, with the line "put a link in
+  and the WHOLE hall sees it". The file button now says "A file off your
+  computer (only for you)".
+- 🐛 An error was logged to the console when the browser refused the mouse in a
+  window that was not in front. It was not a fault, it was normal.
 
-## 0.17.0 · 15 Αυγούστου 2026
+## 0.17.0 · 15 August 2026
 
-- **Η ηχώ πάει πολύ πιο πέρα.** Το ρυθμιστικό «Ηχώ αίθουσας» κοβόταν στο 60%.
-  Τώρα φτάνει στο 100%, και το κομμάτι που προστέθηκε είναι **πραγματικό**:
-  μετρημένο, από το 60% στο 100% η ουρά δυναμώνει **8,8 dB**.
-- **Νέο ρυθμιστικό «Διάρκεια ηχώς»**, δίπλα του: από 0,15 έως 3,5 δευτερόλεπτα.
-  Αυτό αλλάζει *μέγεθος χώρου*, όχι ποσότητα. Μετρημένο, η ταινία ηχεί από
-  0,77 έως **3,05 δευτερόλεπτα** μετά τον ήχο.
-- **Ό,τι είχες ρυθμίσει μένει ακριβώς όπως ήταν.** Η καμπύλη είναι φτιαγμένη
-  ώστε το κάτω μισό να μη μετακινηθεί καθόλου (στο σινεμά, 0,2 dB διαφορά).
-- ℹ️ Η ηχώ πιάνει ταινία **από αρχείο**. Το YouTube παίζει στον δικό του player
-  και δεν μπορεί να περάσει από την αίθουσα.
+- **The reverb goes much further.** The room reverb slider stopped at 60%. It
+  now reaches 100%, and the part that was added is **real**: measured, from 60%
+  to 100% the tail gains **8.8 dB**.
+- **A new "reverb length" slider** next to it: from 0.15 to 3.5 seconds. That
+  changes the *size of the place*, not the amount. Measured, the film rings on
+  from 0.77 to **3.05 seconds** after the sound.
+- **Whatever you had set stays exactly as it was.** The curve is built so the
+  bottom half does not move at all (in the cinema preset, 0.2 dB of difference).
+- ℹ️ The reverb catches a film **from a file**. YouTube plays in its own player
+  and cannot be routed through the hall.
 
-## 0.16.0 · 15 Αυγούστου 2026
+## 0.16.0 · 15 August 2026
 
-- **Τέσσερις αίθουσες, μία προβολή η καθεμία.** Στην αρχή διαλέγεις πόρτα και
-  βλέπεις τι γίνεται πίσω από την καθεμία: πόσοι είναι μέσα, τι παίζει, πόσα
-  λεπτά μέσα είναι. Οι αίθουσες δεν βλέπονται μεταξύ τους.
-- **Μπαίνεις εκεί που είναι η ταινία.** Αν κάποιος βλέπει ήδη 20 λεπτά, εσύ
-  ξεκινάς στο 20ό λεπτό, όχι από την αρχή. Μετρημένο: ο δεύτερος θεατής
-  προσγειώθηκε στο 445ο δευτερόλεπτο, 0,7 δευτερόλεπτα διαφορά.
-- **Play, pause και μετακίνηση περνάνε σε όλους** στην ίδια αίθουσα.
-- **Γράφεις το όνομά σου στην είσοδο.** Κρατάει όσο η επίσκεψη, και το βλέπουν
-  οι υπόλοιποι.
-- 🐛 Το μενού των αιθουσών ξαναχτιζόταν κάθε 4 δευτερόλεπτα και **έτρωγε το
-  κλικ σου**. Τώρα ανανεώνεται χωρίς να χάνεται το κουμπί.
-- 🐛 Όταν πήγαινες μπροστά στην ταινία, **σε τραβούσε πίσω**: η αίθουσα δεν
-  μάθαινε ποτέ ότι μετακίνησες, και το θεωρούσε καθυστέρηση.
-- 🐛 Αμέσως μετά το ξεκίνημα μιας ταινίας, **τα κλικ σου αγνοούνταν** για όσο
-  κρατούσε η τελετή (κουρτίνα και φώτα).
-- ℹ️ Ταινία από τον υπολογιστή σου τη βλέπεις μόνο εσύ. Για κοινή προβολή
-  χρειάζεται link.
+- **Four halls, one screening each.** At the start you pick a door and see what
+  is going on behind each one: how many are in, what is playing, how many
+  minutes in it is. The halls cannot see each other.
+- **You land where the film is.** If somebody is already 20 minutes in, you
+  start at minute 20, not at the opening frame. Measured: the second viewer
+  landed at second 445, 0.7 seconds out.
+- **Play, pause and seeking reach everybody** in the same hall.
+- **You write your name at the door.** It lasts as long as the visit, and the
+  others see it.
+- 🐛 The hall menu was rebuilt every 4 seconds and **ate your click**. It now
+  refreshes without the button going missing.
+- 🐛 When you moved forward in the film, **it pulled you back**: the hall never
+  learned that you had seeked, and treated it as lag.
+- 🐛 Right after a film started, **your clicks were ignored** for as long as the
+  ceremony (curtain and lights) lasted.
+- ℹ️ A film off your own computer is seen only by you. A shared screening wants
+  a link.
 
-## 0.15.0 · 15 Αυγούστου 2026
+## 0.15.0 · 15 August 2026
 
-- **Η ταινία του YouTube ακούγεται πια από πού στέκεσαι.** Περπατάς προς τα
-  πίσω και χαμηλώνει, γυρνάς την πλάτη και πέφτει κι άλλο, ακριβώς όπως ένα
-  κανονικό αρχείο. Μετρημένο: μπροστά 100%, τελευταία σειρά 61%, με την πλάτη
-  γυρισμένη 50%.
-- **Νέο ρυθμιστικό «Απόσταση σε YouTube»** στο πάνελ «Ήχος»: στο 0 η ταινία
-  ακούγεται το ίδιο όπου κι αν είσαι, στο 100% κινείται όσο λέει η αίθουσα.
-- **Τι ΔΕΝ γίνεται, και γιατί.** Η ηχώ της αίθουσας και τα μπάσα δεν μπορούν να
-  πιάσουν το YouTube. Δοκιμάστηκε ο μόνος δρόμος που υπάρχει (να πάρουμε τον
-  ήχο της καρτέλας από τον browser) και μετρήθηκε ότι ο browser μας γυρίζει
-  πίσω **και τους δικούς μας ήχους**: ένας ήχος 0.40 επέστρεφε 0.48, δηλαδή
-  μικροφωνισμός. Οι δύο ρυθμίσεις που υποτίθεται το λύνουν δεν το έλυσαν.
-- 🐛 Διορθώθηκε: το κεφάλι διαβαζόταν ανάποδα, οπότε γυρίζοντας την πλάτη στην
-  οθόνη ο ήχος θα **δυνάμωνε**.
+- **A YouTube film is now heard from where you are standing.** Walk to the back
+  and it drops, turn your back and it drops further, exactly like a normal file.
+  Measured: in front 100%, back row 61%, with your back turned 50%.
+- **A new "YouTube distance" slider** in the Sound panel: at 0 the film sounds
+  the same wherever you are, at 100% it moves as much as the hall says.
+- **What is NOT possible, and why.** The hall reverb and the sub cannot reach
+  YouTube. The only road that exists was tried (taking the tab's sound from the
+  browser) and it was measured that the browser hands **our own sounds back to
+  us** as well: a tone of 0.40 came back as 0.48, which is feedback. The two
+  settings that are supposed to solve it did not.
+- 🐛 Fixed: the head was being read backwards, so turning your back on the
+  screen would make the sound **louder**.
 
-## 0.14.0 · 15 Αυγούστου 2026
+## 0.14.0 · 15 August 2026
 
-- **Ο ήχος του YouTube ακούει επιτέλους τη μπάρα.** Μέχρι τώρα το YouTube έπαιζε
-  στη δική του ένταση και κανένα ρυθμιστικό της αίθουσας δεν τον έπιανε. Πλέον η
-  «Γενική ένταση» και η «Ταινία» τον ρυθμίζουν κανονικά, και η σίγαση τον κλείνει.
-  (Η ηχώ της αίθουσας και τα μπάσα δεν μπορούν να τον πιάσουν: ο ήχος βγαίνει από
-  τον δικό τους player.)
-- **Υπότιτλοι YouTube: διακόπτης στην «Οθόνη».** Το YouTube άνοιγε υπότιτλους από
-  μόνο του. Τώρα είναι **κλειστοί**, και τους ανοίγεις μόνο αν τους θέλεις.
-- **Καθαρή οθόνη με ένα κουμπί (🎬).** Στη μπάρα, εκεί που ήταν το ρυθμιστικό της
-  έντασης. Ένα πάτημα και φεύγουν **όλα**: μπάρα, οδηγίες, σημάδι στη μέση, το
-  «στην αίθουσα», το κουμπί της ταινίας. Μένει μόνο η ταινία. Επιστροφή με **L**
-  ή **Esc**, ή με δεξί κλικ.
-- Η ένταση συνεχίζει να είναι ένα κλικ μακριά: το ηχείο κάνει σίγαση, και το
-  ρυθμιστικό είναι στο πάνελ **«Ήχος» → «Γενική ένταση»**.
+- **YouTube sound finally listens to the bar.** Until now YouTube played at its
+  own level and no room control reached it. The master and film levels now set
+  it properly, and mute closes it. (The hall reverb and the sub still cannot
+  reach it: the sound comes out of their player.)
+- **YouTube subtitles: a switch in the Screen panel.** YouTube was turning
+  subtitles on by itself. They are now **off**, and you turn them on only if you
+  want them.
+- **A clean screen on one button (🎬).** On the bar, where the volume slider
+  used to be. One press and **everything** goes: the bar, the hints, the sight
+  in the middle, the "in the room" tag, the film button. Only the film is left.
+  Back with **L** or **Esc**, or with a right click.
+- The volume is still one click away: the speaker mutes, and the slider lives in
+  the **Sound** panel under the master level.
 
-## 0.13.0 · 14 Αυγούστου 2026
+## 0.13.0 · 14 August 2026
 
-- **Η αίθουσα ξαναστρώνει μόνη της.** Αν για οποιονδήποτε λόγο παίζει ταινία με
-  την κουρτίνα κλειστή ή τα φώτα αναμμένα, μέσα σε μισό δευτερόλεπτο η κουρτίνα
-  ανοίγει και τα φώτα πέφτουν. Δεν χρειάζεται να πατήσεις τίποτα.
-- **Το play πιάνει πάντα.** Πριν, αν η προηγούμενη ταινία είχε αφήσει την τελετή
-  στη μέση, η επόμενη ξεκινούσε χωρίς αυτήν.
-- **Η έκδοση γράφεται μόλις μπεις** («Virtual Cinema v0.13.0»), για να ξέρεις
-  αμέσως αν η σελίδα σου είναι παλιά και θέλει το κουμπί «Ενημέρωση».
+- **The hall puts itself right.** If for any reason a film is playing with the
+  curtain closed or the lights up, within half a second the curtain opens and
+  the lights come down. You do not have to press anything.
+- **Play always takes.** Before, if the previous film had left the ceremony
+  half done, the next one started without it.
+- **The version is written as you walk in** ("Virtual Cinema v0.13.0"), so you
+  know at once whether your page is old and wants the update button.
 
-## 0.12.0 · 14 Αυγούστου 2026
+## 0.12.0 · 14 August 2026
 
-- **Η ταινία ξεκινάει αμέσως.** Πατάς play και παίζει· η κουρτίνα ανοίγει και τα
-  φώτα κατεβαίνουν **από πάνω της**, μέσα στα πρώτα δευτερόλεπτα. Δεν περιμένεις
-  πια στο σκοτάδι.
-- **Τα φώτα της προβολής είναι δικά σου.** Τα τρία σκηνικά (Προβολή, Ημίφως,
-  Διάλειμμα) κρατάνε πλέον **και τις έξι** ρυθμίσεις, και η τελετή πηγαίνει
-  ακριβώς σε αυτά. Στα «Φώτα» υπάρχει **«Κράτα τα τωρινά φώτα ως»**: φτιάχνεις
-  την αίθουσα όπως τη θέλεις και την κάνεις προβολή με ένα κλικ.
-- **Το διάλειμμα έρχεται πέντε δευτερόλεπτα πριν το τέλος**, όπως σε αληθινή
-  αίθουσα, και **η κουρτίνα δεν ξανακλείνει** από μόνη της.
-- **Ένταση πάνω στη μπάρα**, δίπλα στον χρόνο: το ηχείο κάνει σίγαση και θυμάται
-  πού ήσουν, και η μπάρα ξετυλίγεται μόλις πας από πάνω. Ο μίκτης μένει στο
-  πάνελ «Ήχος».
-- **Η ποιότητα YouTube κατέβηκε στη μπάρα** και εμφανίζεται **μόνο όταν παίζει
-  YouTube**.
-- **Διακόπτης για τους ήχους του χώρου** (βήματα, καθίσματα, κόσμος, δωμάτιο),
-  για να ακούσεις τη διαφορά.
-- Και το μικρό ταμπελάκι με τον κόσμο και το μικρόφωνο μιλάει πια Αγγλικά.
+- **The film starts immediately.** You press play and it plays; the curtain
+  opens and the lights come down **over the top of it**, in the first few
+  seconds. No more waiting in the dark.
+- **The showtime lights are yours.** The three presets (Showtime, Half lights,
+  Interval) now hold **all six** settings, and the ceremony goes exactly there.
+  In Lights there is **Save the current lights as**: set the hall up the way you
+  want it and make it showtime with one click.
+- **The interval comes five seconds before the end**, the way it does in a real
+  hall, and **the curtain does not close again** on its own.
+- **Volume on the bar**, next to the time: the speaker mutes and remembers where
+  you were, and the slider unrolls as soon as you go near it. The mixing desk
+  stays in the Sound panel.
+- **YouTube quality moved down to the bar** and appears **only when YouTube is
+  playing**.
+- **A switch for the room's own sounds** (footsteps, seats, crowd, room), so you
+  can hear the difference.
+- And the small tag with the crowd and the microphone speaks English now too.
 
-## 0.11.0 · 14 Αυγούστου 2026
+## 0.11.0 · 14 August 2026
 
-- **Κάθε χώρος δείχνει μόνο τα δικά του.** Στο σινεμά βλέπεις κουρτίνες, μέγεθος
-  οθόνης, φωτάκια διαδρόμου, εξόδους, τελετή και θεατές. Στο σπίτι τρόμου μόνο
-  τα δικά του, στο ζεστό σαλόνι μόνο τα δικά του. Το πάνελ ξαναχτίζεται μόλις
-  περάσεις την πόρτα.
-- **Οι κουρτίνες είναι πια το πρώτο πράγμα** στο πάνελ «Οθόνη», και μπήκαν και
-  στο **δεξί κλικ**: «Ανοιχτές / Κλειστές», χωρίς ψάξιμο.
-- **Η τελετή πήγε στα «Φώτα»** (εκεί ανήκει) και **οι θεατές στη «Θέα»**.
-- **Η ουρά περιμένει εσένα.** Κανονικά πατάς «Επόμενη ταινία» και μπαίνει. Το
-  αυτόματο κενό είναι πλέον διακόπτης που τον ανοίγεις μόνο αν το θέλεις.
-- **Διορθώθηκαν τα Αγγλικά** παντού: σκηνικά φώτων, ονόματα ήχου και ομάδων,
-  θέες, λουκ εικόνας και όλες οι τιμές που έμεναν ελληνικές.
+- **Each place shows only its own.** In the cinema you see curtains, screen
+  format, aisle lights, exits, the ceremony and the audience. In the horror
+  house only its own, in the cosy room only its own. The panel is rebuilt as
+  soon as you go through the door.
+- **The curtains are now the first thing** in the Screen panel, and they went
+  into the **right click menu** as well: open or closed, no hunting.
+- **The ceremony moved to Lights** (where it belongs) and **the audience to
+  View**.
+- **The queue waits for you.** Normally you press next and it goes on. The
+  automatic gap is now a switch you turn on only if you want it.
+- **The English was fixed** everywhere: light presets, sound and group names,
+  views, picture looks and every value that was still coming out in Greek.
 
-## 0.10.0 · 14 Αυγούστου 2026
+## 0.10.0 · 14 August 2026
 
-- **Επαναφορά σε κάθε ρύθμιση.** Δίπλα σε κάθε μπάρα εμφανίζεται ένα μικρό ↺
-  μόλις την πειράξεις, και τη γυρνάει εκεί που ήταν. Κάθε σελίδα έχει και το
-  δικό της **«Επαναφορά όλων»**.
-- **Η ποιότητα YouTube έγινε κουμπιά**: Αυτόματη, 720p, 1080p, 1440p, 4K. Η
-  μπάρα ήταν λάθος ιδέα: το YouTube δίνει συγκεκριμένες ποιότητες, όχι συνεχή
-  κλίμακα, οπότε μια μπάρα υποσχόταν ακρίβεια που δεν υπάρχει.
-- **Οι κουρτίνες κινούνται πολύ πιο αργά**, όπως τριάντα κιλά βελούδο σε μοτέρ:
-  η διαδρομή κρατάει κοντά στα πέντε δευτερόλεπτα αντί για ενάμιση.
-- **Κουμπιά «Ανοιχτές / Κλειστές»** για τις κουρτίνες, μαζί με τη μπάρα, στο
-  πάνελ «Οθόνη». Δεν χρειάζεται πια να ψάχνεις την άκρη μιας μπάρας για να τις
-  κλείσεις.
+- **Undo on every setting.** A small ↺ appears beside every slider the moment
+  you touch it, and puts it back where it was. Every page has its own **Reset
+  all** too.
+- **YouTube quality became buttons**: Auto, 720p, 1080p, 1440p, 4K. The slider
+  was the wrong idea: YouTube gives specific qualities, not a continuous scale,
+  so a slider promised a precision that does not exist.
+- **The curtains move much more slowly**, like thirty kilos of velvet on a
+  motor: the travel takes close to five seconds instead of one and a half.
+- **Open and closed buttons** for the curtains, alongside the slider, in the
+  Screen panel. You no longer have to hunt for the end of a slider to close them.
 
-## 0.9.0 · 14 Αυγούστου 2026
+## 0.9.0 · 14 August 2026
 
-- **Ελληνικά και Αγγλικά.** Όλο το μενού, τα μηνύματα και οι μπάρες αλλάζουν
-  γλώσσα από το «Θέα», και η επιλογή σου θυμάται. Την πρώτη φορά ακολουθεί τη
-  γλώσσα του browser σου.
-- **Ουρά ταινιών.** Στο πεδίο του link υπάρχει πλέον και **«Στην ουρά»**, και
-  ένα νέο πάνελ δείχνει τι ακολουθεί, με κουμπιά για να παίξεις κάτι αμέσως ή
-  να το βγάλεις.
-- **Το κενό ανάμεσα στις ταινίες το ορίζεις εσύ**, από 5 δευτερόλεπτα ως 5
-  λεπτά. Η επόμενη ξεκινάει μόνο αφού η αίθουσα έχει ανάψει τα φώτα της, και
-  φέρνει μαζί της ολόκληρη την τελετή: φώτα κάτω, κουρτίνα, ταινία.
-- **Η κουρτίνα είναι πάντα κλειστή στην αρχή**, ό,τι κι αν είχες ρυθμίσει, ώστε
-  το πρώτο play να έχει πάντα κάτι να ανοίξει.
+- **Greek and English.** The whole menu, the messages and the sliders change
+  language from View, and it remembers your choice. The first time round it
+  follows your browser.
+- **A film queue.** The link field now also has **Add to queue**, and a new
+  panel shows what is coming, with buttons to play something now or take it out.
+- **You set the gap between films**, from 5 seconds to 5 minutes. The next one
+  only starts once the hall has brought its lights up, and it brings the whole
+  ceremony with it: lights down, curtain, film.
+- **The curtain is always closed at the start**, whatever you had set, so the
+  first play always has something to open.
 
-## 0.8.0 · 14 Αυγούστου 2026
+## 0.8.0 · 14 August 2026
 
-- **Τελετή προβολής.** Η αίθουσα σε περιμένει όπως μια αληθινή: φώτα αναμμένα,
-  κουρτίνα κλειστή. Πατάς play και **σβήνουν σιγά σιγά τα φώτα, ανοίγει η
-  κουρτίνα, και μόνο τότε ξεκινάει η ταινία**. Όταν τελειώσει, δέκα δευτερόλεπτα
-  σκοτάδι, μετά ανάβουν τα φώτα και κλείνει η κουρτίνα. Την κλείνεις από το
-  «Θέα», και δίπλα υπάρχει «Ξεκίνα αμέσως» για όποτε βιάζεσαι.
-- **Κόσμος στις θέσεις.** Μπαλόνια με avatar και όνομα κάθονται στα καθίσματα,
-  με μπάρα για το πόσοι είναι. Ο ίδιος αριθμός γεμίζει και τον ήχο: 36 άτομα
-  ακούγονται σαν 36 άτομα.
-- **Νέο μενού: η κονσόλα κάτω.** Μια μπάρα σαν τηλεχειριστήριο στο κάτω μέρος,
-  με το play, την ώρα και πέντε κουμπιά. Τα πάνελ ανοίγουν από πάνω της και
-  κλείνουν με ένα κλικ. Όσο δεν αγγίζεις τίποτα, η εικόνα είναι εντελώς καθαρή.
-- Το παλιό πάνελ της ταινίας ενσωματώθηκε στη μπάρα, οπότε δεν υπάρχουν πια
-  δύο πάνελ που λένε τα ίδια πράγματα.
-- Σε υπολογιστή χωρίς κάρτα γραφικών, η λάμψη ζωγραφίζεται πιο απλά αντί να
-  ρίχνει τη σελίδα.
+- **The screening ceremony.** The hall waits for you the way a real one does:
+  lights up, curtain closed. You press play and **the lights fade down, the
+  curtain opens, and only then does the film start**. When it ends, ten seconds
+  of dark, then the lights come up and the curtain closes. You switch it off
+  from View, and next to it there is a start now for when you are in a hurry.
+- **People in the seats.** Cards with an avatar and a name sit in the seats,
+  with a slider for how many. The same number fills the sound: 36 people sound
+  like 36 people.
+- **A new menu: the console at the bottom.** A bar like a remote control along
+  the bottom, with play, the time and five buttons. The panels open above it and
+  close with a click. As long as you touch nothing, the picture is completely
+  clean.
+- The old film panel was folded into the bar, so there are no longer two panels
+  saying the same things.
+- On a computer with no graphics card, the glow is drawn more simply instead of
+  taking the page down with it.
 
-## 0.7.0 · 14 Αυγούστου 2026
+## 0.7.0 · 14 August 2026
 
-- **Ζουμ με τη ρόδα του ποντικιού.** Γυρνάς προς τα μπρος και ο φακός κλείνει.
-  Αν συνεχίσεις μετά το τέρμα, μπαίνει μόνο του το **κινηματογραφικό κάδρο**.
-  Γυρνάς ανάποδα και ξετυλίγεται από τα ίδια σημεία, πίσω εκεί που ήσουν.
-- **Τα χρώματα της οθόνης βάφουν τον χώρο.** Μια πλατιά λίμνη φωτός πέφτει στη
-  μοκέτα μπροστά από την οθόνη, και το φως που γυρίζει από το πάτωμα χρωματίζει
-  όλη την αίθουσα. Μια κόκκινη σκηνή κάνει το δωμάτιο κόκκινο, όχι μπλε.
-- **Λίστες YouTube.** Κόλλα link λίστας (`playlist?list=...` ή βίντεο μέσα σε
-  λίστα) και παίζουν στη σειρά. Στο δεξί κλικ βρίσκεις «Επόμενο στη λίστα» με
-  το πού βρίσκεσαι, π.χ. 3 από 24.
-- **Ποιότητα εικόνας** σε δική της μπάρα. Στο YouTube η ποιότητα την αποφασίζει
-  το πόσο μεγάλος είναι ο player, οπότε η μπάρα αλλάζει ακριβώς αυτό. Σε δικό
-  σου αρχείο ρυθμίζει την ευκρίνεια πάνω στην οθόνη.
-- **Caps Lock** κρύβει και ξαναφέρνει το σημαδάκι στη μέση.
+- **Zoom on the mouse wheel.** Roll forward and the lens closes in. Keep going
+  past the end and the **cinematic frame** comes in by itself. Roll back and it
+  unwinds from the same points, back where you were.
+- **The screen colours paint the room.** A wide pool of light falls on the
+  carpet in front of the screen, and the light coming back off the floor
+  colours the whole hall. A red scene makes the room red, not blue.
+- **YouTube playlists.** Paste a list link (`playlist?list=...` or a video
+  inside a list) and they play in order. The right click menu has a next in the
+  list with your place in it, for example 3 of 24.
+- **Picture quality** on a slider of its own. On YouTube the quality is decided
+  by how big the player is, so the slider changes exactly that. On your own file
+  it sets the sharpness on the screen.
+- **Caps Lock** hides and brings back the little sight in the middle.
 
-## 0.6.0 · 14 Αυγούστου 2026
+## 0.6.0 · 14 August 2026
 
-- **Ο ήχος ξαναπαίζει από αριστερά και δεξιά.** Ο μίκτης έστελνε τα μπάσα δύο
-  φορές, μία μοιρασμένα στα ηχεία και μία μονοφωνικά και δυνατότερα, και η
-  μονοφωνική έπνιγε την άλλη. Μετρήθηκε: η διαφορά αριστερά δεξιά σε στροφή 90
-  μοιρών είχε πέσει στα 0.7 dB στο IMAX, τώρα είναι 3.4, και στο Σινεμά 6.1.
-- **Οι μπάρες του ήχου κάνουν πια δουλειά.** Η γενική ένταση είχε 4.6 dB
-  διαδρομή, τώρα 40. Η ηχώ κατέβαζε τη συνολική ένταση αντί να προσθέτει.
-- **Τα σκηνικά ήχου ξεχωρίζουν** πραγματικά μεταξύ τους.
-- **Άλμα με `Space`**, ίσα ίσα όσο πηδάει ένας άνθρωπος. Δεν σκαρφαλώνεις σε
-  καθίσματα και δεν βγαίνεις από το δωμάτιο.
-- **Καμία κίτρινη θέση** όταν πλησιάζεις. Ξέρεις πού θα κάτσεις.
-- **Έφυγαν τα ηχεία μπροστά από την οθόνη.** Σε αληθινό σινεμά είναι πίσω από
-  την οθόνη, γι' αυτό δεν τα βλέπεις ποτέ.
-- **Κουρτίνες που ανοιγοκλείνουν** με βάρος: μαζεύονται, καθυστερεί η μία πίσω
-  από την άλλη και κουνιούνται λίγο πριν σταθούν.
-- **Γράφεις την ώρα.** Κλικ στον χρόνο και πληκτρολογείς `1:21:04`.
-- **Τα φίλτρα εικόνας πιάνουν και στο YouTube** τώρα, όχι μόνο σε δικό σου αρχείο.
-- **Κάθεσαι στα δύο σπίτια**: καναπές, πολυθρόνα, και στο ζεστό σαλόνι ένα
-  παγκάκι στο παράθυρο. Ο καναπές κοιτάει επιτέλους την τηλεόραση.
-- **Δικές τους θέες σε κάθε δωμάτιο** με το `V`, και το κινηματογραφικό κάδρο
-  δουλεύει παντού.
-- **Το κάδρο βγαίνει με κλικ**, όχι μόλις κουνήσεις το ποντίκι, ώστε να μπορείς
-  να κοιτάς γύρω σου όσο η οθόνη γεμίζει το βλέμμα.
-- **Ξαναφτιαγμένο σπίτι τρόμου**: διάδρομος που πάει κάπου σκοτεινά, πόρτα
-  μισάνοιχτη, ταπετσαρία που ξεκολλάει, το σημάδι από ένα κάδρο που δεν είναι
-  πια εκεί. Μια καρέκλα που μετακινείται μόνο όταν δεν την κοιτάς, και κάτι που
-  στέκεται στο βάθος του διαδρόμου.
-- **Ξαναφτιαγμένο ζεστό σαλόνι**: άλλο σχήμα δωματίου, δοκάρια, τζάκι, γάτα που
-  κοιμάται, και **παράθυρο** με χιόνι έξω.
-- **Μέγεθος τηλεόρασης** ρυθμιζόμενο σε κάθε σπίτι.
+- **The sound plays from left and right again.** The mixing desk was sending
+  the bass twice, once spread across the speakers and once in mono and louder,
+  and the mono one was drowning the other. Measured: the left to right
+  difference on a 90 degree turn had fallen to 0.7 dB on IMAX, it is now 3.4,
+  and 6.1 on Cinema.
+- **The sound sliders actually do something now.** The master had 4.6 dB of
+  travel, it now has 40. The reverb was taking the overall level down instead of
+  adding to it.
+- **The sound presets really differ** from one another.
+- **Jump with `Space`**, just as far as a person jumps. You cannot climb onto
+  seats and you cannot get out of the room.
+- **No yellow seat** when you come near. You know where you are going to sit.
+- **The speakers in front of the screen are gone.** In a real cinema they are
+  behind the screen, which is why you never see them.
+- **Curtains that open and close** with weight: they gather, one lags behind the
+  other and they sway a little before they settle.
+- **You can type the time.** Click on the time and type `1:21:04`.
+- **The picture filters reach YouTube** now too, not only your own file.
+- **You can sit down in both houses**: sofa, armchair, and in the cosy room a
+  bench at the window. The sofa finally faces the television.
+- **Views of their own in each room** with `V`, and the cinematic frame works
+  everywhere.
+- **The frame leaves on a click**, not the moment you move the mouse, so you can
+  look around while the screen fills your vision.
+- **The horror house rebuilt**: a corridor that goes somewhere dark, a door left
+  ajar, wallpaper coming away, the mark of a picture that is not there any more.
+  A chair that only moves when you are not looking at it, and something standing
+  at the end of the corridor.
+- **The cosy room rebuilt**: a different room shape, beams, a fire, a sleeping
+  cat, and a **window** with snow outside.
+- **Television size** adjustable in each house.
 
-## 0.5.0 · 14 Αυγούστου 2026
+## 0.5.0 · 14 August 2026
 
-- **Δύο νέοι χώροι.** Από τις πίσω πόρτες της αίθουσας μπαίνεις σε ένα **σπίτι
-  τρόμου** με τηλεόραση, καναπέ και βροχή στο παράθυρο, ή σε ένα **ζεστό
-  σαλόνι** με τζάκι. Η ταινία σε ακολουθεί και παίζει στην τηλεόραση, με όλα τα
-  ίδια χειριστήρια. Πλησίασε την πόρτα και πάτα `F`.
-- **Ένταση τρόμου** με μπάρα: βροχή, κεραυνοί, τριξίματα, και πιο ψηλά πράγματα
-  που σέρνονται στο πάτωμα.
-- **Μίκτης ήχου.** Δικές σου μπάρες για ταινία, μπάσα, κόσμο, βήματα και χώρο,
-  με πέντε έτοιμα σκηνικά που μετά τα πειράζεις όπως θέλεις.
-- **Ambient από κόσμο**: όσο πιο γεμάτη η αίθουσα, τόσο περισσότερη ζωή γύρω
-  σου, με τυχαία βηχάκια και κινήσεις. Άδεια αίθουσα, απόλυτη ησυχία.
-- **Τα μπάσα φτιάχνουν την αίθουσα.** Ξεχωριστό κανάλι για τα χαμηλά, που δεν
-  περνάει από τα ηχεία της οθόνης, όπως ακριβώς το subwoofer ενός σινεμά.
-- **Πολλές θέες με το `V`**: πρώτο πρόσωπο, τελευταία σειρά, θάλαμος προβολής,
-  πλάγια, μπροστά από την οθόνη, πανοραμική.
-- **Κινηματογραφικό κάδρο με το `C`**: η οθόνη γεμίζει το βλέμμα σου, και
-  βγαίνεις μόλις κουνήσεις το ποντίκι.
-- **Φίλτρα εικόνας**: φωτεινότητα, αντίθεση, ζωντάνια, ζεστό ή ψυχρό, μεσαίοι
-  τόνοι, με τέσσερα έτοιμα λουκ.
-- **Λάμψη (bloom)** γύρω από την οθόνη, ρυθμιζόμενη.
-- Το πάνελ χωρίστηκε σε τμήματα που ανοιγοκλείνουν, γιατί έγιναν 26 μπάρες.
-- **Διορθώθηκε**: αν έβαζες αρχείο και μετά YouTube, έμενε το αρχείο από πάνω
-  και δεν έβλεπες το YouTube.
+- **Two new places.** Through the back doors of the hall you get into a **horror
+  house** with a television, a sofa and rain on the window, or a **cosy room**
+  with a fire. The film follows you and plays on the television, with all the
+  same controls. Walk up to the door and press `F`.
+- **A dread slider**: rain, lightning, creaking, and higher up things dragging
+  across the floor.
+- **A mixing desk.** Sliders of your own for the film, the sub, the crowd,
+  footsteps and the room, with five presets you then change however you like.
+- **Ambience from the crowd**: the fuller the hall, the more life around you,
+  with the odd cough and shift. Empty hall, total quiet.
+- **The sub makes the hall.** A separate channel for the low end that does not
+  go through the screen speakers, exactly like a cinema subwoofer.
+- **Several views on `V`**: first person, back row, projection booth, from the
+  side, in front of the screen, wide.
+- **A cinematic frame on `C`**: the screen fills your vision, and you leave the
+  moment you move the mouse.
+- **Picture filters**: brightness, contrast, colour, warm or cool, mid tones,
+  with four presets.
+- **Glow (bloom)** around the screen, adjustable.
+- The panel was split into sections that open and close, because it had got to
+  26 sliders.
+- **Fixed**: if you loaded a file and then YouTube, the file stayed on top and
+  you could not see the YouTube.
 
-## 0.4.0 · 14 Αυγούστου 2026
+## 0.4.0 · 14 August 2026
 
-- **Το ποντίκι δεν τραντάζεται πια.** Η ματιά διαβάζεται κατευθείαν από την
-  κίνηση του ποντικιού, χωρίς τον γύρο από την κάμερα και πίσω που έκανε τα
-  γρήγορα στριψίματα να πηδάνε. Τα αφύσικα πηδήματα του browser αγνοούνται και
-  ζητάμε «ωμή» κίνηση, χωρίς την επιτάχυνση των Windows.
-- **Πιο μικρά καθίσματα.** Η πλάτη κόπηκε και το ύψος των ματιών ανέβηκε, οπότε
-  η μπροστινή σειρά δεν μπαίνει πια μέσα στο κάτω μέρος της εικόνας.
-- **Μπαίνεις χωρίς να βάλεις ταινία.** Το κουμπί λέει «Μπες στην αίθουσα» και
-  σε βάζει μέσα. Η ταινία μπαίνει όποτε θέλεις εσύ, ή ποτέ.
-- **Ενημέρωση μόνο όταν την πατήσεις.** Τέρμα τα ξαφνικά refresh: όταν υπάρχει
-  νέα έκδοση, εμφανίζεται ένα διακριτικό μήνυμα κάτω δεξιά και ενημερώνεις εσύ.
-- **Changelog μέσα στην εφαρμογή**, από το μενού με το δεξί κλικ.
-- Οι σκιές υπολογίζονται μία φορά αντί για κάθε καρέ, που είναι και πιο γρήγορο.
+- **The mouse does not judder any more.** The look is read straight off the
+  mouse movement, without the trip out to the camera and back that made fast
+  turns jump. The browser's unnatural jumps are ignored and we ask for raw
+  movement, without the Windows acceleration.
+- **Smaller seats.** The back was cut down and eye height went up, so the front
+  row no longer climbs into the bottom of the picture.
+- **You go in without putting a film on.** The button says enter the room and
+  puts you in. The film goes on whenever you want, or never.
+- **Updates only when you press them.** No more sudden refreshes: when there is
+  a new version, a quiet message appears at the bottom right and you update.
+- **A changelog inside the app**, from the right click menu.
+- Shadows are worked out once instead of every frame, which is faster too.
 
-## 0.3.0 · 14 Αυγούστου 2026
+## 0.3.0 · 14 August 2026
 
-- **Οθόνη πολύ πιο μεγάλη**, με τρία μεγέθη: Πανοραμική 2.39:1, Σινεμά 1.85:1
-  και Τηλεόραση 16:9. Αλλάζουν με μαύρες μάσκες που κλείνουν στα πλάγια, όπως
-  σε αληθινή αίθουσα.
-- **Παίζουν links από YouTube και Vimeo**, πάνω στην οθόνη και σε προοπτική.
-- **Δεξί κλικ = το μενού της αίθουσας**, όχι το «αντιγραφή / επικόλληση» του
-  browser.
-- **Ο ήχος ξαναφτιάχτηκε σαν αληθινό σινεμά**: κοντή και σκούρα ηχώ, σχεδόν
-  μηδενικός αέρας χώρου, βήματα μπάσα και πνιγμένα με ένα κοφτό χτύπημα από
-  τους τοίχους.
-- **Καθαρό πάτωμα.** Τα φωτάκια του διαδρόμου ξεκινούν κλειστά, και κάθε φως
-  έχει πλέον δική του μπάρα (αίθουσα, οθόνη, ζεστό/ψυχρό, διάδρομος, έξοδοι,
-  γενική φωτεινότητα).
-- Μεγαλύτερη αίθουσα, περισσότερες θέσεις, κουμπί «Δοκιμή» για τους ήχους.
+- **A much bigger screen**, with three formats: Scope 2.39:1, Flat 1.85:1 and
+  Widescreen 16:9. They change with black masks closing in from the sides, the
+  way they do in a real hall.
+- **YouTube and Vimeo links play**, on the screen and in perspective.
+- **Right click is the room menu**, not the browser's copy and paste.
+- **The sound was rebuilt like a real cinema**: short dark reverb, almost no
+  room air, low muffled footsteps with one sharp knock off the walls.
+- **A clean floor.** The aisle lights start off, and every light now has a
+  slider of its own (house, screen, warm or cool, aisle, exits, overall
+  exposure).
+- A bigger hall, more seats, a test button for the sounds.
 
-## 0.2.0 · 14 Αυγούστου 2026
+## 0.2.0 · 14 August 2026
 
-- **Ρυθμιζόμενος φωτισμός** με πάνελ πάνω δεξιά, τρία έτοιμα σκηνικά και τα
-  πλήκτρα `[` `]`. Τα φώτα ανεβαίνουν σιγά σιγά, σαν αληθινό dimmer.
-- **Ήχοι αίθουσας**: βήματα στη μοκέτα, κάθισμα που ανοίγει και κλείνει, κλικ
-  και τικ στα χειριστήρια. Όλα φτιάχνονται τη στιγμή που ακούγονται, χωρίς
-  κανένα αρχείο ήχου.
-- Διορθώθηκε το σφάλμα που δεν άφηνε την κύρια σελίδα να ανοίξει καθόλου.
+- **Adjustable lighting** with a panel at the top right, three presets and the
+  `[` `]` keys. The lights come up slowly, like a real dimmer.
+- **Room sounds**: footsteps on the carpet, a seat opening and closing, clicks
+  and ticks on the controls. All made at the moment you hear them, with no
+  sound files at all.
+- Fixed the error that stopped the main page opening at all.
 
 ## 0.1.0
 
-- Η πρώτη αίθουσα: 3D χώρος, περπάτημα σε πρώτο πρόσωπο, καθίσματα, ταινία
-  στην οθόνη με χωρικό ήχο, και σύνδεση πολλών θεατών.
+- The first hall: a 3D room, first person walking, seats, a film on the screen
+  with spatial sound, and more than one viewer connected.

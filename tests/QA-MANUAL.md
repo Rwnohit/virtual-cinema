@@ -1,272 +1,269 @@
-# Κατάλογος ελέγχου (χειροκίνητα)
+# Manual QA checklist
 
-Απλός έλεγχος με τα χέρια, για τον γύρο με τη **σκοτεινή αίθουσα**, το
-**περπάτημα σε πρώτο πρόσωπο** και το **δικό σου βίντεο**.
-Θέλει 10 λεπτά και μπορεί να τον κάνει και ο πελάτης μόνος του.
+A plain hands-on pass, for the round with the **dark hall**, the **first person
+walking** and **your own video**. It takes 10 minutes and somebody outside the
+project can run it on their own.
 
-## Πριν ξεκινήσεις
+## Before you start
 
-Άνοιξε δύο παράθυρα τερματικού μέσα στον φάκελο του έργου:
-
-```bash
-npm run server   # παράθυρο 1 (χρειάζεται μόνο για πολλούς θεατές)
-npm run dev      # παράθυρο 2
-```
-
-Μετά άνοιξε το **http://localhost:5173** και βάλε ακουστικά.
-
----
-
-## Α. Ο βασικός γύρος
-
-Κάνε τα βήματα με τη σειρά. Τσέκαρε το κουτάκι όταν δεις αυτό που λέει η
-δεξιά στήλη.
-
-| # | Τι κάνω | Τι πρέπει να δω | ✔ |
-|---|---------|-----------------|---|
-| 1 | Ανοίγω το `http://localhost:5173` | Μέσα σε λίγα δευτερόλεπτα φορτώνει η αίθουσα και βλέπω **«Μπες στην αίθουσα»** | [ ] |
-| 2 | Πατάω **«Μπες στην αίθουσα»** χωρίς να έχω βάλει ταινία | Μπαίνω κανονικά μέσα. **Δεν** μου ζητάει αρχείο, δεν ανοίγει κανένα παράθυρο | [ ] |
-| 3 | Κοιτάω τον δείκτη του ποντικιού | Ο δείκτης έχει εξαφανιστεί, το ποντίκι κλείδωσε στη σελίδα | [ ] |
-| 4 | Κουνάω το ποντίκι δεξιά και αριστερά | Το βλέμμα ακολουθεί ομαλά, χωρίς τραντάγματα, και δεν γυρίζει ανάποδα | [ ] |
-| 5 | **Κουνάω το ποντίκι πολύ γρήγορα, με απότομες στροφές** | **Καμία αναπήδηση, καμία στιγμιαία «τούμπα»**, η εικόνα ακολουθεί το χέρι | [ ] |
-| 6 | Κοιτάω πολύ ψηλά και πολύ χαμηλά | Σταματάει στο πάνω και στο κάτω όριο, δεν κάνει τούμπα | [ ] |
-| 7 | Πατάω `W` | Προχωράω μπροστά | [ ] |
-| 8 | Πατάω `S` `A` `D` | Πάω πίσω, αριστερά, δεξιά, πάντα σε σχέση με το πού κοιτάω | [ ] |
-| 9 | Πάω πάνω σε τοίχο και σε καθίσματα | Με σταματάει, δεν περνάω μέσα από τίποτα και δεν βγαίνω έξω από την αίθουσα | [ ] |
-| 10 | Πλησιάζω ένα ελεύθερο κάθισμα | Το κάθισμα ξεχωρίζει και μου λέει ότι μπορώ να καθίσω | [ ] |
-| 11 | Πατάω `E` | Κάθομαι στο κάθισμα, στο ύψος των ματιών, κοιτώντας την οθόνη | [ ] |
-| 12 | **Κάθομαι και κοιτάω ίσια την οθόνη** | **Η μπροστινή σειρά μένει χαμηλά, δεν μπαίνει μέσα στην εικόνα** | [ ] |
-| 13 | Κουνάω το ποντίκι ενώ κάθομαι | Κοιτάω γύρω μου κανονικά, αλλά δεν φεύγω από τη θέση | [ ] |
-| 14 | Πατάω ξανά `E` | Σηκώνομαι και ξαναπερπατάω | [ ] |
-| 15 | Πατάω `V` | Βλέπω όλη την αίθουσα από ψηλά, σαν πανοραμική | [ ] |
-| 16 | Πατάω ξανά `V` | Γυρίζω πίσω στα μάτια μου, στο ίδιο σημείο που ήμουν | [ ] |
-| 17 | Κοιτάω γενικά την αίθουσα | Είναι **σκοτεινή**. Το φως έρχεται από την οθόνη, όχι από λάμπες | [ ] |
-| 18 | Κοιτάω τοίχους και καθίσματα την ώρα που αλλάζει η σκηνή της ταινίας | Το φως πάνω τους αλλάζει μαζί με την ταινία | [ ] |
-| 19 | Πατάω `Esc` | Το ποντίκι ξεκλειδώνει και ξαναβλέπω τον δείκτη και το πάνελ της ταινίας | [ ] |
-
-- [ ] **Το Α πέρασε**
-
-## Β. Βάζω δικό μου βίντεο
-
-Το πάνελ **«Προβολή ταινίας»** είναι κάτω κάτω στη μέση. Κρύβεται όσο είναι
-κλειδωμένο το ποντίκι, οπότε πάτα πρώτα `Esc` για να το δεις.
-
-| # | Τι κάνω | Τι πρέπει να δω | ✔ |
-|---|---------|-----------------|---|
-| 1 | Πατάω `Esc` | Εμφανίζεται το πάνελ «Προβολή ταινίας» | [ ] |
-| 2 | Πατάω το κουμπί **Αρχείο** και διαλέγω ένα δικό μου βίντεο από τον υπολογιστή | Το βίντεο εμφανίζεται στην οθόνη της αίθουσας | [ ] |
-| 3 | Πατάω το ▶ | Η ταινία ξεκινάει και ο χρόνος τρέχει | [ ] |
-| 4 | Σέρνω τη μπάρα του χρόνου | Η ταινία πάει στο σημείο που διάλεξα | [ ] |
-| 5 | Κοιτάω το σχήμα της εικόνας | Δεν είναι τεντωμένη ούτε πλακουτσωτή, ό,τι διαστάσεις κι αν έχει το βίντεο | [ ] |
-| 6 | Βάζω ένα link σε βίντεο στο πεδίο δίπλα και πατάω **Παίξε** | Παίζει και αυτό | [ ] |
-| 7 | Βάζω ένα λάθος link επίτηδες | Μου το λέει με μήνυμα, δεν κολλάει η σελίδα | [ ] |
-| 8 | Γράφω μέσα στο πεδίο του link τα γράμματα `w` `a` `s` `d` | Γράφονται κανονικά, **δεν** περπατάω μέσα στην αίθουσα | [ ] |
-| 9 | Ξαναμπαίνω στην αίθουσα με κλικ | Η ταινία μου συνεχίζει να παίζει | [ ] |
-
-**Από YouTube**
-
-| # | Τι κάνω | Τι πρέπει να δω | ✔ |
-|---|---------|-----------------|---|
-| 10 | Κολλάω ένα link `youtube.com/watch?v=...` και πατάω **Παίξε** | Το βίντεο παίζει πάνω στην οθόνη της αίθουσας, σε προοπτική | [ ] |
-| 11 | Περπατάω και το κοιτάω από πλάγια | Η εικόνα γέρνει μαζί με την οθόνη, δεν είναι κολλημένη στο τζάμι | [ ] |
-| 12 | Πατάω παύση και ένταση από το πάνελ | Υπακούει, και ο χρόνος στη μπάρα τρέχει σωστά | [ ] |
-| 13 | Διαβάζω το μήνυμα κάτω από τα κουμπιά | Μου λέει ότι ο ήχος βγαίνει από τον player του YouTube | [ ] |
-| 14 | Βάζω το μέγεθος οθόνης σε **16:9** | Η εικόνα γεμίζει την οθόνη χωρίς μαύρα στα πλάγια | [ ] |
-| 15 | Ξαναφορτώνω ένα δικό μου αρχείο | Το YouTube φεύγει και η οθόνη γίνεται πάλι κανονική | [ ] |
-| 16 | Κοιτάω κάτι που στέκεται μπροστά από την οθόνη (ηχείο, κάθισμα) | Το κρύβει κανονικά, δεν περνάει η εικόνα από μέσα του | [ ] |
-
-- [ ] **Το Β πέρασε**
-
-## Β2. Το μέγεθος της οθόνης και το δεξί κλικ
-
-| # | Τι κάνω | Τι πρέπει να δω | ✔ |
-|---|---------|-----------------|---|
-| 1 | Στο πάνελ, πατάω **Σινεμά 1.85:1** | Οι μαύρες μάσκες κλείνουν από τα πλάγια και η εικόνα στενεύει | [ ] |
-| 2 | Πατάω **Τηλεόραση 16:9** | Στενεύει κι άλλο, το ύψος μένει ίδιο | [ ] |
-| 3 | Πατάω **Πανοραμική 2.39:1** | Οι μάσκες ανοίγουν τέρμα και η οθόνη πιάνει όλο τον τοίχο | [ ] |
-| 4 | Κάνω **δεξί κλικ** μέσα στην αίθουσα | Ανοίγει το δικό μας μενού, **όχι** το «αντιγραφή / επικόλληση» του browser | [ ] |
-| 5 | Κάνω δεξί κλικ ενώ το ποντίκι είναι κλειδωμένο | Το ποντίκι ελευθερώνεται και το μενού ανοίγει στη μέση | [ ] |
-| 6 | Διαλέγω κάτι από το μενού | Γίνεται αυτό που λέει και το μενού κλείνει | [ ] |
-| 7 | Κάνω δεξί κλικ μέσα στο πεδίο του link | Εδώ βγαίνει κανονικά το μενού του browser, για επικόλληση | [ ] |
-| 8 | Κάνω δεξί κλικ και πατάω `Esc` | Το μενού κλείνει χωρίς να γίνει τίποτα | [ ] |
-
-- [ ] **Το Β2 πέρασε**
-
-## Γ. Τα φώτα της αίθουσας
-
-Το πάνελ **«Αίθουσα»** είναι πάνω δεξιά. Κρύβεται όσο περπατάς, οπότε
-πάτα `L` για να το δεις.
-
-| # | Τι κάνω | Τι πρέπει να δω | ✔ |
-|---|---------|-----------------|---|
-| 1 | Πατάω `L` μέσα από την αίθουσα | Ελευθερώνεται το ποντίκι και εμφανίζεται το πάνελ των φώτων | [ ] |
-| 2 | Σέρνω τη μπάρα **Φώτα αίθουσας** προς τα πάνω | Τα φώτα ανεβαίνουν **σιγά σιγά**, όχι απότομα, και βλέπω τοίχους και ταβάνι | [ ] |
-| 3 | Την κατεβάζω πάλι στο 0 | Η αίθουσα ξανασκοτεινιάζει, μένει μόνο το φως της οθόνης και οι λάμπες ασφαλείας | [ ] |
-| 4 | Πατάω **Διάλειμμα** | Τα φώτα ανάβουν και το κουμπί μένει πατημένο | [ ] |
-| 5 | Πατάω **Προβολή** | Τα φώτα σβήνουν πάλι | [ ] |
-| 6 | Σέρνω τη **Λάμψη οθόνης** στο 0 | Η ταινία παίζει, αλλά δεν φωτίζει πια τον χώρο | [ ] |
-| 7 | Τη σέρνω στο 200% | Η αίθουσα πλημμυρίζει από το φως της ταινίας | [ ] |
-| 8 | Σέρνω το **Ζεστό ή ψυχρό** δεξιά, με τα φώτα αναμμένα | Το φως γίνεται λευκό σαν μέρας, από κίτρινο που ήταν | [ ] |
-| 9 | **Κοιτάω το πάτωμα με τα φώτα σβηστά** | **Καθαρή μοκέτα, χωρίς πορτοκαλί κηλίδες** | [ ] |
-| 10 | Σέρνω τα **Φωτάκια διαδρόμου** στο 100% | Τώρα και μόνο τώρα εμφανίζονται τα φωτάκια στα σκαλιά | [ ] |
-| 11 | Σέρνω τις **Πινακίδες εξόδου** στο 0 | Οι έξοδοι σταματάνε να ρίχνουν πράσινο γύρω τους | [ ] |
-| 12 | Σέρνω τη **Φωτεινότητα εικόνας** πάνω και κάτω | Όλη η εικόνα ανοίγει και σκουραίνει μαζί | [ ] |
-| 13 | Ξαναμπαίνω στην αίθουσα και πατάω `]` τρεις φορές | Τα φώτα ανεβαίνουν ανά 10% και μου το γράφει στη μέση της οθόνης | [ ] |
-| 14 | Πατάω `[` τρεις φορές | Κατεβαίνουν πάλι το ίδιο | [ ] |
-| 15 | Κλείνω και ξανανοίγω τη σελίδα | Οι ρυθμίσεις των φώτων είναι όπως τις άφησα | [ ] |
-
-- [ ] **Το Γ πέρασε**
-
-## Δ. Οι ήχοι της αίθουσας
-
-Με ακουστικά, και με την ταινία σε **παύση** για να ακούγονται καθαρά.
-
-| # | Τι κάνω | Τι πρέπει να ακούσω | ✔ |
-|---|---------|---------------------|---|
-| 1 | Περπατάω με `W` | Βήματα σε μοκέτα, ένα ένα, στον ρυθμό του βηματισμού | [ ] |
-| 2 | Σταματάω | Σταματάνε αμέσως και τα βήματα, δεν συνεχίζουν από μόνα τους | [ ] |
-| 3 | Τρέχω με `Shift` | Τα βήματα πυκνώνουν και ακούγονται πιο δυνατά | [ ] |
-| 4 | Πάω πάνω σε τοίχο και συνεχίζω να πατάω `W` | Δεν ακούγονται βήματα, αφού δεν προχωράω | [ ] |
-| 5 | Κάθομαι με `E` | Ακούγεται το κάθισμα να ανοίγει και να δέχεται το βάρος | [ ] |
-| 6 | Σηκώνομαι με `E` | Ακούγεται το κάθισμα να κλείνει πίσω | [ ] |
-| 7 | Πατάω ένα κουμπί στο πάνελ των φώτων | Ακούγεται καθαρό κλικ | [ ] |
-| 8 | Σέρνω μια μπάρα | Ακούγονται μικρά τικ, ένα ανά σκαλοπάτι, όχι χαλί από θόρυβο | [ ] |
-| 9 | Στέκομαι ακίνητος και ακούω | Σχεδόν απόλυτη ησυχία, μόλις που ακούγεται ο αέρας. **Καμία «ατμόσφαιρα»** | [ ] |
-| 10 | Ακούω πίσω από κάθε βήμα | Ένα κοφτό, μπάσο «χτύπημα» από τους τοίχους, που κόβεται αμέσως. Καμία ουρά ηχούς | [ ] |
-| 11 | Πατάω το κουμπί **Δοκιμή** δίπλα στην ένταση | Ακούγονται με τη σειρά: δύο βήματα, κάθισμα, διακόπτης | [ ] |
-| 12 | Κατεβάζω τη μπάρα **Ήχοι αίθουσας** στο 0 | Σιωπή. Ο ήχος της ταινίας συνεχίζει κανονικά | [ ] |
-| 13 | Την ξανανεβάζω | Οι ήχοι επιστρέφουν αμέσως | [ ] |
-
-- [ ] **Το Δ πέρασε**
-
-## Ε. Ο ήχος της ταινίας
-
-| # | Τι κάνω | Τι πρέπει να δω | ✔ |
-|---|---------|-----------------|---|
-| 1 | Ακούω με ακουστικά, κοιτώντας την οθόνη | Ο ήχος έρχεται μπροστά μου | [ ] |
-| 2 | Γυρίζω την πλάτη στην οθόνη | Ο ήχος έρχεται από πίσω μου | [ ] |
-| 3 | Γυρίζω αριστερά ώστε η οθόνη να μείνει δεξιά μου | Ο ήχος ακούγεται πιο πολύ από το δεξί αυτί | [ ] |
-| 4 | Πάω στην τελευταία σειρά | Ο ήχος χαμηλώνει σιγά σιγά, δεν κόβεται απότομα | [ ] |
-| 5 | Κουνάω τη μπάρα **«Αίθουσα»** στο πάνελ | Αλλάζει η ηχώ, σαν να αλλάζει το μέγεθος του χώρου | [ ] |
-| 6 | Κατεβάζω την ένταση τέρμα και την ξανανεβάζω | Ακολουθεί αμέσως | [ ] |
-| 7 | Αλλάζω καρτέλα και γυρίζω πίσω | Εικόνα και ήχος είναι μαζί, δεν έχουν ξεκολλήσει | [ ] |
-
-- [ ] **Το Ε πέρασε**
-
-## ΣΤ. Πολλοί θεατές (αν τρέχει ο server)
-
-| # | Τι κάνω | Τι πρέπει να δω | ✔ |
-|---|---------|-----------------|---|
-| 1 | Ανοίγω 2ο παράθυρο σε ανώνυμη περιήγηση, στο ίδιο link | Μπαίνει στην ίδια αίθουσα | [ ] |
-| 2 | Κοιτάω από το 1ο παράθυρο | Βλέπω τον 2ο θεατή μέσα στην αίθουσα | [ ] |
-| 3 | Κάθομαι με `E` στο ένα | Στο άλλο φαίνεται ότι κάθισε, στο ίδιο ακριβώς κάθισμα | [ ] |
-| 4 | Περπατάω με το ένα | Στο άλλο η κίνηση είναι ομαλή, χωρίς αναπηδήσεις | [ ] |
-| 5 | Δίνω άδεια μικροφώνου και μιλάω | Ακούγεται στο άλλο παράθυρο, από τη μεριά που κάθεται | [ ] |
-| 6 | Κλείνω το 2ο παράθυρο | Ο θεατής φεύγει από την αίθουσα μέσα σε λίγα δευτερόλεπτα | [ ] |
-| 7 | Κοιτάω το τερματικό του server | Καμία κόκκινη γραμμή, ο server συνεχίζει να τρέχει | [ ] |
-
-- [ ] **Το ΣΤ πέρασε**
-
-## Ζ. Ενημερώσεις και changelog
-
-| # | Τι κάνω | Τι πρέπει να δω | ✔ |
-|---|---------|-----------------|---|
-| 1 | Ανοίγω τη σελίδα και κάθομαι μέσα στην αίθουσα λίγα λεπτά | **Καμία φορά δεν κάνει refresh από μόνη της** | [ ] |
-| 2 | (Όσο δουλεύουμε) αποθηκεύεται ένα αρχείο του έργου | Κάτω δεξιά βγαίνει «Νέα έκδοση έτοιμη». Η σελίδα **δεν** φορτώνει ξανά | [ ] |
-| 3 | Πατάω το **×** στο μήνυμα | Φεύγει και συνεχίζω ό,τι έκανα | [ ] |
-| 4 | Ξανακάνω δεξί κλικ | Στο μενού υπάρχει «Ενημέρωση σε νέα έκδοση» | [ ] |
-| 5 | Πατάω **Ενημέρωση** | Τώρα και μόνο τώρα φορτώνει η νέα έκδοση | [ ] |
-| 6 | Πατάω **«Τι άλλαξε»** στο πάνελ ή στο μενού | Ανοίγει ο κατάλογος αλλαγών, με την έκδοση που τρέχω από πάνω | [ ] |
-| 7 | Πατάω `Esc` ή κλικ έξω από το παράθυρο | Κλείνει, χωρίς να πειράξει τίποτα άλλο | [ ] |
-
-- [ ] **Το Ζ πέρασε**
-
-## Η. Τελευταία ματιά
-
-| # | Τι κάνω | Τι πρέπει να δω | ✔ |
-|---|---------|-----------------|---|
-| 1 | Ανοίγω την κονσόλα με `F12` | Καμία κόκκινη γραμμή | [ ] |
-| 2 | Γράφω `__cinema` και Enter | `ready: true` και όλα τα `started` σε `true` | [ ] |
-| 3 | Αλλάζω μέγεθος στο παράθυρο | Η εικόνα ακολουθεί, δεν κόβεται και δεν παραμορφώνεται | [ ] |
-| 4 | Το αφήνω ανοιχτό 10 λεπτά | Παραμένει ομαλό, δεν βαραίνει | [ ] |
-
-- [ ] **Το Η πέρασε**
-
----
-
-## Αυτόματοι έλεγχοι
+Open two terminal windows inside the project folder:
 
 ```bash
-npm test            # γρήγορα, χωρίς browser
-npm run test:browser  # ανοίγει αληθινό browser (θέλει Playwright)
+npm run server   # window 1 (only needed for more than one viewer)
+npm run dev      # window 2
 ```
 
-Όσα κομμάτια δεν έχουν φτάσει ακόμη βγαίνουν `skipped`, δεν κοκκινίζουν.
+Then open **http://localhost:5173** and put headphones on.
 
 ---
 
-## Ευρήματα από το τελευταίο τρέξιμο
+## A. The basic round
 
-Κατάσταση: **14 Αυγούστου 2026**, έκδοση **0.4.0**: ήρεμο ποντίκι, χαμηλά
-καθίσματα, είσοδος χωρίς ταινία, changelog και χειροκίνητη ενημέρωση.
+Do the steps in order. Tick the box when you see what the right hand column
+says.
 
-### ✅ `npm test`: 15 πέρασαν, 0 έσκασαν, 0 skipped
+| # | What I do | What I should see | ✔ |
+|---|-----------|-------------------|---|
+| 1 | Open `http://localhost:5173` | Within a few seconds the hall loads and I see **Enter the room** | [ ] |
+| 2 | Press **Enter the room** without having put a film on | I go straight in. It does **not** ask me for a file, no dialog opens | [ ] |
+| 3 | Look at the mouse pointer | The pointer is gone, the mouse has locked to the page | [ ] |
+| 4 | Move the mouse left and right | The view follows smoothly, no juddering, and it does not flip over | [ ] |
+| 5 | **Move the mouse very fast, with sharp turns** | **No snapping back, no momentary somersault**, the picture follows my hand | [ ] |
+| 6 | Look right up and right down | It stops at the top and bottom limit, it does not tumble | [ ] |
+| 7 | Press `W` | I walk forward | [ ] |
+| 8 | Press `S` `A` `D` | I go back, left, right, always relative to where I am looking | [ ] |
+| 9 | Walk into a wall and into seats | It stops me, I pass through nothing and I do not get out of the hall | [ ] |
+| 10 | Walk up to a free seat | The seat stands out and tells me I can sit | [ ] |
+| 11 | Press `E` | I sit in the seat, at eye height, facing the screen | [ ] |
+| 12 | **Sit and look straight at the screen** | **The front row stays low, it does not climb into the picture** | [ ] |
+| 13 | Move the mouse while seated | I look around normally, but I do not leave the seat | [ ] |
+| 14 | Press `E` again | I stand up and walk again | [ ] |
+| 15 | Press `V` | I see the whole hall from a wide shot | [ ] |
+| 16 | Press `V` again | I come back to my own eyes, in the same place I was | [ ] |
+| 17 | Look at the hall in general | It is **dark**. The light comes off the screen, not off lamps | [ ] |
+| 18 | Look at walls and seats as the film cuts to another scene | The light on them changes with the film | [ ] |
+| 19 | Press `Esc` | The mouse unlocks and I see the pointer and the control bar again | [ ] |
 
-Μπήκαν και τα εφτά κομμάτια (`scene`, `player`, `media`, `sound`, `update`,
-`room`, `net`) και ο `server/`. Ο έλεγχος με τους δύο ταυτόχρονους θεατές
-περνάει.
+- [ ] **A passed**
 
-### ✅ Η σελίδα δεν ξαναφορτώνει μόνη της
+## B. Putting my own video on
 
-Μετρήθηκε: αφήνουμε ένα σημάδι στη σελίδα, αλλάζουμε ένα αρχείο του έργου, και
-το σημάδι είναι ακόμη εκεί μετά. Στη θέση του refresh εμφανίστηκε το μήνυμα
-της νέας έκδοσης.
+The control bar is along the bottom. It hides while the mouse is locked, so
+press `Esc` first to see it.
 
-### ✅ `npm run test:browser`: 18 πέρασαν, 0 έσκασαν
+| # | What I do | What I should see | ✔ |
+|---|-----------|-------------------|---|
+| 1 | Press `Esc` | The control bar appears | [ ] |
+| 2 | Press the file button and choose one of my own videos | The video appears on the hall screen | [ ] |
+| 3 | Press ▶ | The film starts and the time runs | [ ] |
+| 4 | Drag the seek bar | The film goes to the point I picked | [ ] |
+| 5 | Look at the shape of the picture | It is neither stretched nor squashed, whatever the video's dimensions are | [ ] |
+| 6 | Put a video link in the field beside it and press **Play** | That plays too | [ ] |
+| 7 | Put a wrong link in on purpose | It tells me so with a message, the page does not hang | [ ] |
+| 8 | Type the letters `w` `a` `s` `d` inside the link field | They type normally, I do **not** walk around the hall | [ ] |
+| 9 | Go back into the hall with a click | My film carries on playing | [ ] |
 
-Σε αληθινό browser: μπήκαμε στην αίθουσα **χωρίς ταινία**, το δοκιμαστικό
-βίντεο μπήκε στην οθόνη και προχώρησε, το `W` περπάτησε και έβγαλε βήματα, το
-`E` έβαλε τον παίκτη στη θέση, τα φώτα ανέβηκαν και ξανακατέβηκαν, τα φωτάκια
-του διαδρόμου βρέθηκαν κλειστά και άναψαν όταν τους το ζήτησαν, η οθόνη άλλαξε
-και στα τρία μεγέθη (22.94 → 17.76 → 17.07 μέτρα πλάτος), το δεξί κλικ άνοιξε
-το δικό μας μενού, τα links YouTube και Vimeo αναγνωρίστηκαν, το μήνυμα της
-νέας έκδοσης εμφανίστηκε μόνο όταν του το ζήτησαν και ο κατάλογος αλλαγών
-διαβάστηκε, και οι ήχοι της αίθουσας έβγαλαν μετρήσιμο σήμα (η σιωπή μετρήθηκε
-0, για να μη λέει «πέρασε» ένα κύκλωμα που δεν παίζει τίποτα).
+**From YouTube**
 
-Η ματιά μετρήθηκε κιόλας: 20 κινήσεις των 40 pixel έδωσαν ακριβώς 1.60 rad
-στροφή, ένα αφύσικο πήδημα 9000 pixel αγνοήθηκε ολόκληρο, και το βλέμμα
-σταμάτησε στις 85 μοίρες πάνω και κάτω χωρίς να γυρίσει ανάποδα.
+| # | What I do | What I should see | ✔ |
+|---|-----------|-------------------|---|
+| 10 | Paste a `youtube.com/watch?v=...` link and press **Play** | The video plays on the hall screen, in perspective | [ ] |
+| 11 | Walk around and look at it from the side | The picture leans with the screen, it is not stuck to the glass | [ ] |
+| 12 | Press pause and change the volume from the bar | It obeys, and the time runs correctly | [ ] |
+| 13 | Read the note under the controls | It tells me the sound comes out of the YouTube player | [ ] |
+| 14 | Set the screen format to widescreen | The picture fills the screen with no black at the sides | [ ] |
+| 15 | Load one of my own files again | YouTube goes away and the screen is normal again | [ ] |
+| 16 | Look at something standing in front of the screen (a speaker, a seat) | It hides it properly, the picture does not come through it | [ ] |
 
-### ✅ Αληθινό link YouTube
+- [ ] **B passed**
 
-Δοκιμάστηκε με πραγματικό βίντεο: μπήκε στην οθόνη σε προοπτική, ξεκίνησε μόνο
-του, η μπάρα έδειξε σωστή διάρκεια (10:34) και τα ηχεία της σκηνής το έκρυβαν
-κανονικά από μπροστά. Γυρνώντας σε τοπικό αρχείο, η οθόνη επανήλθε.
+## B2. Screen format and the right click menu
 
-### Ένα που φάνηκε λάθος και δεν ήταν
+| # | What I do | What I should see | ✔ |
+|---|-----------|-------------------|---|
+| 1 | In the panel, press **Flat 1.85:1** | The black masks close in from the sides and the picture narrows | [ ] |
+| 2 | Press **Widescreen 16:9** | It narrows further, the height stays the same | [ ] |
+| 3 | Press **Scope 2.39:1** | The masks open all the way and the screen takes the whole wall | [ ] |
+| 4 | **Right click** inside the hall | Our menu opens, **not** the browser's copy and paste one | [ ] |
+| 5 | Right click while the mouse is locked | The mouse is released and the menu opens in the middle | [ ] |
+| 6 | Choose something from the menu | It does what it says and the menu closes | [ ] |
+| 7 | Right click inside the link field | Here the browser menu comes up normally, for pasting | [ ] |
+| 8 | Right click and press `Esc` | The menu closes without anything happening | [ ] |
 
-Στο δοκιμαστικό βίντεο (`public/sample.webm`) η χρωματιστή λωρίδα φαίνεται πιο
-φαρδιά από τις κάθετες μπάρες. Είναι έτσι μέσα στο ίδιο το αρχείο, δεν φταίει η
-προβολή: ελέγχθηκε βγάζοντας ένα καρέ κατευθείαν από το αρχείο.
+- [ ] **B2 passed**
 
-### ✅ Το `npm run build` ξαναδουλεύει
+## C. The house lights
 
-Ήταν σπασμένο, και μαζί του **και ολόκληρη η σελίδα στο `npm run dev`**: ο νέος
-vite σταματούσε στο `Failed to resolve import "./scene.js"`. Το `src/main.js`
-δοκίμαζε και εναλλακτικές διαδρομές (`./scene.js`, `./player.js` κ.λπ.) που δεν
-υπάρχουν στον δίσκο. Έμεινε **μία** διαδρομή ανά κομμάτι και έφτιαξαν και τα
-δύο.
+The room panel hides while you walk, so press `L` to see it.
 
-### Ένα μικρό
+| # | What I do | What I should see | ✔ |
+|---|-----------|-------------------|---|
+| 1 | Press `L` from inside the hall | The mouse is released and the lights panel appears | [ ] |
+| 2 | Drag **House lights** upwards | The lights come up **slowly**, not abruptly, and I see walls and ceiling | [ ] |
+| 3 | Take it back down to 0 | The hall goes dark again, only the screen light and the safety lamps are left | [ ] |
+| 4 | Press **Interval** | The lights come up and the button stays pressed | [ ] |
+| 5 | Press **Showtime** | The lights go out again | [ ] |
+| 6 | Drag **Screen glow** to 0 | The film plays, but it no longer lights the room | [ ] |
+| 7 | Drag it to 200% | The hall floods with the light of the film | [ ] |
+| 8 | Drag **Warm or cool** to the right, with the lights up | The light goes daylight white, from the yellow it was | [ ] |
+| 9 | **Look at the floor with the lights out** | **Clean carpet, no orange patches** | [ ] |
+| 10 | Drag **Aisle lights** to 100% | Now and only now do the little lights on the steps appear | [ ] |
+| 11 | Drag **Exit signs** to 0 | The exits stop throwing green around themselves | [ ] |
+| 12 | Drag **Exposure** up and down | The whole picture opens up and darkens with it | [ ] |
+| 13 | Go back into the hall and press `]` three times | The lights come up in steps of 10% and it tells me in the middle of the screen | [ ] |
+| 14 | Press `[` three times | They go back down the same way | [ ] |
+| 15 | Close and reopen the page | The light settings are as I left them | [ ] |
 
-Υπάρχει το `server/smoke-test.js`. Δεν τρέχει με το `npm test`, γιατί αυτό
-κοιτάει μόνο τον φάκελο `tests/`. Αν πρέπει να μπει στη σειρά, πείτε μου να το
-προσθέσω στο script.
+- [ ] **C passed**
+
+## D. The room's own sounds
+
+With headphones, and with the film **paused** so they can be heard clearly.
+
+| # | What I do | What I should hear | ✔ |
+|---|-----------|--------------------|---|
+| 1 | Walk with `W` | Footsteps on carpet, one at a time, in step with the walking | [ ] |
+| 2 | Stop | The footsteps stop at once, they do not carry on by themselves | [ ] |
+| 3 | Run with `Shift` | The footsteps get closer together and louder | [ ] |
+| 4 | Walk into a wall and keep pressing `W` | No footsteps, because I am not going anywhere | [ ] |
+| 5 | Sit with `E` | The seat is heard opening and taking the weight | [ ] |
+| 6 | Stand with `E` | The seat is heard folding back | [ ] |
+| 7 | Press a button in the lights panel | A clean click | [ ] |
+| 8 | Drag a slider | Small ticks, one per step, not a carpet of noise | [ ] |
+| 9 | Stand still and listen | Almost total quiet, the air only just audible. **No "atmosphere"** | [ ] |
+| 10 | Listen behind each footstep | One sharp, low knock off the walls, cut off at once. No reverb tail | [ ] |
+| 11 | Press **Test the sounds** in the panel | In order: two footsteps, a seat, a switch | [ ] |
+| 12 | Take **Room sound effects** down to off | Silence. The film's sound carries on normally | [ ] |
+| 13 | Switch it back on | The sounds come straight back | [ ] |
+
+- [ ] **D passed**
+
+## E. The film's sound
+
+| # | What I do | What I should hear | ✔ |
+|---|-----------|--------------------|---|
+| 1 | Listen on headphones, facing the screen | The sound comes from in front of me | [ ] |
+| 2 | Turn my back on the screen | The sound comes from behind me | [ ] |
+| 3 | Turn left so the screen is on my right | The sound is heard more in the right ear | [ ] |
+| 4 | Walk to the back row | The sound drops away gradually, it does not cut | [ ] |
+| 5 | Move the **Room** slider in the panel | The reverb changes, as if the size of the place changed | [ ] |
+| 6 | Take the volume all the way down and back up | It follows immediately | [ ] |
+| 7 | Switch tabs and come back | Picture and sound are together, they have not come apart | [ ] |
+
+- [ ] **E passed**
+
+## F. More than one viewer (if the server is running)
+
+| # | What I do | What I should see | ✔ |
+|---|-----------|-------------------|---|
+| 1 | Open a second window in private browsing, on the same link | It joins the same hall | [ ] |
+| 2 | Look from the first window | I see the second viewer inside the hall | [ ] |
+| 3 | Sit with `E` in one | The other shows them seated, in exactly the same seat | [ ] |
+| 4 | Walk in one | In the other the movement is smooth, no snapping | [ ] |
+| 5 | Allow the microphone and talk | It is heard in the other window, from the side they are sitting on | [ ] |
+| 6 | Close the second window | The viewer leaves the hall within a few seconds | [ ] |
+| 7 | Look at the server terminal | No red lines, the server carries on running | [ ] |
+
+- [ ] **F passed**
+
+## G. Updates and the changelog
+
+| # | What I do | What I should see | ✔ |
+|---|-----------|-------------------|---|
+| 1 | Open the page and sit inside the hall for a few minutes | **Not once does it refresh on its own** | [ ] |
+| 2 | (While we are working) a project file is saved | "New version ready" appears at the bottom right. The page does **not** reload | [ ] |
+| 3 | Press the **×** on the message | It goes away and I carry on with what I was doing | [ ] |
+| 4 | Right click again | The menu has "Update to the new version" in it | [ ] |
+| 5 | Press **Update** | Now and only now does the new version load | [ ] |
+| 6 | Press **What changed** in the panel or the menu | The list of changes opens, with the version I am running above it | [ ] |
+| 7 | Press `Esc` or click outside the window | It closes, without touching anything else | [ ] |
+
+- [ ] **G passed**
+
+## H. A last look
+
+| # | What I do | What I should see | ✔ |
+|---|-----------|-------------------|---|
+| 1 | Open the console with `F12` | No red lines | [ ] |
+| 2 | Type `__cinema` and Enter | `ready: true` and every `started` at `true` | [ ] |
+| 3 | Resize the window | The picture follows, it is neither cropped nor distorted | [ ] |
+| 4 | Leave it open for 10 minutes | It stays smooth, it does not get heavy | [ ] |
+
+- [ ] **H passed**
 
 ---
 
-## Αν κάτι δεν πάει καλά
+## Automated checks
 
-Γράψε: τον αριθμό του βήματος, τι είδες, ποιον browser έχεις, και τι έγραφε
-η κονσόλα (`F12`) και το τερματικό του server.
+```bash
+npm test              # quick, no browser
+npm run test:browser  # opens a real browser (wants Playwright)
+npm run test:halls    # two browsers, one hall, shared screening
+```
+
+Pieces that have not arrived yet come out `skipped`, they do not go red.
+
+---
+
+## Findings from the last full run
+
+State: **14 August 2026**, version **0.4.0**: calm mouse, low seats, entry
+without a film, changelog and manual updating.
+
+### `npm test`: 15 passed, 0 failed, 0 skipped
+
+All seven pieces were in (`scene`, `player`, `media`, `sound`, `update`,
+`room`, `net`) plus `server/`. The two simultaneous viewers check passes.
+
+### The page does not reload on its own
+
+Measured: leave a mark on the page, change a project file, and the mark is
+still there afterwards. In place of the refresh, the new version message
+appeared.
+
+### `npm run test:browser`: 18 passed, 0 failed
+
+In a real browser: we went into the hall **without a film**, the test video
+went onto the screen and advanced, `W` walked and produced footsteps, `E` put
+the player in the seat, the lights went up and back down, the aisle lights were
+found off and came on when asked, the screen changed through all three formats
+(22.94 → 17.76 → 17.07 metres wide), right click opened our menu, YouTube and
+Vimeo links were recognised, the new version message appeared only when asked
+for and the change list was read, and the room sounds produced a measurable
+signal (silence measured 0, so that a circuit playing nothing cannot pass).
+
+The look was measured too: 20 movements of 40 pixels gave exactly 1.60 rad of
+turn, an unnatural 9000 pixel jump was ignored whole, and the view stopped at 85
+degrees up and down without flipping over.
+
+### A real YouTube link
+
+Tried with a real video: it went onto the screen in perspective, started on its
+own, the bar showed the right duration (10:34) and the stage speakers occluded
+it properly from the front. Going back to a local file, the screen recovered.
+
+### One that looked wrong and was not
+
+In the test video (`public/sample.webm`) the colour band looks wider than the
+vertical bars. It is like that inside the file itself, the projection is not at
+fault: checked by pulling a frame straight out of the file.
+
+### `npm run build` works again
+
+It was broken, and with it **the whole page under `npm run dev`**: the new vite
+stopped at `Failed to resolve import "./scene.js"`. `src/main.js` was also
+trying fallback paths (`./scene.js`, `./player.js` and so on) that do not exist
+on disk. **One** path per piece was left and both were fixed.
+
+### A small one
+
+There is `server/smoke-test.js`. It does not run under `npm test`, because that
+only looks at the `tests/` folder. If it should be in the run, say so and it
+goes into the script.
+
+---
+
+## If something goes wrong
+
+Write down: the step number, what you saw, which browser you have, and what the
+console (`F12`) and the server terminal said.

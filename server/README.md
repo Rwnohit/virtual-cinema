@@ -1,57 +1,58 @@
 # Multiplayer server (virtual 3D cinema)
 
-Κρατάει το ποιος είναι μέσα, πού κάθεται και πού κοιτάει, και παίζει τον
-ταχυδρόμο για το WebRTC. Η φωνή ΔΕΝ περνάει από εδώ, πάει peer to peer.
+Keeps track of who is in, where they are sitting and where they are looking,
+and plays postman for WebRTC. The voice does NOT go through here, it goes peer
+to peer.
 
-## Τρέξιμο
+## Running it
 
-Από τη ρίζα του έργου, όχι από εδώ μέσα:
+From the project root, not from in here:
 
 ```bash
 npm run server     # ws://localhost:8787
 ```
 
-Το `ws` είναι ήδη στο `package.json` της ρίζας, δεν θέλει δεύτερο
-`npm install` εδώ.
+`ws` is already in the root `package.json`, this folder does not want a second
+`npm install`.
 
-Έλεγχος ότι ζει: <http://localhost:8787/health>
+Check it is alive: <http://localhost:8787/health>
 
-Δέχεται σύνδεση σε οποιοδήποτε path, και σκέτο `ws://host:8787` (έτσι το
-φτιάχνει το `main.js`) και `ws://host:8787/ws`.
+It accepts a connection on any path, both a bare `ws://host:8787` (which is how
+`main.js` builds it) and `ws://host:8787/ws`.
 
-Ρυθμίσεις με env vars: `PORT` (8787), `HOST` (0.0.0.0), `WS_PATH` (κλειδώνει σε
-ένα μόνο path), `ALLOWED_ORIGINS` (λίστα με κόμμα, ή `*`).
+Settings come from env vars: `PORT` (8787), `HOST` (0.0.0.0), `WS_PATH` (pins it
+to a single path), `ALLOWED_ORIGINS` (comma separated list, or `*`).
 
-## Τεστ χωρίς browser
+## Testing without a browser
 
 ```bash
-npm run server              # σε ένα terminal
-node server/smoke-test.js   # σε άλλο
+npm run server              # in one terminal
+node server/smoke-test.js   # in another
 ```
 
-Ελέγχει join, poses, seats, seat conflicts, WebRTC relay και leave.
+Checks join, poses, seats, seat conflicts, WebRTC relay and leave.
 
-## Αρχεία
+## Files
 
-| Αρχείο | Τι κάνει |
+| File | What it does |
 | --- | --- |
-| `index.js` | HTTP health, WebSocket, snapshot loop 15 Hz, heartbeat |
-| `room.js` | Δωμάτια, peers, κατοχή θέσεων (πρώτος έρχεται, πρώτος κάθεται) |
-| `protocol.js` | Τα μηνύματα. Ίδιο αρχείο με το `src/net/protocol.js` |
-| `smoke-test.js` | 11 έλεγχοι end to end |
+| `index.js` | Serves the build, HTTP health, WebSocket, 15 Hz snapshot loop, heartbeat |
+| `room.js` | Rooms, peers, seat ownership (first come, first seated), the shared screening |
+| `protocol.js` | The messages. The same file as `src/net/protocol.js` |
+| `smoke-test.js` | 11 end to end checks |
 
-## Πρωτόκολλο με δυο λόγια
+## The protocol in a nutshell
 
-Client προς server: `hello`, `state`, `seat`, `sig`, `ping`
-Server προς client: `welcome`, `join`, `leave`, `snap`, `seats`, `seatno`, `pong`
+Client to server: `hello`, `state`, `seat`, `sig`, `ping`
+Server to client: `welcome`, `join`, `leave`, `snap`, `seats`, `seatno`, `pong`
 
-- `state` στέλνεται μόνο όταν κάτι αλλάζει, μέχρι 12 φορές το δευτερόλεπτο.
-- `snap` φεύγει 15 φορές το δευτερόλεπτο και περιέχει μόνο όσους κουνήθηκαν,
-  με ένα πλήρες keyframe κάθε 2 δευτερόλεπτα.
-- `sig` είναι τυφλή αναμετάδοση: ο server δεν κοιτάει ποτέ μέσα στο SDP.
+- `state` is only sent when something changes, up to 12 times a second.
+- `snap` goes out 15 times a second and carries only the people who moved, with
+  a full keyframe every 2 seconds.
+- `sig` is a blind relay: the server never looks inside the SDP.
 
-## Όρια
+## Limits
 
-24 άτομα ανά δωμάτιο, 16 KB ανά μήνυμα, 150 μηνύματα ανά δευτερόλεπτο ανά
-σύνδεση. Νεκρές συνδέσεις πέφτουν στα 25 δευτερόλεπτα, ώστε να μη μένουν
-φαντάσματα στις θέσεις.
+24 people per room, 16 KB per message, 150 messages per second per connection.
+Dead connections are dropped at 25 seconds, so no ghosts are left sitting in
+the seats.

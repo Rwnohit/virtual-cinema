@@ -1,35 +1,35 @@
 # Virtual Cinema
 
-Μια αίθουσα κινηματογράφου σε 3D, μέσα στον browser. Μπαίνεις, περπατάς,
-διαλέγεις κάθισμα, βάζεις όποια ταινία θέλεις και ακούς τους άλλους θεατές
-από τη μεριά που κάθονται.
+A 3D cinema hall, inside the browser. You walk in, pick a seat, put on whatever
+film you like, and hear the other people in the room from the direction they
+are actually sitting in.
 
-Η αίθουσα είναι σκοτεινή. Το φως έρχεται από την ίδια την οθόνη, οπότε
-αλλάζει μαζί με την ταινία.
+The hall is dark. The light comes off the screen itself, so it moves with the
+film.
 
-Πελάτης: Three.js. Server: Node με WebSocket για την παρουσία των χρηστών και
-WebRTC για τη φωνή.
+Client: Three.js. Server: Node, with a WebSocket for presence and WebRTC for
+voice.
 
 ---
 
-## Τι χρειάζεσαι
+## What you need
 
-- **Node.js 20 ή νεότερο** (`node -v` για να δεις τι έχεις)
-- Έναν σύγχρονο browser (Chrome, Edge, Firefox, Safari)
-- Ακουστικά, για να μην κάνει μικροφωνισμό η φωνή
+- **Node.js 20 or newer** (`node -v` to see what you have)
+- A current browser (Chrome, Edge, Firefox, Safari)
+- Headphones, so the voice chat does not feed back
 
-## Εγκατάσταση
+## Install
 
 ```bash
 cd virtual-cinema
 npm install
 ```
 
-Μία φορά, στην αρχή.
+Once, at the start.
 
-## Ξεκίνημα
+## Running it
 
-Θέλει **δύο τερματικά**, ένα για τον server και ένα για τη σελίδα.
+It wants **two terminals**, one for the server and one for the page.
 
 ```bash
 npm run server
@@ -39,399 +39,417 @@ npm run server
 npm run dev
 ```
 
-Μετά άνοιξε το **http://localhost:5173**.
+Then open **http://localhost:5173**.
 
-| Εντολή | Τι κάνει |
-|--------|----------|
-| `npm run dev` | Σηκώνει τη σελίδα (Vite) στο `localhost:5173` |
-| `npm run server` | Σηκώνει τον server επικοινωνίας στο `localhost:8787` |
-| `npm test` | Τρέχει τα γρήγορα smoke tests |
-| `npm run test:browser` | Ανοίγει αληθινό browser και ελέγχει σκηνή και ταινία |
-| `npm run build` | Φτιάχνει την έκδοση για ανέβασμα, στο `dist/` |
-| `npm run version:stamp` | Ξαναγράφει την έκδοση. Τρέχει μόνο του πριν από `dev` και `build` |
+| Command | What it does |
+|---------|--------------|
+| `npm run dev` | Serves the page (Vite) on `localhost:5173` |
+| `npm run server` | Runs the presence server on `localhost:8787` |
+| `npm test` | The quick smoke tests |
+| `npm run test:browser` | Opens a real browser and checks the scene and the film |
+| `npm run build` | Builds the deployable version into `dist/` |
+| `npm run version:stamp` | Rewrites the version. Runs on its own before `dev` and `build` |
+| `npm run ship` | Publishes the source and deploys, if the machine has a `deploy.env` |
 
-Χωρίς τον server η αίθουσα και η ταινία δουλεύουν κανονικά, απλά είσαι μόνος.
+Without the server the hall and the film work exactly the same, you are just
+on your own in there.
 
-## Πώς παίζεται
+## How it plays
 
-Μόλις ανοίξει η σελίδα, πάτα **«Μπες στην αίθουσα»**. Το ποντίκι κλειδώνει στη
-σελίδα και είσαι μέσα.
+Once the page loads, press **Enter the room**. The mouse locks to the page and
+you are inside.
 
-**Ταινία δεν χρειάζεται για να μπεις.** Μπορείς να τριγυρνάς σε άδεια αίθουσα
-όσο θέλεις και να βάλεις κάτι αργότερα, ή ποτέ. Αν ξέρεις ήδη τι θες να δεις,
-υπάρχει και το «Ή διάλεξε ταινία τώρα» από κάτω.
+**You do not need a film to go in.** You can wander around an empty hall for as
+long as you like and put something on later, or never. If you already know what
+you want to watch, there is **Or choose a film now** underneath.
 
-| Πλήκτρο | Τι κάνει |
-|---------|----------|
-| Ποντίκι | Κοιτάς γύρω σου |
-| `W` `A` `S` `D` | Περπατάς μπροστά, αριστερά, πίσω, δεξιά |
-| `Shift` | Τρέχεις |
-| `E` | Κάθεσαι στο κάθισμα που έχεις μπροστά σου, και σηκώνεσαι πάλι |
-| `V` | Βλέπεις όλη την αίθουσα από ψηλά, και γυρνάς πίσω |
-| `[` `]` | Χαμηλώνεις και ανεβάζεις τα φώτα της αίθουσας |
-| `V` | Αλλάζεις θέα μέσα στην αίθουσα (`Shift+V` πάει ανάποδα) |
-| `C` | Κινηματογραφικό κάδρο: η οθόνη γεμίζει το βλέμμα σου |
-| **Ρόδα ποντικιού** | Ζουμ. Συνέχισε μετά το τέρμα και μπαίνει στο κάδρο, γύρνα ανάποδα και βγαίνει |
-| `Caps Lock` | Κρύβει και ξαναφέρνει το σημαδάκι στη μέση |
-| `F` | Περνάς την πόρτα, όταν στέκεσαι μπροστά της |
-| `L` | Ανοίγει το πάνελ της αίθουσας, και σου δίνει πίσω το ποντίκι |
-| **Δεξί κλικ** | Το μενού της αίθουσας, όπου κι αν στέκεσαι |
-| `Esc` | Ξεκλειδώνει το ποντίκι (για να πιάσεις τα πάνελ) |
+| Key | What it does |
+|-----|--------------|
+| Mouse | Look around |
+| `W` `A` `S` `D` | Walk forward, left, back, right |
+| `Shift` | Run |
+| `Space` | Jump |
+| `E` | Sit down in the seat in front of you, and stand up again |
+| `V` | Change your view of the hall (`Shift+V` goes the other way) |
+| `[` `]` | Take the house lights down and up |
+| `C` | Cinematic frame: the screen fills your vision |
+| **Mouse wheel** | Zoom. Keep going past the end and it enters the frame, roll back and it leaves |
+| `Caps Lock` | Hides and brings back the little sight in the middle |
+| `F` | Go through the door, when you are standing in front of one |
+| `L` | Opens the room panel, and gives you the mouse back |
+| **Right click** | The room menu, wherever you happen to be standing |
+| `Esc` | Unlocks the mouse (so you can reach the panels) |
 
-**Το μενού με το δεξί κλικ**
+**The right click menu**
 
-Το δεξί κλικ δεν ανοίγει το μενού του browser με τα «αντιγραφή, επικόλληση».
-Ανοίγει το μενού της αίθουσας: παύση, άνοιγμα ταινίας, πλήρης οθόνη, μέγεθος
-οθόνης, φώτα, κάθισμα και θέα. Αν το ποντίκι ήταν κλειδωμένο, σου το δίνει
-πίσω και ανοίγει στη μέση της οθόνης. Μέσα σε πεδίο κειμένου το αφήνει ήσυχο,
-γιατί εκεί το μενού του browser είναι το χρήσιμο.
+Right click does not open the browser menu with copy and paste in it. It opens
+the room menu: pause, open a film, full screen, screen format, lights, seat and
+view. If the mouse was locked, it gives it back to you and opens in the middle
+of the screen. Inside a text field it leaves well alone, because there the
+browser menu is the useful one.
 
-**Κάθισμα**
+**Sitting down**
 
-1. Πλησίασε ένα ελεύθερο κάθισμα, θα ξεχωρίσει.
-2. Πάτα `E` για να καθίσεις.
-3. Πάτα ξανά `E` για να σηκωθείς.
+1. Walk up to a free seat.
+2. Press `E` to sit.
+3. Press `E` again to stand.
 
-Τα πιασμένα καθίσματα δεν ξεχωρίζουν, τα βλέπεις κατειλημμένα από τους άλλους.
+Taken seats are not offered to you, you see them occupied by the people in them.
 
-## Επαναφορά
+## Undo
 
-Κάθε μπάρα έχει δίπλα της ένα μικρό **↺**, που εμφανίζεται μόλις την πειράξεις
-και τη γυρνάει εκεί που ήταν. Κάθε σελίδα του πάνελ έχει και ένα
-**«Επαναφορά όλων»** στο τέλος.
+Every slider has a small **↺** beside it, which appears the moment you touch it
+and puts it back where it was. Every page of the panel has a **Reset all** at
+the end.
 
-## Γλώσσα
+## Language
 
-Η αίθουσα μιλάει **Ελληνικά και Αγγλικά**. Την αλλάζεις από το πάνελ **«Θέα»**,
-και η επιλογή σου θυμάται. Την πρώτη φορά ακολουθεί τη γλώσσα του browser σου.
+The room speaks **Greek and English**. You switch from the **View** panel, and
+it remembers your choice. The first time round it follows your browser.
 
-Κάθε καινούριο κομμάτι που μπαίνει από εδώ και πέρα γράφεται και στις δύο:
-τα κείμενα ζουν όλα μαζί στο `src/i18n/index.js`, και οι μπάρες παίρνουν το
-όνομά τους από εκεί με βάση το κλειδί τους, ώστε κανένα κομμάτι να μη χρειάζεται
-δικό του κώδικα για τη μετάφραση.
+Every new piece that goes in from here on is written in both: the strings all
+live together in `src/i18n/index.js`, and the sliders take their labels from
+there by key, so no single piece needs translation code of its own.
 
-## Η ουρά
+## Halls, and watching together
 
-Στο πεδίο του link, δίπλα στο «Παίξε», υπάρχει το **«Στην ουρά»**. Ό,τι βάζεις
-εκεί μπαίνει στη σειρά και το βλέπεις στο πάνελ **«Ουρά»**: τι ακολουθεί, με
-κουμπί για να το παίξεις αμέσως ή να το βγάλεις.
+The front door asks for a name and a hall. Whatever is playing in that hall,
+everybody in it watches together: the same film, at the same second. Walk in
+twenty minutes late and you land twenty minutes in, not at the opening frame.
 
-**Κανονικά η ουρά περιμένει εσένα**: πατάς «Επόμενη ταινία» και μπαίνει, με
-ολόκληρη την τελετή, σαν νέα προβολή. Αν θέλεις να τρέχει μόνη της, ανοίγεις το
-**«Αυτόματα η επόμενη»** και τότε ορίζεις εσύ **το κενό**, από 5 δευτερόλεπτα ως
-5 λεπτά. Η αντίστροφη μέτρηση ξεκινάει αφού η αίθουσα έχει ανάψει τα φώτα της,
-οπότε ο αριθμός που βλέπεις είναι η πραγματική αναμονή.
+The room itself is shared too, not just the film. The curtain, the house
+lights, the audience in the seats and the screen format are the hall's, seeded
+by whoever walked in first. What is deliberately **not** shared is your sound
+desk and your picture grade, because those are what one person hears and sees
+from one seat.
 
-## Η τελετή
+A file off your own disk is the exception, and the room says so: nobody else
+can open it, because it never leaves your computer. For a shared screening, use
+a link.
 
-Η αίθουσα σε περιμένει όπως μια αληθινή: **φώτα αναμμένα, κουρτίνα κλειστή**.
+## The queue
 
-Πατάς play και **η ταινία ξεκινάει αμέσως**. Η κουρτίνα ανοίγει και τα φώτα
-κατεβαίνουν από πάνω της, μέσα στα πρώτα δευτερόλεπτα: δεν περιμένεις στο
-σκοτάδι κάτι που έχεις ήδη πατήσει. **Πέντε δευτερόλεπτα πριν το τέλος** η
-αίθουσα αρχίζει να ξανανάβει, όπως σε αληθινή προβολή, και **η κουρτίνα δεν
-ξανακλείνει** από μόνη της.
+In the link field, next to **Play**, there is **Add to queue**. Whatever you put
+there lines up, and you see it in the **Queue** panel: what is coming, with a
+button to play it now or take it out.
 
-Πού πηγαίνουν τα φώτα το αποφασίζεις εσύ. Τα τρία σκηνικά στο πάνελ **«Φώτα»**
-(Προβολή, Ημίφως, Διάλειμμα) κρατάνε **και τις έξι** ρυθμίσεις, και η τελετή
-πηγαίνει ακριβώς εκεί. Φτιάξε την αίθουσα όπως τη θέλεις και πάτα **«Κράτα τα
-τωρινά φώτα ως · Προβολή»**: αυτό θα βλέπεις σε κάθε ταινία.
+**By default the queue waits for you**: you press next, and it goes on with the
+full ceremony, like a new screening. If you want it to run itself, switch on
+the automatic option and then you set **the gap**, from 5 seconds to 5 minutes.
+The countdown only starts once the hall has brought its lights back up, so the
+number you see is the real wait.
 
-Στο ίδιο πάνελ τη σβήνεις αν δεν τη θέλεις, και δίπλα υπάρχει **«Ξεκίνα
-αμέσως»** για όταν βιάζεσαι. Τις κουρτίνες μόνες τους τις βρίσκεις **πρώτες
-πρώτες στο πάνελ «Οθόνη»**, και στο δεξί κλικ.
+## The ceremony
 
-## Η κάτω μπάρα
+The hall waits for you the way a real one does: **lights up, curtain closed**.
 
-Ό,τι θέλεις **όσο παίζει η ταινία** είναι εκεί και δεν κουνιέται: play, χρόνος,
-μπάρα, και δίπλα τους η **ένταση**. Το ηχείο κάνει σίγαση και θυμάται πού ήσουν,
-και η μπάρα ξετυλίγεται μόλις πας από πάνω. Ό,τι *φτιάχνει* τον ήχο (μπάσα,
-κόσμος, ηχώ) μένει στο πάνελ «Ήχος».
+You press play and **the film starts immediately**. The curtain opens and the
+lights come down over the top of it, in the first few seconds: you do not sit
+in the dark waiting for something you have already pressed. **Five seconds
+before the end** the hall starts coming back up, the way a real screening does,
+and **the curtain does not close again** on its own.
 
-Όταν παίζει **YouTube**, εμφανίζονται εκεί και οι πέντε ποιότητες. Με δικό σου
-αρχείο δεν εμφανίζονται καθόλου, γιατί δεν σημαίνουν τίποτα.
+Where the lights go is up to you. The three presets in the **Lights** panel
+(Showtime, Half lights, Interval) hold **all six** settings, and the ceremony
+goes exactly there. Set the hall up the way you want it and press **Save the
+current lights as · Showtime**: that is what you will get on every film.
 
-## Ο κόσμος
+In the same panel you can switch the ceremony off if you do not want it, and
+next to it there is **Start now** for when you are in a hurry. The curtains on
+their own are **first in the Screen panel**, and in the right click menu.
 
-Στο πάνελ **«Θέα»**, η μπάρα **«Θεατές στις θέσεις»** γεμίζει την αίθουσα με
-κόσμο: ο καθένας ένα μπαλόνι με avatar και όνομα, καθισμένος στη θέση του.
+## The bottom bar
 
-Ο ίδιος αριθμός γεμίζει και τον ήχο. Τριάντα άτομα ακούγονται σαν τριάντα
-άτομα, και επειδή ο κόσμος ρουφάει τον ήχο, η ηχώ κονταίνει μαζί τους.
+Everything you want **while the film is playing** is there and does not move:
+play, time, the seek bar, and the **volume** beside them. The speaker mutes and
+remembers where you were, and the slider unrolls as soon as you go near it.
+Whatever *shapes* the sound (the sub, the crowd, the reverb) stays in the Sound
+panel.
 
-## Οι τρεις χώροι
+When **YouTube** is playing, the five quality buttons appear there too. With
+your own file they do not appear at all, because they would mean nothing.
 
-Δεν είσαι υποχρεωμένος να μείνεις στην αίθουσα. Στις **πίσω πόρτες** υπάρχουν
-δύο ακόμη μέρη. Πλησίασε την πόρτα, θα σου γράψει πού βγάζει, και πάτα `F`.
-Μπορείς επίσης να αλλάξεις χώρο από το πάνελ ή το δεξί κλικ.
+## The crowd
 
-| Χώρος | Τι είναι |
-|-------|----------|
-| **Σινεμά** | Η μεγάλη αίθουσα |
-| **Σπίτι τρόμου** | Σκοτεινό σαλόνι με τηλεόραση, καναπέ και βροχή στο παράθυρο |
-| **Ζεστό σαλόνι** | Το ίδιο, αλλά ζεστό και ήσυχο, με τζάκι και βιβλιοθήκες |
+In the **View** panel, the audience slider fills the hall with people: each one
+a card with an avatar and a name, sitting in their seat.
 
-**Η ταινία σε ακολουθεί**: ό,τι παίζει, συνεχίζει να παίζει στην τηλεόραση του
-χώρου, με τα ίδια πάντα χειριστήρια. Και τα φώτα και το ζεστό ή ψυχρό
-συνεχίζουν να δουλεύουν, στα φωτιστικά του κάθε δωματίου.
+The same number fills the sound. Thirty people sound like thirty people, and
+because a crowd soaks sound up, the reverb shortens along with them.
 
-**Και το πάνελ αλλάζει μαζί σου.** Κάθε χώρος δείχνει μόνο τα δικά του: στο
-σινεμά βρίσκεις κουρτίνες, μέγεθος οθόνης, φωτάκια διαδρόμου, πινακίδες εξόδου,
-τελετή και θεατές. Στο σπίτι τρόμου βρίσκεις την ένταση τρόμου και την
-τηλεόρασή του, στο ζεστό σαλόνι το τζάκι και τη δική του. Δεν χρειάζεται να
-προσπερνάς ρυθμίσεις που δεν έχουν νόημα εκεί που στέκεσαι.
+## The three places
 
-**Ένταση τρόμου**
+You are not stuck in the auditorium. There are two more places through the
+**back doors**. Walk up to a door, it will tell you where it goes, and press
+`F`. You can also change place from the panel or the right click menu.
 
-Μια μπάρα στο πάνελ. Στο 0 είναι ένα ήσυχο σκοτεινό σαλόνι. Όσο ανεβαίνει:
-βροχή στο τζάμι, κεραυνοί με λάμψη, τριξίματα του σπιτιού, και πιο ψηλά
-πράγματα που σέρνονται στο πάτωμα και ένας χτύπος καρδιάς από κάτω.
+| Place | What it is |
+|-------|------------|
+| **Cinema** | The big auditorium |
+| **Horror house** | A dark living room with a television, a sofa and rain on the window |
+| **Cosy room** | The same, but warm and quiet, with a fire and bookshelves |
 
-## Ο ήχος
+**The film follows you**: whatever is playing carries on playing on that room's
+television, with the same controls throughout. The lights and the warm-or-cool
+keep working too, on whatever fittings that room has.
 
-**Η ταινία**
+**And the panel changes with you.** Each place shows only its own: in the cinema
+you get curtains, screen format, aisle lights, exit signs, the ceremony and the
+audience. In the horror house you get its dread level and its television, in the
+cosy room the fire and its own. You never have to scroll past settings that mean
+nothing where you are standing.
 
-- Ο ήχος βγαίνει από την οθόνη, οπότε αλλάζει καθώς γυρνάς το κεφάλι.
-- Η φωνή των άλλων ακούγεται από το σημείο που κάθονται. Όσο πιο μακριά, τόσο πιο σιγά.
-- Την πρώτη φορά ο browser θα ζητήσει άδεια για το μικρόφωνο. Χωρίς άδεια ακούς, αλλά δεν σε ακούνε.
-- Αν δεν ακούς τίποτα, κάνε ένα κλικ μέσα στη σελίδα. Οι browsers δεν αφήνουν ήχο πριν από το πρώτο κλικ.
+**Dread**
 
-**Πώς είναι φτιαγμένος ο χώρος**
+One slider. At 0 it is a quiet dark living room. As it climbs: rain on the
+glass, lightning with a flash, the house creaking, and higher up things dragging
+across the floor and a heartbeat underneath.
 
-Μια αίθουσα κινηματογράφου δεν είναι εκκλησία: όλα μέσα της είναι εκεί για να
-**τρώνε** τον ήχο. Μοκέτα στο πάτωμα, ύφασμα στους τοίχους, εκατόν σαράντα
-καθίσματα με ταπετσαρία. Γι' αυτό εδώ:
+## The sound
 
-- η **ηχώ είναι κοντή και σκούρα**, γύρω στο ένα δευτερόλεπτο, και σβήνει αμέσως
-- τα ψηλά κόβονται πολύ πριν τα μπάσα, όπως κάνει το ύφασμα
-- ο **αέρας του χώρου** είναι μόλις που ακούγεται, όχι ένα ambient από ταινία τρόμου
-- τα **βήματα** είναι μπάσα και πνιγμένα, με ένα μόνο κοφτό «χτύπημα» από τους πλαϊνούς τοίχους
+**The film**
 
-Με τη μπάρα **«Αίθουσα»** στο πάνελ της ταινίας και το μενού δίπλα της αλλάζεις
-πόσο μεγάλος ακούγεται ο χώρος: από **«Χωρίς αίθουσα»** μέχρι **«Μεγάλη αίθουσα»**.
+- The sound comes off the screen, so it changes as you turn your head.
+- Other people's voices come from where they are sitting. The further away, the quieter.
+- The first time, the browser will ask for the microphone. Without permission you can hear, but not be heard.
+- If you hear nothing, click once inside the page. Browsers do not allow sound before the first click.
 
-**Οι ήχοι της αίθουσας**
+**How the room is built**
 
-Πέρα από την ταινία, η αίθουσα κάνει και τους δικούς της ήχους:
+A cinema is not a church: everything in it is there to **eat** sound. Carpet on
+the floor, fabric on the walls, a hundred and forty upholstered seats. So here:
 
-- **βήματα** στη μοκέτα, που αλλάζουν όταν τρέχεις με `Shift`
-- το **κάθισμα** που ανοίγει όταν κάθεσαι και κλείνει όταν σηκώνεσαι
-- **κλικ** στα κουμπιά και μικρά **τικ** καθώς σέρνεις τις μπάρες
+- the **reverb is short and dark**, around a second, and it dies straight away
+- the highs are cut long before the lows, the way fabric does it
+- the **air in the room** is only just audible, not a horror-film ambience
+- **footsteps** are low and muffled, with a single sharp knock off the side walls
 
-Δεν κατεβαίνει κανένα αρχείο ήχου: όλα φτιάχνονται τη στιγμή που ακούγονται,
-οπότε κανένα βήμα δεν είναι ίδιο με το προηγούμενο. Το κουμπί **«Δοκιμή ήχων»**
-στο πάνελ τους παίζει με τη σειρά, για να ακούσεις τι ακριβώς κάνει.
+The **Room** slider in the sound panel and the menu beside it change how big the
+place sounds: from no room at all to a large auditorium.
 
-## Ο μίκτης
+**The room's own sounds**
 
-Στο τμήμα **«Ήχος»** του πάνελ μιξάρεις μόνος σου. Πρώτα διαλέγεις ένα έτοιμο
-σκηνικό (**Σινεμά**, **IMAX**, **Ήσυχη αίθουσα**, **Πρεμιέρα**, **Σπίτι**) και
-μετά πειράζεις ό,τι θέλεις από πάνω.
+Beyond the film, the hall makes its own noises:
 
-| Ομάδα | Τι ρυθμίζεις |
+- **footsteps** on the carpet, which change when you run with `Shift`
+- the **seat** opening as you sit and closing as you get up
+- **clicks** on the buttons and small **ticks** as you drag the sliders
+
+Not a single sound file is downloaded: they are all made at the moment you hear
+them, so no two footsteps are alike. The **Test the sounds** button in the panel
+plays them in order, so you can hear exactly what it is doing.
+
+## The mixing desk
+
+In the **Sound** section of the panel you mix it yourself. First pick a preset
+(**Cinema**, **IMAX**, **Quiet room**, **Premiere**, **Home**) and then change
+whatever you like on top of it.
+
+| Group | What you set |
 |-------|--------------|
-| **Αίθουσα** | Γενική ένταση, ηχώ του χώρου, βήματα και καθίσματα, ήχος του αέρα |
-| **Ταινία** | Ένταση της ταινίας, και πόσο μαζεύονται τα ψηλά όπως στα πραγματικά σινεμά |
-| **Μπάσα** | Ένταση, πόσο βαθιά κατεβαίνουν, και από πού και κάτω μετράνε |
-| **Κοινό** | Πόσο γεμάτη είναι η αίθουσα, πόσο ακούγεται ο κόσμος, πόσο απλωμένος |
+| **Room** | Overall volume, the reverb, footsteps and seats, the sound of the air |
+| **Film** | The film's level, and how much the highs are pulled back the way real cinemas do it |
+| **Sub** | Level, how deep it goes, and from where down it counts |
+| **Audience** | How full the hall is, how loud the crowd is, how spread out |
 
-Δύο πράγματα που δίνουν τον χαρακτήρα:
+Two things give it its character:
 
-- **Τα μπάσα** έχουν δικό τους κανάλι που **δεν** περνάει από τα ηχεία της
-  οθόνης. Έτσι δουλεύει και το subwoofer ενός σινεμά: κάτω από τα 100 Hz περίπου
-  το αυτί δεν καταλαβαίνει από πού έρχεται ο ήχος, τον νιώθει παντού.
-- **Ο κόσμος**. Όσο ανεβάζεις το «πόσο γεμάτη», τόσο περισσότερη ζωή ακούγεται
-  γύρω σου: ανάσες, ρούχα, καμιά φορά ένα βηχάκι. Στο 0 η αίθουσα είναι άδεια
-  και σιωπηλή. Και επειδή ο κόσμος ρουφάει τον ήχο, η ηχώ κοντεύει όσο γεμίζει.
+- **The sub** has its own channel that does **not** go through the screen
+  speakers. That is how a cinema subwoofer works: below roughly 100 Hz the ear
+  cannot tell where a sound is coming from, it just feels it everywhere.
+- **The crowd.** The fuller you make the hall, the more life there is around
+  you: breathing, clothes, the occasional small cough. At 0 the hall is empty
+  and silent. And because a crowd soaks sound up, the reverb shortens as it
+  fills.
 
-## Η εικόνα
+## The picture
 
-Στο τμήμα **«Εικόνα»** ρυθμίζεις πώς δείχνει η ταινία πάνω στην οθόνη:
-φωτεινότητα, αντίθεση, ζωντάνια χρωμάτων, ζεστό ή ψυχρό, μεσαίοι τόνοι. Υπάρχουν
-και τέσσερα έτοιμα λουκ: **Κανονικό**, **Πιο φωτεινό**, **Ζεστό**, **Ψυχρό**.
+In the **Picture** section you set how the film looks on the screen:
+brightness, contrast, colour, warm or cool, mid tones. There are four presets
+too: normal, brighter, warm, cool.
 
-Στο τμήμα **«Λάμψη»** ρυθμίζεις το bloom, δηλαδή πόσο απλώνεται το φως της
-οθόνης μέσα στο σκοτεινό δωμάτιο. Ξεκινάει διακριτικό επίτηδες.
+In the **Glow** section you set the bloom, that is, how far the screen light
+spreads into the dark room. It starts subtle on purpose.
 
-## Θέες και κάδρο
+## Views and the frame
 
-Το `V` γυρίζει ανάμεσα σε έξι θέες: **πρώτο πρόσωπο**, **τελευταία σειρά**,
-**θάλαμος προβολής**, **πλάγια**, **μπροστά από την οθόνη**, **πανοραμική**.
-Το `Shift+V` πάει ανάποδα. Η κάμερα ταξιδεύει, δεν κόβει.
+`V` cycles through six views: **first person**, **back row**, **projection
+booth**, **from the side**, **in front of the screen**, **wide**. `Shift+V` goes
+the other way. The camera travels, it does not cut.
 
-Το `C` κάνει **κινηματογραφικό κάδρο**: η οθόνη γεμίζει το βλέμμα σου, σαν να
-έσκυψες μέσα στην ταινία. **Μόλις κουνήσεις το ποντίκι, βγαίνεις** και γυρνάς
-εκεί που ήσουν.
+`C` gives you the **cinematic frame**: the screen fills your vision, as if you
+had leaned into the film. **Click or press a key and you are out**, back where
+you were.
 
-Όπου κι αν πάει η κάμερα, τα **αυτιά σου μένουν στο σώμα σου**: ο ήχος έρχεται
-από εκεί που στέκεσαι πραγματικά, όχι από εκεί που κοιτάει η κάμερα.
+Wherever the camera goes, **your ears stay on your body**: the sound comes from
+where you are actually standing, not from where the camera is looking.
 
-## Το μέγεθος της οθόνης
+## The size of the screen
 
-Η οθόνη πιάνει σχεδόν όλο τον μπροστινό τοίχο. Το σχήμα της αλλάζει από το
-πάνελ ή από το δεξί κλικ, όπως σε αληθινή αίθουσα: το ύψος μένει ίδιο και οι
-**μαύρες μάσκες στα πλάγια** κλείνουν ή ανοίγουν.
+The screen takes up nearly the whole front wall. Its shape changes from the
+panel or the right click menu, the way it does in a real hall: the height stays
+the same and the **black masks at the sides** close in or open out.
 
-| Επιλογή | Σχήμα | Πότε |
-|---------|-------|------|
-| **Πανοραμική** | 2.39:1 | Ταινίες scope, η πιο φαρδιά |
-| **Σινεμά** | 1.85:1 | Το κλασικό σχήμα του σινεμά |
-| **Τηλεόραση** | 16:9 | YouTube και ό,τι βλέπεις σε οθόνη |
+| Option | Shape | When |
+|--------|-------|------|
+| **Scope** | 2.39:1 | Scope films, the widest |
+| **Flat** | 1.85:1 | The classic cinema shape |
+| **Widescreen** | 16:9 | YouTube and anything made for a screen |
 
-Ό,τι κι αν παίζει, χωράει μέσα χωρίς να τεντωθεί.
+Whatever is playing fits inside without being stretched.
 
-## Τα φώτα της αίθουσας
+## The house lights
 
-Πάνω δεξιά υπάρχει το πάνελ **«Αίθουσα»**. Όπως και το πάνελ της ταινίας,
-κρύβεται όσο περπατάς, οπότε πάτα `L` (ή `Esc`) για να το πιάσεις.
-Κάθε φως έχει τη δική του μπάρα:
+Each light has its own slider:
 
-| Ρύθμιση | Τι κάνει |
-|---------|----------|
-| **Φώτα αίθουσας** | Από σβηστά (προβολή) μέχρι αναμμένα (διάλειμμα). Ανεβαίνουν σιγά σιγά, σαν αληθινό dimmer |
-| **Λάμψη οθόνης** | Πόσο φωτίζει η ταινία τον χώρο γύρω σου. Στο 0 η αίθουσα μένει σκοτεινή, στο 200% σε πλημμυρίζει |
-| **Ζεστό ή ψυχρό** | Το χρώμα των φώτων, από κίτρινο λαμπτήρα μέχρι λευκό μέρας |
-| **Φωτάκια διαδρόμου** | Τα φωτάκια στα σκαλιά. **Ξεκινούν κλειστά**, ώστε το πάτωμα να μένει καθαρό |
-| **Πινακίδες εξόδου** | Πόσο πράσινο ρίχνουν οι έξοδοι γύρω τους |
-| **Φωτεινότητα εικόνας** | Η γενική έκθεση, αν η οθόνη σου δείχνει όλα πολύ σκούρα ή πολύ ανοιχτά |
+| Setting | What it does |
+|---------|--------------|
+| **House lights** | From out (showtime) to up (interval). They come up slowly, like a real dimmer |
+| **Screen glow** | How much the film lights the room around you. At 0 the hall stays dark, at 200% it floods you |
+| **Warm or cool** | The colour of the light, from a yellow bulb to daylight white |
+| **Aisle lights** | The little lights on the steps. **They start off**, so the floor stays clean |
+| **Exit signs** | How much green the exits throw around themselves |
+| **Exposure** | Overall exposure, if your monitor shows everything too dark or too washed out |
 
-Πάνω πάνω υπάρχουν και τα τρία έτοιμα: **Προβολή**, **Ημίφως**, **Διάλειμμα**.
+At the top there are the three presets: **Showtime**, **Half lights**,
+**Interval**.
 
-Χωρίς να ανοίξεις καν το πάνελ, τα `[` και `]` κατεβάζουν και ανεβάζουν τα φώτα
-ανά 10%, και σου το γράφουν στη μέση της οθόνης.
+Without even opening the panel, `[` and `]` take the lights down and up in steps
+of 10%, and tell you so in the middle of the screen.
 
-Ό,τι ρυθμίσεις μένει αποθηκευμένο στον browser σου, οπότε η αίθουσα ανοίγει
-όπως την άφησες.
+Whatever you set is kept in your browser, so the hall opens the way you left it.
 
-## Βάλε δική σου ταινία
+## Put your own film on
 
-Κάτω κάτω στη μέση υπάρχει το πάνελ **«Προβολή ταινίας»**. Κρύβεται όσο
-περπατάς, οπότε πάτα πρώτα `Esc` για να το δεις.
+**From your computer**
 
-**Από τον υπολογιστή σου**
+1. Press `Esc`.
+2. Press the file button and choose your video.
+3. Press ▶ and go back into the hall with a click.
 
-1. Πάτα `Esc`.
-2. Πάτα το κουμπί **Αρχείο** και διάλεξε το βίντεό σου.
-3. Πάτα το ▶ και ξαναμπές στην αίθουσα με ένα κλικ.
+Nobody else in the hall can see this one, and the room will tell you so. The
+file never leaves your computer.
 
-**Από link**
+**From a link**
 
-Γράψε το link στο πεδίο δίπλα και πάτα **Παίξε**. Δέχεται `mp4`, `webm`,
-`m3u8`, και **YouTube** ή **Vimeo**.
+Write the link in the field beside it and press **Play**. It takes `mp4`,
+`webm`, `m3u8`, and **YouTube** or **Vimeo**. This is the one to use if you want
+to watch together.
 
 **YouTube**
 
-Κόλλα το link όπως το αντιγράφεις (`youtube.com/watch?v=...` ή `youtu.be/...`)
-και παίζει στη μεγάλη οθόνη. Δύο πράγματα να ξέρεις:
+Paste the link exactly as you copied it (`youtube.com/watch?v=...` or
+`youtu.be/...`) and it plays on the big screen. Two things to know:
 
-- Ο **ήχος βγαίνει από τον player του YouTube**, οπότε δεν περνάει μέσα από την
-  ηχώ της αίθουσας όπως ένα δικό σου αρχείο. Ένταση και παύση δουλεύουν κανονικά.
-- Τα βίντεο του YouTube είναι **16:9**, οπότε βάλε και την οθόνη στο «Τηλεόραση
-  16:9» για να γεμίσει χωρίς μαύρα κενά.
+- The **sound comes out of the YouTube player**, so it does not pass through the
+  hall reverb the way your own file does. Volume and pause work normally, and
+  how far away you are standing still counts.
+- YouTube videos are **16:9**, so set the screen to widescreen for it to fill
+  without black gaps.
 
-Αν ένα βίντεο δεν παίζει, ο ιδιοκτήτης του έχει απαγορεύσει την προβολή έξω από
-το YouTube. Δεν γίνεται τίποτα, δοκίμασε άλλο.
+If a video will not play, its owner has disallowed playback outside YouTube.
+Nothing to be done, try another.
 
-**Λίστες**
+**Lists**
 
-Κόλλα link λίστας (`youtube.com/playlist?list=...`, ή ένα βίντεο που ανήκει σε
-λίστα) και παίζουν το ένα μετά το άλλο. Στο δεξί κλικ εμφανίζεται **«Επόμενο
-στη λίστα»** μαζί με το πού βρίσκεσαι, π.χ. 3 από 24.
+Paste a playlist link (`youtube.com/playlist?list=...`, or a video that belongs
+to a list) and they play one after another. The right click menu grows a **Next
+in the list** with your place in it, for example 3 of 24.
 
-**Ποιότητα**
+**Quality**
 
-Στο πάνελ **«Οθόνη»**, κουμπιά: **Αυτόματη, 720p, 1080p, 1440p, 4K**.
+In the **Screen** panel, buttons: **Auto, 720p, 1080p, 1440p, 4K**.
 
-Το YouTube διαλέγει μόνο του τι ποιότητα θα στείλει, και το κριτήριο είναι
-**πόσο μεγάλος είναι ο player**. Αυτά τα κουμπιά αλλάζουν ακριβώς αυτό, γι'
-αυτό και είναι κουμπιά: υπάρχουν συγκεκριμένες ποιότητες, όχι συνεχής κλίμακα.
-Ψηλότερα σημαίνει καθαρότερη εικόνα και πιο βαρύ για τον υπολογιστή.
+YouTube decides for itself what quality to send, and its yardstick is **how big
+the player is**. These buttons change exactly that, which is why they are
+buttons: there are specific qualities, not a continuous scale. Higher means a
+cleaner picture and more work for the computer.
 
-Στο ίδιο πάνελ αλλάζεις ένταση, θέση στην ταινία, και με τη μπάρα
-**«Αίθουσα»** πόση ηχώ θέλεις να έχει ο χώρος.
+**A test video**
 
-Το αρχείο σου δεν ανεβαίνει πουθενά, παίζει μόνο στον υπολογιστή σου.
+If you want something on the screen right away, write `/sample.webm` in the link
+field and load it. It is a six second colour test pattern that ships with the
+project.
 
-**Δοκιμαστικό βίντεο**
+## Updates: only when you press them
 
-Αν θέλεις να δεις κάτι στην οθόνη αμέσως, γράψε στο πεδίο του link
-`/sample.webm` και πάτα **Φόρτωση**. Είναι ένα εξάλεπτο χρωματιστό δοκιμαστικό
-σήμα που έρχεται μαζί με το έργο.
+The page **never refreshes on its own**. You are inside a dark room, in the
+middle of a film. When that gets interrupted is your decision.
 
-## Ενημερώσεις: μόνο όταν τις πατάς εσύ
+When there is something newer, a quiet **new version ready** appears at the
+bottom right, with two buttons: update now, or **×** for later. The same thing
+lives in the right click menu.
 
-Η σελίδα **δεν κάνει ποτέ refresh από μόνη της**. Είσαι μέσα σε μια σκοτεινή
-αίθουσα, στη μέση μιας ταινίας. Πότε θα διακοπεί αυτό το αποφασίζεις εσύ.
+- While we are working on the project, every file save shows it.
+- On a deployed version, `/version.json` is checked on its own every two and a
+  half minutes and every time you come back to the tab.
 
-Όταν υπάρχει κάτι νεότερο, εμφανίζεται ένα διακριτικό **«Νέα έκδοση έτοιμη»**
-κάτω δεξιά, με δύο κουμπιά: **Ενημέρωση** τώρα, ή **×** για αργότερα. Το ίδιο
-βρίσκεται και στο μενού με το δεξί κλικ.
+**What changed**: the button in the panel (or the right click menu) opens the
+full list of changes, the same one in [CHANGELOG.md](CHANGELOG.md). The version
+you are running is written above it.
 
-- Όσο δουλεύουμε πάνω στο έργο, κάθε αποθήκευση αρχείου το εμφανίζει.
-- Σε ανεβασμένη έκδοση, ελέγχεται μόνο του το `/version.json` κάθε δυόμισι
-  λεπτά και κάθε φορά που γυρίζεις στην καρτέλα.
+The version number comes out of `package.json` and is stamped on every
+`npm run dev` and `npm run build` by `scripts/write-version.mjs`.
 
-**Τι άλλαξε**: το κουμπί στο πάνελ (ή το μενού με το δεξί κλικ) ανοίγει τον
-πλήρη κατάλογο αλλαγών, τον ίδιο που είναι στο
-[CHANGELOG.md](CHANGELOG.md). Η έκδοση που τρέχεις γράφεται από πάνω.
+## Deploying it
 
-Ο αριθμός έκδοσης βγαίνει από το `package.json` και σφραγίζεται σε κάθε
-`npm run dev` και `npm run build` από το `scripts/write-version.mjs`.
+One process serves the page **and** runs the room, so the page and the WebSocket
+share a single host, port and certificate. Anything else and `wss` on another
+port is dead over https and on corporate networks.
 
-## Αν το ανεβάσουμε online
+```bash
+npm run build && npm run server
+```
 
-Η αίθουσα, το περπάτημα και τα φώτα δουλεύουν ακριβώς το ίδιο. Για την ταινία,
-όμως, υπάρχει μια σημαντική διαφορά:
+`npm run ship` does the whole round: it commits, pushes the source, deploys, and
+then waits for the live build stamp to move before it says it worked. It reads
+where to deploy from a `deploy.env` file, which stays on the machine that owns
+the address:
 
-| Πηγή | Τη βλέπεις εσύ | Τη βλέπουν οι άλλοι |
-|------|----------------|---------------------|
-| **Αρχείο από τον υπολογιστή σου** | Ναι | **Όχι.** Το αρχείο δεν φεύγει ποτέ από τον υπολογιστή σου |
-| **Link YouTube / Vimeo** | Ναι | Ναι, αν ανοίξουν το ίδιο link |
-| **Link σε αρχείο στο διαδίκτυο** | Ναι | Ναι, αν ανοίξουν το ίδιο link |
+```
+RAILWAY_SERVICE=<service name>
+LIVE_URL=https://<your address>
+```
 
-Δηλαδή σήμερα ο καθένας βάζει τη δική του εικόνα, και η αίθουσα είναι κοινή.
-Για **κοινή προβολή** (ένας βάζει την ταινία και ξεκινάει σε όλους μαζί, με
-κοινή παύση και κοινό χρόνο) χρειάζεται να στέλνει ο server τη διεύθυνση και
-τον χρόνο σε όλους. Ο server υπάρχει ήδη και το κάνει για τις θέσεις και τη
-φωνή, οπότε είναι μια προσθήκη, όχι ξαναγράψιμο. Πες το και μπαίνει.
+Without that file it still commits and pushes, and simply says it has nowhere to
+deploy to.
 
-Για δικό σου αρχείο να το βλέπουν και οι άλλοι, θα έπρεπε να ανεβαίνει κάπου
-πρώτα. Αυτό είναι άλλη συζήτηση (χώρος, κόστος, πνευματικά δικαιώματα).
-
-## Δομή
+## Layout
 
 ```
 virtual-cinema/
-  index.html          σημείο εκκίνησης της σελίδας
-  CHANGELOG.md        τι άλλαξε σε κάθε έκδοση
+  index.html          the page's starting point
+  CHANGELOG.md        what changed in each version
   scripts/
-    write-version.mjs σφραγίζει την έκδοση πριν από κάθε dev / build
+    write-version.mjs stamps the version before every dev / build
+    ship.mjs          publish the source and deploy, in one press
   public/
-    sample.webm       δοκιμαστικό βίντεο, για να δεις κάτι στην οθόνη αμέσως
+    sample.webm       a test video, so there is something on screen at once
   src/
-    main.js           ενώνει τα κομμάτια, δεν έχει δική του λογική
-    scene/            η αίθουσα, η οθόνη, τα καθίσματα, ο φωτισμός
-    player/           κίνηση, κάμερα, επιλογή θέσης
-    media/            η ταινία στην οθόνη και ο ήχος της
-      embedScreen.js  YouTube και Vimeo μέσα στον χώρο
-    i18n/             όλα τα κείμενα, στα Ελληνικά και στα Αγγλικά
-    sound/            ο μίκτης, ο κόσμος, βήματα, καθίσματα, κλικ
-    venues/           το σπίτι τρόμου και το ζεστό σαλόνι
-    update/           «νέα έκδοση» και ο κατάλογος αλλαγών
-    room/             το πάνελ της αίθουσας, τα πλήκτρα και το δεξί κλικ
-    net/              σύνδεση χρηστών και χωρική φωνή
+    main.js           joins the pieces together, holds no logic of its own
+    scene/            the hall, the screen, the seats, the lighting
+    player/           movement, camera, choosing a seat
+    media/            the film on the screen and its sound
+      embedScreen.js  YouTube and Vimeo inside the room
+    i18n/             every string, in Greek and in English
+    sound/            the mixing desk, the crowd, footsteps, seats, clicks
+    audience/         the people in the seats
+    venues/           the horror house and the cosy room
+    update/           "new version" and the list of changes
+    room/             the room panel, the keys and the right click menu
+    net/              presence, spatial voice, and the shared screening
   server/
-    index.js          WebSocket presence και WebRTC signaling
-  tests/              smoke tests και σενάριο χειροκίνητου QA
+    index.js          serves the build, WebSocket presence, WebRTC signalling
+  tests/              smoke tests and a manual QA script
 ```
 
-### Πώς κουμπώνουν τα κομμάτια
+### How the pieces clip together
 
-Το `src/main.js` φορτώνει με τη σειρά τα modules και δίνει στο καθένα
-ό,τι έφτιαξε το προηγούμενο. Κάθε module βγάζει προς τα έξω μία συνάρτηση:
+`src/main.js` loads the modules in order and hands each one whatever the
+previous one made. Every module exports a single function:
 
-| Module | Συνάρτηση | Παίρνει | Επιστρέφει |
-|--------|-----------|---------|------------|
+| Module | Function | Takes | Returns |
+|--------|----------|-------|---------|
 | `src/scene/index.js` | `createScene` | `{ container }` | `{ renderer, scene, camera, seats, lighting }` |
 | `src/player/index.js` | `createPlayer` | `{ renderer, scene, camera, seats }` | `{ update, seat }` |
 | `src/media/index.js` | `createMedia` | `{ scene, camera, lighting, ... }` | `{ update, video }` |
@@ -441,84 +459,95 @@ virtual-cinema/
 | `src/room/index.js` | `createRoom` | `{ lighting, sound, player }` | `{ setHouseLights, applyPreset }` |
 | `src/net/index.js` | `createNet` | `{ url, scene, camera, player, media }` | `{ update }` |
 
-Η σειρά δεν είναι τυχαία: ο ήχος της αίθουσας δανείζεται το AudioContext της
-ταινίας, και το πάνελ των φώτων θέλει και τον φωτισμό και τον ήχο.
+The order is not arbitrary: the room sound borrows the film's AudioContext, and
+the lights panel wants both the lighting and the sound.
 
-Ό,τι επιστρέφεται είναι προαιρετικό. Αν ένα module έχει `update(delta)`, το
-`main.js` το καλεί σε κάθε καρέ. Αν έχει `resize()`, το καλεί σε κάθε αλλαγή
-μεγέθους. Αν κάποιο module λείπει ή σκάσει, η σελίδα σηκώνεται κανονικά και
-γράφει κάτω αριστερά τι λείπει.
+Everything returned is optional. If a module has `update(delta)`, `main.js`
+calls it every frame. If it has `resize()`, it calls it on every resize. If a
+module is missing or throws, the page still comes up and writes what is missing
+at the bottom left.
 
-Για έλεγχο, το `window.__cinema` δείχνει την κατάσταση φόρτωσης:
+For checking, `window.__cinema` shows the boot state:
 
 ```js
-__cinema.ready      // true όταν τελείωσε το ξεκίνημα
-__cinema.started    // ποια modules ξεκίνησαν
-__cinema.errors     // τι πήγε στραβά
+__cinema.ready      // true once startup finished
+__cinema.started    // which modules started
+__cinema.errors     // what went wrong
 ```
 
-## Ρυθμίσεις
+## Settings
 
-| Μεταβλητή | Προεπιλογή | Τι κάνει |
-|-----------|------------|----------|
-| `PORT` | `8787` | Πόρτα του server |
-| `VITE_SERVER_URL` | `ws://localhost:8787` | Πού συνδέεται ο πελάτης |
+| Variable | Default | What it does |
+|----------|---------|--------------|
+| `PORT` | `8787` | The server's port |
+| `VITE_SERVER_URL` | `ws://localhost:8787` | Where the client connects |
 
-Βάλ' τες σε ένα αρχείο `.env` στη ρίζα, ή μπροστά από την εντολή:
+Put them in a `.env` file at the root, or in front of the command:
 
 ```bash
 PORT=9000 npm run server
 ```
 
-## Έλεγχοι
+## Checks
 
 ```bash
 npm test
 ```
 
-Γρήγορα smoke tests, χωρίς browser:
+Quick smoke tests, no browser:
 
-- ο σκελετός του έργου και τα npm scripts είναι στη θέση τους
-- κάθε module βγάζει τη συνάρτηση που περιμένει το `main.js`
-- ο server σηκώνεται και δέχεται **δύο χρήστες ταυτόχρονα** χωρίς να πέσει
+- the shape of the project and the npm scripts are where they should be
+- every module exports the function `main.js` expects
+- the server comes up and takes **two users at once** without falling over
 
-Όσα κομμάτια δεν υπάρχουν ακόμη βγαίνουν ως `skipped`, δεν κοκκινίζουν.
+Pieces that do not exist yet come out as `skipped`, they do not go red.
 
 ```bash
 npm run test:browser
 ```
 
-Ανοίγει αληθινό browser και ελέγχει ότι η αίθουσα ζωγραφίζεται, ότι η ταινία
-προχωράει, ότι το `W` περπατάει και βγάζει βήματα, ότι το `E` σε βάζει στη
-θέση, ότι τα φώτα ανάβουν και σβήνουν, ότι τα φωτάκια του διαδρόμου ξεκινούν
-κλειστά, ότι η οθόνη αλλάζει και στα τρία μεγέθη, ότι το δεξί κλικ ανοίγει το
-μενού μας, ότι τα links YouTube αναγνωρίζονται, και ότι οι ήχοι της αίθουσας
-βγάζουν πραγματικό σήμα. Θέλει Playwright:
+Opens a real browser and checks that the hall draws, that the film advances,
+that `W` walks and makes footsteps, that `E` puts you in a seat, that the lights
+go up and down, that the aisle lights start off, that the screen changes through
+all three formats, that right click opens our menu, that YouTube links are
+recognised, and that the room sounds produce a real signal. It wants Playwright:
 
 ```bash
 npm i -D playwright && npx playwright install chromium
 ```
 
-Αν δεν είναι εγκατεστημένο, βγάζει `SKIPPED` και δεν χαλάει το build.
+If it is not installed, it comes out `SKIPPED` and does not break the build.
 
-Για ό,τι θέλει μάτια και αυτιά, υπάρχει βήμα προς βήμα σενάριο στο
+```bash
+npm run test:halls
+```
+
+Two real browsers, one hall: one person starts a film and lets it run, a second
+walks in afterwards and has to land inside the same minute. Point it at a
+deployed address with `ORIGIN=https://... npm run test:halls`.
+
+For everything that needs eyes and ears, there is a step by step script in
 **[tests/QA-MANUAL.md](tests/QA-MANUAL.md)**.
 
-## Αν κάτι δεν παίζει
+## If something is not working
 
-| Πρόβλημα | Τι να κοιτάξεις |
-|----------|-----------------|
-| Μαύρη οθόνη | Κάτω αριστερά γράφει ποιο κομμάτι λείπει. Δες και την κονσόλα με `F12` |
-| Δεν κλειδώνει το ποντίκι | Πάτα το κουμπί έναρξης, ή κάνε ένα κλικ μέσα στην αίθουσα |
-| Δεν βλέπω το πάνελ της ταινίας | Πάτα `Esc`. Κρύβεται όσο περπατάς |
-| Δεν βλέπω το πάνελ των φώτων | Πάτα `L`. Κρύβεται και αυτό όσο περπατάς |
-| Δεν παίζει ένα link YouTube | Ο ιδιοκτήτης του βίντεο απαγορεύει την προβολή αλλού. Δοκίμασε άλλο βίντεο |
-| Ο ήχος του YouTube δεν έχει αίθουσα | Έτσι είναι: τον ήχο τον κρατάει ο δικός τους player. Με δικό σου αρχείο έχει |
-| Η εικόνα του YouTube έχει μαύρα στα πλάγια | Βάλε την οθόνη στο «Τηλεόραση 16:9» |
-| Δεν ακούω βήματα | Κάνε ένα κλικ μέσα στη σελίδα, και δες τη μπάρα «Ήχοι αίθουσας» στο πάνελ των φώτων |
-| Η αίθουσα είναι πολύ σκοτεινή | Ανέβασε τα φώτα με `]`, ή τη «Λάμψη οθόνης» στο πάνελ |
-| Περπατάω ενώ γράφω link | Πάτα κάπου έξω από το πεδίο και δοκίμασε ξανά, και πες μας το |
-| Δεν βλέπω τους άλλους | Τρέχει ο `npm run server`; Δες το τερματικό του |
-| Δεν ακούγεται τίποτα | Κάνε ένα κλικ μέσα στη σελίδα και δώσε άδεια μικροφώνου |
-| `Port 5173 in use` | Τρέχει ήδη ένα `npm run dev`. Κλείσ' το ή άσε τον Vite να πάρει την 5174 |
-| Ακούω τον εαυτό μου | Βάλε ακουστικά |
+| Problem | What to look at |
+|---------|-----------------|
+| Black screen | The bottom left says which piece is missing. Also look at the console with `F12` |
+| The mouse will not lock | Press the start button, or click once inside the hall |
+| I cannot see the control bar | Press `Esc`. It hides while you walk |
+| I cannot see the room panel | Press `L`. That one hides while you walk too |
+| A YouTube link will not play | The video's owner disallows playback elsewhere. Try another video |
+| YouTube sound has no room on it | That is how it is: their player keeps hold of the sound. With your own file it has |
+| The YouTube picture has black at the sides | Set the screen to widescreen |
+| I cannot hear footsteps | Click once inside the page, and check the room sounds switch in the panel |
+| The hall is too dark | Bring the lights up with `]`, or the screen glow in the panel |
+| I am walking while typing a link | Click somewhere outside the field and try again, and tell us about it |
+| I cannot see anybody else | Is `npm run server` running? Look at its terminal |
+| Nothing at all is audible | Click once inside the page and allow the microphone |
+| `Port 5173 in use` | A `npm run dev` is already running. Close it or let Vite take 5174 |
+| I can hear myself | Put headphones on |
+
+## Licence
+
+MIT. See [LICENSE](LICENSE).

@@ -1,96 +1,99 @@
 # src/net · multiplayer client
 
-Βλέπεις τους άλλους να κάθονται και να κουνιούνται, και τους ακούς από τη μεριά
-που βρίσκονται. Δεν πειράζει κανένα αρχείο εκτός από αυτόν τον φάκελο.
+You see the others sitting and moving, and you hear them from the side they are
+on. It touches no file outside this folder.
 
-## Ενσωμάτωση
+## Wiring it in
 
-Γίνεται ήδη μόνη της από το `src/main.js`:
+`src/main.js` already does it:
 
 ```js
 createNet({ url, scene, camera, player, media })  // -> { update(delta) }
 ```
 
-Το `main.js` καλεί το `update(delta)` μέσα στο δικό του loop και τότε το
-εσωτερικό loop σβήνει μόνο του. Αν ο server δεν τρέχει, το `createNet`
-επιστρέφει κανονικά και είσαι απλώς μόνος στην αίθουσα.
+`main.js` calls `update(delta)` inside its own loop, and the internal loop then
+switches itself off. If the server is not running, `createNet` returns normally
+and you are simply alone in the hall.
 
-Αν κάποιος θέλει να το στήσει χειροκίνητα, υπάρχει και το `createNetwork(...)`
-με τις ίδιες επιλογές.
+If somebody wants to set it up by hand, there is also `createNetwork(...)` with
+the same options.
 
-## Τι διαβάζει από αλλού (μόνο ανάγνωση)
+## What it reads from elsewhere (read only)
 
-| Πηγή | Τι ψάχνει | Αν λείπει |
+| Source | What it looks for | If it is missing |
 | --- | --- | --- |
-| `camera` | θέση και διεύθυνση, η βάση για ήχο και avatar | δοκιμάζει το player state |
-| `player` (handle) ή `src/player/state.js` | `seat` / `seatId`, και pose αν δεν υπάρχει κάμερα | στέκεται όρθιος στη θέση της κάμερας |
-| `seats` / `SEATS` του scene | `{ id, eyePosition }` ή `{ id, position }` | μόνο για το πρώτο στήσιμο πριν έρθει pose |
+| `camera` | position and direction, the basis for sound and avatar | falls back to player state |
+| `player` (handle) or `src/player/state.js` | `seat` / `seatId`, and pose if there is no camera | stands upright where the camera is |
+| `seats` / `SEATS` from the scene | `{ id, eyePosition }` or `{ id, position }` | only for the first placement, before a pose arrives |
 
-## Έλεγχος χωρίς browser
+Both are read dynamically and read only. You can hand them over yourself:
+`createNetwork({ getLocalState: () => ({ position, quaternion, seat }) })`.
+
+## Checking without a browser
 
 ```bash
 node src/net/self-check.mjs
 ```
 
-16 έλεγχοι: ότι σηκώνεται χωρίς server, ότι ο ακροατής κάθεται πάνω στην κάμερα,
-ότι ο διπλανός δεξιά ακούγεται δεξιά και ο αριστερά αριστερά, και ότι όσο πιο
-μακριά τόσο πιο σιγά.
+16 checks: that it comes up without a server, that the listener sits on the
+camera, that the neighbour on your right is heard on the right and the one on
+your left on the left, and that further away is quieter.
 
-Και τα δύο διαβάζονται δυναμικά και μόνο για ανάγνωση. Μπορείς να τα δώσεις και
-με το χέρι: `createNetwork({ getLocalState: () => ({ position, quaternion, seat }) })`.
-
-## Χρήσιμα από το API
+## The useful part of the API
 
 ```js
-net.count                 // πόσοι είμαστε μέσα
-net.isSeatTaken('C7')     // για να γκριζάρεις πιασμένες θέσεις
+net.count                 // how many of us are in
+net.isSeatTaken('C7')     // to grey out taken seats
 net.occupiedSeats()       // { seatId: peerId }
-net.claimSeat('C7')       // αν δεν το βγάζεις από το player state
+net.claimSeat('C7')       // if you are not getting it out of player state
 net.on('seats', map => {})
 net.on('peers', list => {})
 net.enableMic() / net.setMuted(true) / net.toggleMic()
 net.dispose()
 ```
 
-## Επιλογές
+## Options
 
 `url`, `room`, `name`, `color`, `scene`, `camera`, `three`, `seats`,
 `getLocalState`, `hud` (default true), `voice` (default true),
-`autoUpdate` (default true), `tuning` (ρυθμίσεις απόστασης ήχου).
+`autoUpdate` (default true), `tuning` (sound distance settings).
 
-Ο server βρίσκεται μόνος του: `?net=ws://...` στο URL, αλλιώς `VITE_NET_URL`,
-αλλιώς η ίδια μηχανή στο 8787.
+The server finds itself: `?net=ws://...` in the URL, otherwise `VITE_NET_URL`,
+otherwise the same machine on 8787.
 
-## Φωνή και χωρικός ήχος
+## Voice and spatial sound
 
-- Full mesh WebRTC. Ο server μόνο περνάει τα μηνύματα σύνδεσης.
-- Κάθε φωνή περνάει από `PannerNode` με `HRTF`: όποιος κάθεται αριστερά σου
-  ακούγεται αριστερά, και όσο πλησιάζει δυναμώνει (`inverse`, refDistance 1.4 m,
-  σβήνει στα 18 m). Όποιος γυρίζει την πλάτη ακούγεται πιο πνιχτά.
-- Ο listener κολλάει πάνω στην κάμερα σε κάθε καρέ.
-- Μοιραζόμαστε το ίδιο `AudioContext` με το Three.js (`THREE.AudioContext`), για
-  να ζουν ταινία και φωνές στον ίδιο κόσμο.
-- Το μικρόφωνο ανοίγει μόνο με πάτημα κουμπιού, έτσι το απαιτεί ο browser. Το
-  κουμπί είναι κάτω αριστερά, με `hud: false` το σβήνεις.
+- Full mesh WebRTC. The server only passes the connection messages along.
+- Every voice goes through a `PannerNode` with `HRTF`: whoever is sitting to
+  your left is heard on your left, and gets louder as they come closer
+  (`inverse`, refDistance 1.4 m, gone by 18 m). Somebody with their back turned
+  sounds more muffled.
+- The listener is pinned to the camera every frame.
+- We share the same `AudioContext` as Three.js (`THREE.AudioContext`), so the
+  film and the voices live in one world.
+- The microphone only opens on a button press, because the browser demands it.
+  The button is at the bottom left, `hud: false` turns it off.
 
-## Αρχεία
+## Files
 
-| Αρχείο | Τι κάνει |
+| File | What it does |
 | --- | --- |
-| `index.js` | Το μοναδικό σημείο εισόδου, τα δένει όλα |
-| `client.js` | WebSocket, reconnect, αποστολή pose μόνο όταν αλλάζει |
-| `peers.js` | Interpolation buffer, ομαλή κίνηση στα 120 ms πίσω |
-| `avatars.js` | Το σωματάκι, το ταμπελάκι, το δαχτυλίδι ομιλίας |
-| `voice.js` | WebRTC mesh, perfect negotiation, replaceTrack για το μικρόφωνο |
-| `audio.js` | PannerNode HRTF, listener στην κάμερα, μετρητής φωνής |
-| `local-state.js` | Ο μεταφραστής προς `player/state.js` και `scene/seats.js` |
-| `ui.js` | Το μικρό HUD με το μικρόφωνο |
-| `protocol.js` | Τα μηνύματα, ίδιο με το `server/protocol.js` |
+| `index.js` | The single entry point, ties it all together |
+| `client.js` | WebSocket, reconnect, sends a pose only when it changes |
+| `peers.js` | Interpolation buffer, smooth movement 120 ms behind |
+| `avatars.js` | The little body, the name tag, the speaking ring |
+| `voice.js` | WebRTC mesh, perfect negotiation, replaceTrack for the microphone |
+| `audio.js` | PannerNode HRTF, listener on the camera, voice meter |
+| `local-state.js` | The translator towards `player/state.js` and `scene/seats.js` |
+| `show.js` | The hall's screening: what is on, and how far in |
+| `ui.js` | The small HUD with the microphone |
+| `protocol.js` | The messages, the same as `server/protocol.js` |
 
-## Γνωστές παγίδες
+## Known traps
 
-- Στο Chrome ένα WebRTC stream δεν ακούγεται μέσω Web Audio αν δεν είναι
-  δεμένο και σε ένα `<audio>` element. Το φτιάχνουμε κρυφό και muted.
-- Σε http από άλλη συσκευή, το μικρόφωνο δεν δίνεται. Θέλει `localhost` ή https.
-- Χωρίς TURN server, δύσκολα δίκτυα (αυστηρό NAT) μπορεί να μη συνδεθούν.
-  Τα STUN μπαίνουν στο `config.js`.
+- In Chrome a WebRTC stream is not audible through Web Audio unless it is also
+  attached to an `<audio>` element. We make one, hidden and muted.
+- Over http from another device, the microphone is not granted. It wants
+  `localhost` or https.
+- Without a TURN server, difficult networks (strict NAT) may fail to connect.
+  The STUN servers live in `config.js`.
