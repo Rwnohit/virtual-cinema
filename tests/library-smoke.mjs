@@ -74,7 +74,24 @@ await host.waitForTimeout(400)
 const promoted = await host.evaluate(() => document.querySelector('.rp-hero h3')?.textContent ?? '')
 check('the rail promotes rather than plays', promoted !== hero.title, `${hero.title} -> ${promoted}`)
 
+// Filters reorder the grid rather than reloading it.
+const firstByViews = await host.evaluate(() => document.querySelector('.rp-slide b')?.textContent ?? '')
+await host.locator('.rp-pop .rp-filter').nth(2).click()
+await host.waitForTimeout(500)
+const firstByLength = await host.evaluate(() => document.querySelector('.rp-slide b')?.textContent ?? '')
+check('the filters reorder the programme', firstByViews !== firstByLength, `${firstByViews} -> ${firstByLength}`)
+check(
+  'the grid scrolls down rather than sideways',
+  await host.evaluate(() => {
+    const rail = document.querySelector('.rp-rail')
+    return !!rail && rail.scrollHeight > rail.clientHeight + 40
+  }),
+)
+
 await host.locator('.rp-hero-play').click()
+// Pressing start puts the programme away.
+await host.waitForTimeout(900)
+check('the panel gets out of the way', await host.evaluate(() => !document.querySelector('.rp-pop.is-open')))
 check('the film starts for the one who picked it', !!(await poll(host, () => (window.__cinema.handles.media.currentTime || 0) > 1)))
 check('and for everybody else in the hall', !!(await poll(guest, () => (window.__cinema.handles.media.currentTime || 0) > 1)))
 check(
@@ -86,6 +103,17 @@ const apart = Math.abs(
     (await guest.evaluate(() => window.__cinema.handles.media.currentTime)),
 )
 check('and they are watching the same moment', apart < 6, `${apart.toFixed(1)}s apart`)
+
+// The interval: pauses the hall and brings the lights up.
+await host.waitForTimeout(5000)
+await host.evaluate(() => window.__cinema.handles.room.open('library'))
+await host.waitForTimeout(600)
+const lightsBefore = await host.evaluate(() => window.__cinema.handles.room.settings.house)
+await host.locator('.rp-hero-hold').click()
+await host.waitForTimeout(1200)
+check('the interval stops the film for everybody', (await poll(guest, () => window.__cinema.handles.media.isPlaying === false)) === true)
+const lightsAfter = await host.evaluate(() => window.__cinema.handles.room.settings.house)
+check('and brings the lights up', lightsAfter > lightsBefore, `${lightsBefore} -> ${lightsAfter}`)
 
 const real = errors.filter((e) => !/favicon|WebSocket|8787|Permissions policy/i.test(e))
 check('no console errors', real.length === 0, real.slice(0, 2).join(' | '))

@@ -1,7 +1,7 @@
 {
   "title": "Higgsfield Originals",
   "source": "https://fnf-api-gw.higgsfield.ai/fnf/project-publications",
-  "built": "2026-08-15T22:08:32.209Z",
+  "built": "2026-08-15T22:46:39.419Z",
   "note": "Point this at your own feed (LIBRARY_FEED) or replace the file, and the cinema fills with your programme.",
   "films": [
     {
@@ -12,9 +12,33 @@
       "src": "https://cdn.higgsfield.ai/hls/video_input/d239c691-6c91-4d46-a498-4adbb4c5f4df/index.m3u8",
       "seconds": 5706,
       "by": "higgsfield.studio",
-      "views": 403933,
-      "likes": 3333,
+      "views": 404062,
+      "likes": 3334,
       "page": "https://higgsfield.ai/@higgsfield.studio/projects/hell-grind"
+    },
+    {
+      "id": "01f8ae67-c828-4bec-87a5-d36cf1ad7361",
+      "title": "Kok Boru",
+      "description": null,
+      "poster": "https://du4zrvwy3vtek.cloudfront.net/episode/2f24cfc0-cde0-438b-893f-32c7bee58df0/thumbnail/52f68f64-14b4-426e-b506-ad5b8be30042.jpg",
+      "src": "https://du4zrvwy3vtek.cloudfront.net/hls/episode/2f24cfc0-cde0-438b-893f-32c7bee58df0/video/0d3a6432-7652-44f9-a256-cee23094c50f.m3u8",
+      "seconds": 20,
+      "by": "higgsfield.studio",
+      "views": 179787,
+      "likes": 2187,
+      "page": "https://higgsfield.ai/@higgsfield.studio/projects/kok-boru"
+    },
+    {
+      "id": "4071124f-526d-4e0c-bdac-045cfff9ac95",
+      "title": "Anime production - Launch video",
+      "description": "A tutorial on building a full anime sequence with Claude and Seedream 5.0 Pro via Higgsfield MCP — from a locked style prompt and character",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EugSQ3VZX24bAVRklLPXGmHpQM/3a3d9efd-b0b8-4f39-b325-775d3c803793.png",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/8f4c23e3-659e-4e15-b52a-0d115f1f74fd/index.m3u8",
+      "seconds": 45.8,
+      "by": "mixingburrito1329",
+      "views": 107110,
+      "likes": 798,
+      "page": "https://higgsfield.ai/@mixingburrito1329/projects/anime-production"
     },
     {
       "id": "0efa70c1-07ec-410a-813b-8629502a7de3",
@@ -24,9 +48,69 @@
       "src": "https://cdn.higgsfield.ai/hls/video_input/8379c8de-803d-4b40-ae7a-3029142566f6/index.m3u8",
       "seconds": 6888.896,
       "by": "higgsfield.studio",
-      "views": 89305,
-      "likes": 627,
+      "views": 89511,
+      "likes": 629,
       "page": "https://higgsfield.ai/@higgsfield.studio/projects/cully-hill-boys"
+    },
+    {
+      "id": "7056388c-4c20-4f97-b127-77dfc0a6f06a",
+      "title": "Nala - Heads Drop",
+      "description": "A fully AI-generated music video for \"Head Up\" by Nala. Every frame, character, and scene was created using an AI production pipeline",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3GSjQ8fCQLnyLJWJuyvOmV6Z4tY/3a2dbde4-b05d-413c-9178-589a06beec09.png",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/03924a9c-de03-42c4-aec2-bf184cdc40d5/index.m3u8",
+      "seconds": 49.708333,
+      "by": "higgscreator",
+      "views": 85700,
+      "likes": 838,
+      "page": "https://higgsfield.ai/@higgscreator/projects/nala-heads-drop"
+    },
+    {
+      "id": "9edf6917-846f-480b-8316-99aa993f2847",
+      "title": "4K Blockbuster Breakdown",
+      "description": "One press of a glowing green button traps a guy inside his little sister's AI generations — and every time he dies, he wakes up som",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3CRGV60QtXkARI1qsjfrcLQIV4l/4359cdad-12b6-4f58-bc1a-71c7985ec35d.jpg",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3CRGV60QtXkARI1qsjfrcLQIV4l/e2f25d63-a51d-431a-abcc-88e2a326b198.mp4",
+      "seconds": 202.197333,
+      "by": "adilinthewild",
+      "views": 62006,
+      "likes": 397,
+      "page": "https://higgsfield.ai/@adilinthewild/projects/4k-blockbuster-breakdown"
+    },
+    {
+      "id": "ddc397e7-f617-40d1-9909-0264469b95eb",
+      "title": "Huntress's Tale",
+      "description": "A cold, gothic dark‑fantasy tableau: a porcelain huntress and silver fairy in misted flooded vaults as a serpentine shadow claims the depths",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BqUZjTku4Y6XfrMrx1hVmJM4Cb/be283b86-b112-4895-be0f-dbb83a2e0e2d.jpg",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/904a8d34-9efc-44d4-8a78-f70f0ac6c4c5/index.m3u8",
+      "seconds": null,
+      "by": "ailaa",
+      "views": 50423,
+      "likes": 279,
+      "page": "https://higgsfield.ai/@ailaa/projects/huntress-s-tale"
+    },
+    {
+      "id": "606313de-5ce7-40f3-b05c-2181204e9a97",
+      "title": "Higgsfield Academy",
+      "description": null,
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Bu4J9LdRqhDHpwVUmDuiPIuIy0/65c720f3-0e6b-44f1-a17a-56a94d5cfcd8.png",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/79b40150-283a-45c5-bd0b-fcdf4ed55b4a/index.m3u8",
+      "seconds": 64,
+      "by": "askar_yedil",
+      "views": 37137,
+      "likes": 238,
+      "page": "https://higgsfield.ai/@askar_yedil/projects/higgsfield-academy"
+    },
+    {
+      "id": "cee8c1f3-75a0-4722-970d-c78bd1d23bff",
+      "title": "ZEPHYR: Special",
+      "description": "With a Zephyr member in dire straits, survival looked impossible - until a mysterious guest character intervened. Her mastery of mech combat surpassed the expectations of even the most elite fighters in the squad.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3GNcyaSCltezE7ot4WtRdn0jfo0/9655238c-398d-4403-bc7d-68e3b43238cf.jpg",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/56987630-1f4d-4c34-884f-822aaeac9bd5/index.m3u8",
+      "seconds": 307.861333,
+      "by": "higgsfield.studio",
+      "views": 35146,
+      "likes": 325,
+      "page": "https://higgsfield.ai/@higgsfield.studio/projects/zephyr-special"
     },
     {
       "id": "dfa3c067-3f17-47cc-bc0d-65cc82fb11f0",
@@ -36,8 +120,8 @@
       "src": "https://cdn.higgsfield.ai/hls/video_input/8e773bcc-7271-41a4-8024-3629f9ea9ca4/index.m3u8",
       "seconds": 1188.958333,
       "by": "higgsfield.studio",
-      "views": 29524,
-      "likes": 371,
+      "views": 29642,
+      "likes": 373,
       "page": "https://higgsfield.ai/@higgsfield.studio/projects/oneiric"
     },
     {
@@ -48,9 +132,21 @@
       "src": "https://cdn.higgsfield.ai/hls/video_input/bb1d117b-f833-4810-a131-ca44eaad1c8b/index.m3u8",
       "seconds": 76.565333,
       "by": "alishaqantaar",
-      "views": 27951,
+      "views": 27957,
       "likes": 209,
       "page": "https://higgsfield.ai/@alishaqantaar/projects/the-new-girl"
+    },
+    {
+      "id": "0521e8cd-3ef9-418d-9898-8a839d2757f6",
+      "title": "Ultra Realistic AI Short Film Breakdown",
+      "description": "One press of a remote pulls a guy so deep into the impossibly real worlds on his TV screen that even his mom can't look away.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3CRGV60QtXkARI1qsjfrcLQIV4l/3e3ebe71-19e9-4dfc-a094-ed8769b8ebab.jpg",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/68b2264d-2679-47d3-b9f4-b6b055a57ed1/index.m3u8",
+      "seconds": 65.066667,
+      "by": "adilinthewild",
+      "views": 27803,
+      "likes": 140,
+      "page": "https://higgsfield.ai/@adilinthewild/projects/tv-4k"
     },
     {
       "id": "6f30570f-31f2-4fc2-93b8-9bff903bec81",
@@ -65,6 +161,30 @@
       "page": "https://higgsfield.ai/@merumeru/projects/cat-story"
     },
     {
+      "id": "b9c635b6-4ff7-4f54-9459-04fcc913fc0f",
+      "title": "\"Top Up\" Cinematic AD Breakdown",
+      "description": "One soda turns a drained athlete into a robot gladiator — but to win, he has to lose everything, run dry, and power up one last time.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3CRGV60QtXkARI1qsjfrcLQIV4l/16e7726a-195e-4596-bbc2-aec70c40d87f.jpg",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/6eb955b8-2e11-4742-bfca-6fb1ad9be1a3/index.m3u8",
+      "seconds": 105.664,
+      "by": "adilinthewild",
+      "views": 15717,
+      "likes": 95,
+      "page": "https://higgsfield.ai/@adilinthewild/projects/top-up"
+    },
+    {
+      "id": "2c8b7bf6-8f71-4bfa-9423-c37d0c01c7e0",
+      "title": "Office Bathing",
+      "description": "The office is flooding, everyone is drowning, and one girl in swim goggles could not possibly care less.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3C1vdpZ7vKPBsTfENjBcKRhz7Dd/4e18935a-67fd-4fe5-8f28-67f0474e44c9.png",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3C1vdpZ7vKPBsTfENjBcKRhz7Dd/7b31c2f2-0f15-4fcb-a9b5-f02e188b8629.mp4",
+      "seconds": null,
+      "by": "sateesfaction",
+      "views": 14091,
+      "likes": 111,
+      "page": "https://higgsfield.ai/@sateesfaction/projects/office-bathing"
+    },
+    {
       "id": "60ea55a4-7275-4e39-951a-c23a99bf1d09",
       "title": "Dusk",
       "description": "A muted, grainy schoolyard moment: a pale boy's quiet warning and a guarded girl's steady, wary silence under grey skies.",
@@ -72,9 +192,21 @@
       "src": "https://cdn.higgsfield.ai/hls/video_input/bc85ab6a-ff1c-464d-b559-b654a46ce999/index.m3u8",
       "seconds": 88.448,
       "by": "merumeru",
-      "views": 11610,
+      "views": 11637,
       "likes": 111,
       "page": "https://higgsfield.ai/@merumeru/projects/dusk"
+    },
+    {
+      "id": "2a0b5c38-d182-4481-9551-e5635b8c3fd0",
+      "title": "Seed Audio 1.0 - Launch Video",
+      "description": "Launch video for Seed Audio 1.0 on Higgsfield MCP — voice cloning & cinematic sound, told via bold motion design and a comedic tone",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Bys5o5zgAgyTt2Cu2Mu80wABmx/78f7d753-5d2b-4d90-9143-cb3736e5204c.png",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/c9753062-8e47-48ea-a276-9496362f08dc/index.m3u8",
+      "seconds": null,
+      "by": "daniallll",
+      "views": 11539,
+      "likes": 121,
+      "page": "https://higgsfield.ai/@daniallll/projects/seed-audio-1-0-launch-video"
     },
     {
       "id": "bbe6a216-bdde-46eb-a56a-a6b182521ba4",
@@ -84,9 +216,141 @@
       "src": "https://cdn.higgsfield.ai/hls/video_input/337988a2-6567-4b34-b1bd-a933849fa7b8/index.m3u8",
       "seconds": 360,
       "by": "higgsfield.studio",
-      "views": 9699,
-      "likes": 103,
+      "views": 9814,
+      "likes": 105,
       "page": "https://higgsfield.ai/@higgsfield.studio/projects/adiliada"
+    },
+    {
+      "id": "6e0a98fc-2618-43d0-83bc-0fdcd5e8d1a7",
+      "title": "One More Time",
+      "description": "A girl secretly rewinds time on a first date — until she realizes the only take worth keeping is the one that goes wrong.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3C1vdpZ7vKPBsTfENjBcKRhz7Dd/829f4058-2021-4d98-9111-2d6602481de4.png",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/b27e4a1d-1af6-4c0e-bd5a-fd9538716b6a/index.m3u8",
+      "seconds": null,
+      "by": "sateesfaction",
+      "views": 9645,
+      "likes": 116,
+      "page": "https://higgsfield.ai/@sateesfaction/projects/one-more-time"
+    },
+    {
+      "id": "25ee52ed-c03c-4363-96e9-88e68a1b1534",
+      "title": "Gothic Beach",
+      "description": "A gothic girl walks a sunset beach, drawing the soul from all she touches: shells, lost objects, people, leaving them hollow behind her.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BqTe3gKGdsmgvA3C26ClbV0la7/983a6ea1-b62d-4feb-97a7-48c2aeac8dc1.png",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/eb259cbd-086c-462c-89e2-4f2fa144deab/index.m3u8",
+      "seconds": null,
+      "by": "skxqw",
+      "views": 7667,
+      "likes": 76,
+      "page": "https://higgsfield.ai/@skxqw/projects/gothic-beach"
+    },
+    {
+      "id": "e263263d-ced3-4527-8e1d-9db2d08c62dd",
+      "title": "Strawberry Summer",
+      "description": "Nostalgic summer romance in grainy 90s film frames—gentle goodbyes, quiet grief, and sunlit laughter by sea and old farmhouse.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BrPM8tovojzRNJic3H5tQaINNC/6a0d2904-5367-4bfc-b277-b496e69201e8.png",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/e571c90a-a083-4f81-afda-4722d4bc16db/index.m3u8",
+      "seconds": 47.75,
+      "by": "kniga6767",
+      "views": 7140,
+      "likes": 82,
+      "page": "https://higgsfield.ai/@kniga6767/projects/strawberry-summer"
+    },
+    {
+      "id": "f5ab4f46-2eef-4261-ac5f-e1670eba97d3",
+      "title": "CHANDLER-ROLLERBLADE-COMMERCIAL",
+      "description": "I made the rollerblade commercial pitched by Chandler Bing in an episode of Friends (if you know, you know)!",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_2yLzar9qEBwWtKro0bFax4owvTR/027c9db4-a593-47a5-ab7f-5051d8812347.jpg",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/5ad329f8-14e2-41e2-99d2-1fa41e0b30bc/index.m3u8",
+      "seconds": 50,
+      "by": "thomas_lundstrom",
+      "views": 6631,
+      "likes": 120,
+      "page": "https://higgsfield.ai/@thomas_lundstrom/projects/chandler-rollerblade-commercial"
+    },
+    {
+      "id": "f146de1a-13c8-44e5-b78e-80cea3760ffd",
+      "title": "EMERALD FRAGRANCE COMMERCIAL",
+      "description": "A fragrance commercial making myself Indiana Jones in the process.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_2yLzar9qEBwWtKro0bFax4owvTR/83f61026-b15c-413e-99db-bf3768b1ce84.webp",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/1582f5aa-7879-401a-a9dc-96bd2389638f/index.m3u8",
+      "seconds": 33.125,
+      "by": "thomas_lundstrom",
+      "views": 4766,
+      "likes": 77,
+      "page": "https://higgsfield.ai/@thomas_lundstrom/projects/emerald-fragrance-commercial"
+    },
+    {
+      "id": "08f5b180-01f5-4876-a12f-1c200d4af2a8",
+      "title": "The Secret Monkey Island Movie trailer",
+      "description": "A cinematic live-action Monkey Island vision: charming young pirate heroes and a commanding governor set against mysterious, moonlit Melee I",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_38zeN5BVOn6L63XOa1eVyl9Wtey/951999fb-3374-4e76-a889-57ea54fc4eed.png",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_38zeN5BVOn6L63XOa1eVyl9Wtey/5e4bb613-a89e-476f-bafc-e21428387faa.mp4",
+      "seconds": 106.75,
+      "by": "diegothetower",
+      "views": 2521,
+      "likes": 24,
+      "page": "https://higgsfield.ai/@diegothetower/projects/the-secret-monkey-island-movie-trailer"
+    },
+    {
+      "id": "ee64cb65-1e22-4cb1-a82b-3eea3e03ea1c",
+      "title": "Hello, NYC",
+      "description": "Three Spiders — a cinematic short set in a parallel NYC. Full pipeline: costumes, locations, generations, prompts.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BqRmTGxc9fJUDqpKVbkkJdkzdR/db1e6f3d-be79-49c0-8e07-f5bedc965432.jpg",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/076fc538-2ee7-4671-ae74-9dd9404088e9/index.m3u8",
+      "seconds": null,
+      "by": "realfike",
+      "views": 2497,
+      "likes": 60,
+      "page": "https://higgsfield.ai/@realfike/projects/hello-nyc"
+    },
+    {
+      "id": "9320a732-ea38-4f5c-a2e8-4d2d3779d97d",
+      "title": "REWIND CLUB",
+      "description": "Warm 2000s close-up vignettes of playful, shy, and glittering teen moments filmed on grainy 35mm.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3C1vdpZ7vKPBsTfENjBcKRhz7Dd/6fcf9f4a-51d3-48a1-9e78-3fd5b31c825c.png",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3C1vdpZ7vKPBsTfENjBcKRhz7Dd/327b5d85-9544-4963-a745-b4e729889cc5.mp4",
+      "seconds": 14.570667,
+      "by": "sateesfaction",
+      "views": 2392,
+      "likes": 37,
+      "page": "https://higgsfield.ai/@sateesfaction/projects/rewind-club"
+    },
+    {
+      "id": "9f5239fe-a3ab-42d7-9599-4bda3e1215fd",
+      "title": "Space Chores",
+      "description": "A woman in an orbital cupola presses one key, and an asteroid hits Earth.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3C1vdpZ7vKPBsTfENjBcKRhz7Dd/088b0a86-c2ac-47eb-9755-0ade6a05904a.png",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3C1vdpZ7vKPBsTfENjBcKRhz7Dd/d1c2459f-34f5-453b-8f41-39e44a9480e6.mp4",
+      "seconds": 22.314667,
+      "by": "sateesfaction",
+      "views": 2161,
+      "likes": 28,
+      "page": "https://higgsfield.ai/@sateesfaction/projects/spacechores"
+    },
+    {
+      "id": "e8de3dee-9dc0-4290-ac0b-6c1d7918f13c",
+      "title": "GLOW MASK COMMERCIAL",
+      "description": "A glow mask commercial created using Seedance 2.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_2yLzar9qEBwWtKro0bFax4owvTR/905e0219-f646-4bf0-b5bf-455930892f72.png",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/07777072-dc4e-4e6e-8adb-3e31714006b6/index.m3u8",
+      "seconds": 41.833333,
+      "by": "thomas_lundstrom",
+      "views": 2089,
+      "likes": 30,
+      "page": "https://higgsfield.ai/@thomas_lundstrom/projects/glow-mask-commercial"
+    },
+    {
+      "id": "c76a0b7d-355e-4c5d-a8fa-8e910eb81837",
+      "title": "The Land Before Time (Prehistoric Planet 2 Style)",
+      "description": "Prehistoric Land Before Time | Full AI Fan-Made Short Film\n\n🦕 What if The Land Before Time was reimagined as a real prehistoric documentary",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_37agRaDQriMX1k5Ju6Y8B4qjTLT/0b0df977-18b6-44c5-aff9-bed6609c55fe.jpg",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/674fa2ba-4f2d-464e-ad9d-ee391854e272/index.m3u8",
+      "seconds": 138.878549,
+      "by": "hadiradzi",
+      "views": 1913,
+      "likes": 10,
+      "page": "https://higgsfield.ai/@hadiradzi/projects/the-land-before-time-prehistoric-planet-2-style"
     },
     {
       "id": "6780415b-10f2-4b2a-b9e9-0d8a5e51dfb2",
@@ -101,6 +365,126 @@
       "page": "https://higgsfield.ai/@michelangelorobot1306/projects/emerald-vanguard"
     },
     {
+      "id": "c55a22e6-952d-4445-a712-bc7040d368ea",
+      "title": "AI Music Video - Betrayed By Night",
+      "description": "One house, betrayal, pouring it out...\n\nA  music video for in-house AI artist - Polka.BLK.\n\nMusic - Suno\nVideo - Seedance 2.0",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_339MSApXay2TUCWbvwww8fLBgBk/f896016c-5b19-4e3b-af3c-0ecb35ce511e.png",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/8da13654-e969-4ee0-809c-a5aec6843f47/index.m3u8",
+      "seconds": 136.370998,
+      "by": "desilenced",
+      "views": 1257,
+      "likes": 10,
+      "page": "https://higgsfield.ai/@desilenced/projects/betrayed-by-night"
+    },
+    {
+      "id": "3b2d345f-2a2c-4a98-9f09-52e24de9a17b",
+      "title": "Ascension",
+      "description": "No comments about this one",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_34scrEF45OKLkdbCiEMIjFoECR1/d9bb922a-7de4-4a8a-9e4a-095659b97b23.jpg",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_34scrEF45OKLkdbCiEMIjFoECR1/24686865-62da-4679-9dcf-530b7b22cebc.mp4",
+      "seconds": 830.848,
+      "by": "santialvaa",
+      "views": 1244,
+      "likes": 9,
+      "page": "https://higgsfield.ai/@santialvaa/projects/ascension"
+    },
+    {
+      "id": "adc0a9b6-e358-42d5-8030-bf124c3107a5",
+      "title": "Miles Spidey Style Recreation",
+      "description": "A gritty, cinematic odyssey following a lone, determined hero as reality fractures between rain-soaked city nights and dreamlike eras.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3GklEbLqSyuUXiHg3MHdvY6hvd1/02d410a4-a719-4c69-ad82-98040d03a313.png",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3GklEbLqSyuUXiHg3MHdvY6hvd1/e096030a-279b-4d71-a4bc-03230684c52e_trim.mp4",
+      "seconds": 15.041667,
+      "by": "retailhamster1708",
+      "views": 1017,
+      "likes": 13,
+      "page": "https://higgsfield.ai/@retailhamster1708/projects/miles-spidey-style-recreation"
+    },
+    {
+      "id": "7215fab3-2cf9-4133-bbb0-3ea8c7a33523",
+      "title": "ECHO",
+      "description": "Gritty, neon-drenched cinematic vignettes of restrained longing and tense urban encounters under rain and amber light.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_39U9EcTx8IUSC9STEPZvGIVf02I/a9b46a5c-b737-47d9-a4b4-74b877ec372a.webp",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_39U9EcTx8IUSC9STEPZvGIVf02I/93d7781d-ad43-4370-a2b8-4f6297b8a8d6.mp4",
+      "seconds": 64.106667,
+      "by": "by_frana",
+      "views": 976,
+      "likes": 12,
+      "page": "https://higgsfield.ai/@by_frana/projects/echo"
+    },
+    {
+      "id": "4d4792f1-8c95-42e1-8940-971b86f5ca6d",
+      "title": "Ashes of the New Year",
+      "description": "A poetic rural portrait of childhood joy and tender family warmth ruptured by a sudden, heartbreaking loss.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_39U9EcTx8IUSC9STEPZvGIVf02I/2a70e36f-fa5d-4a78-861f-e0f8fe1e6a96.webp",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_39U9EcTx8IUSC9STEPZvGIVf02I/1c35df72-3a32-45f8-aaa0-06e47d7c723e.mp4",
+      "seconds": 70.91,
+      "by": "by_frana",
+      "views": 950,
+      "likes": 11,
+      "page": "https://higgsfield.ai/@by_frana/projects/ashes-of-the-new-year"
+    },
+    {
+      "id": "77528cb1-04f4-4a78-acb1-0d083d72fa62",
+      "title": "Wing Chun Chieri",
+      "description": "A kung-fu fantasy mini drama series — Chieri, a young Wing Chun practitioner in 1950s  who gets pulled into the hidden world",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_2vIlBFjXLMHbtbVsunvlhZHHvKj/636fdc6b-0c59-4fd6-a176-a5a1c1a89f6a.webp",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_2vIlBFjXLMHbtbVsunvlhZHHvKj/1f32b521-a1d7-4f6c-85a3-837edce7684b.mp4",
+      "seconds": 87.433333,
+      "by": "chieri",
+      "views": 862,
+      "likes": 7,
+      "page": "https://higgsfield.ai/@chieri/projects/wing-chun-chieri"
+    },
+    {
+      "id": "7b719826-9438-4dc3-8e1d-1e221bdc678d",
+      "title": "ExpressVPN Spec Ad",
+      "description": "Brief: Invisibilty \nCreate a story that shares how your data can be exposed. Keep your data private. Your search history should stay yours.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_36h4RbM7fNKHSGQnwonqgBv2Hxn/00ec50ef-664b-47aa-a63a-8f360db769ab.png",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_36h4RbM7fNKHSGQnwonqgBv2Hxn/35747f92-afd6-4993-b9bf-728425192ca8.mp4",
+      "seconds": null,
+      "by": "nxtgstudio",
+      "views": 849,
+      "likes": 7,
+      "page": "https://higgsfield.ai/@nxtgstudio/projects/expressvpn-spec-ad"
+    },
+    {
+      "id": "ae118606-1e35-49e2-a467-2863162c6bba",
+      "title": "Mee Kari Opah Horror Short Film Project",
+      "description": "A spooky yet playful Malaysian horror-comedy set where a ghostly Opah and pocong causing chaos.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_37agRaDQriMX1k5Ju6Y8B4qjTLT/687b5b3a-a322-4965-b1ae-757eef5411ec.webp",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/4bd7e410-c5bb-4677-ad2e-abed028ec36f/index.m3u8",
+      "seconds": 45.371995,
+      "by": "hadiradzi",
+      "views": 801,
+      "likes": 2,
+      "page": "https://higgsfield.ai/@hadiradzi/projects/mee-kari-opah-horror-short-film-project"
+    },
+    {
+      "id": "8e5e149c-fc29-442c-96ed-d0a6b553cebf",
+      "title": "Kurut × Ilbirs [Spec Ad Concept]",
+      "description": "Spec ad concept: kurut, the Kyrgyz salted cheese snack, meets Ilbirs — a snow-leopard mascot in ak-kalpak. Slate-blue studio, 15s.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_2xuW46C5ACuh0AZu0BZsXSWiaYo/3f936749-f79c-4a6b-9b2d-321963bdff55.png",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/164d0570-9eb3-4eea-8881-8d093db5c9d4/index.m3u8",
+      "seconds": 15.916667,
+      "by": "shandeeez",
+      "views": 792,
+      "likes": 10,
+      "page": "https://higgsfield.ai/@shandeeez/projects/kurut-ilbirs-spec-ad-concept"
+    },
+    {
+      "id": "87f31538-a83b-4e64-bd5a-c3b30b25bb28",
+      "title": "배우는 사랑 [Full MV with Prompt]",
+      "description": "A simple MV created by putting clips together.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_2vIlBFjXLMHbtbVsunvlhZHHvKj/4b70339a-0b99-4e74-a07b-144e1638d6b9.png",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/9be8ae9b-5a34-40f6-8c51-2dfddb52807b/index.m3u8",
+      "seconds": 185.2,
+      "by": "chieri",
+      "views": 751,
+      "likes": 5,
+      "page": "https://higgsfield.ai/@chieri/projects/full-mv-with-prompt"
+    },
+    {
       "id": "c4941f7f-1407-46f3-9615-05070d86d3c0",
       "title": "agente perdido",
       "description": "es un agente que representa una empresa gigante llama SMARTEX por eso el se llama agente smartex anda perdido por andar en una mision",
@@ -111,6 +495,54 @@
       "views": 714,
       "likes": 10,
       "page": "https://higgsfield.ai/@monrox/projects/agente-perdido"
+    },
+    {
+      "id": "bd52b68e-b5a5-424f-8290-9a285faf43e3",
+      "title": "ELEMENTS VS POLLUTION",
+      "description": "HELP OUR MOTHER NATURE TO FIGTH THE POLLUTION IN OUR WOLRD",
+      "poster": "https://cdn.higgsfield.ai/763b0b63-2e56-43de-a11b-d7b02154dc15_thumb.webp",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3DSEjzzcJS8NrRPmylc0i1T8Z5p/763b0b63-2e56-43de-a11b-d7b02154dc15.mp4",
+      "seconds": 6.06,
+      "by": "knuthcamel1375",
+      "views": 707,
+      "likes": 4,
+      "page": "https://higgsfield.ai/@knuthcamel1375/projects/elements-vs-pollution"
+    },
+    {
+      "id": "c24545f6-19ce-415d-9888-eb2f381f597f",
+      "title": "Arctic Leopard Spec Ad",
+      "description": "1. Claude\n2. Midjourney\n3. Nano Banana Pro\n4. Seedance 2.0\n5. Epedemic Sound\n6. Photoshop\n7. Premier Pro",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_36h4RbM7fNKHSGQnwonqgBv2Hxn/8f2ecda5-c1f5-496d-9a5d-5c41f7abc284.png",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_36h4RbM7fNKHSGQnwonqgBv2Hxn/3ac7a5e6-473a-4dd0-8460-1fec738fcc7c.mp4",
+      "seconds": null,
+      "by": "nxtgstudio",
+      "views": 667,
+      "likes": 9,
+      "page": "https://higgsfield.ai/@nxtgstudio/projects/arctic-leopard-spec-ad"
+    },
+    {
+      "id": "030ab9ad-22f6-470c-84dd-bfecdd7c73be",
+      "title": "ALVA - SHOWREEL",
+      "description": "whatever this is",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_34scrEF45OKLkdbCiEMIjFoECR1/a52dcfe6-9b18-4d7b-b68d-f3e67240e323.png",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_34scrEF45OKLkdbCiEMIjFoECR1/ee841d6e-af8d-4b23-808a-1879bcf49735.mp4",
+      "seconds": 170.005333,
+      "by": "santialvaa",
+      "views": 657,
+      "likes": 13,
+      "page": "https://higgsfield.ai/@santialvaa/projects/alva-showreel"
+    },
+    {
+      "id": "a555c73d-441f-4a17-9a27-6af4e6636efc",
+      "title": "DONUT-COMMERCIAL",
+      "description": "A tense behind-the-scenes short where a glossy raspberry donut sparks fury and a stunned, silent film‑set confrontation.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_2yLzar9qEBwWtKro0bFax4owvTR/aca6c565-7919-4300-aeb9-945642d77fc3.webp",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/594340a5-ab0d-4af7-93c2-db8e2f03bcbc/index.m3u8",
+      "seconds": 32.666667,
+      "by": "thomas_lundstrom",
+      "views": 620,
+      "likes": 16,
+      "page": "https://higgsfield.ai/@thomas_lundstrom/projects/donut-commercial"
     },
     {
       "id": "968c42c7-9776-45fb-b24a-ba924a36bb5b",
@@ -125,16 +557,28 @@
       "page": "https://higgsfield.ai/@indivisuals/projects/100-real"
     },
     {
-      "id": "a555c73d-441f-4a17-9a27-6af4e6636efc",
-      "title": "DONUT-COMMERCIAL",
-      "description": "A tense behind-the-scenes short where a glossy raspberry donut sparks fury and a stunned, silent film‑set confrontation.",
-      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_2yLzar9qEBwWtKro0bFax4owvTR/aca6c565-7919-4300-aeb9-945642d77fc3.webp",
-      "src": "https://cdn.higgsfield.ai/hls/video_input/594340a5-ab0d-4af7-93c2-db8e2f03bcbc/index.m3u8",
-      "seconds": 32.666667,
-      "by": "thomas_lundstrom",
-      "views": 605,
-      "likes": 15,
-      "page": "https://higgsfield.ai/@thomas_lundstrom/projects/donut-commercial"
+      "id": "fbb9327a-d96c-4ffe-9e6b-7c464d363177",
+      "title": "[MV] Protect the throne & guard",
+      "description": "Under a blood-red moon, armored cat knights defend a cursed Royal Hall as a relentless undead horde crashes in—epic, grim, cinematic.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_2vIlBFjXLMHbtbVsunvlhZHHvKj/356f1acc-d35c-497c-b911-2d59a6006fee.png",
+      "src": "https://cdn.higgsfield.ai/hls/video_input/13dc748f-e82b-4410-a07d-90ca759cfa6d/index.m3u8",
+      "seconds": 233.233333,
+      "by": "chieri",
+      "views": 563,
+      "likes": 3,
+      "page": "https://higgsfield.ai/@chieri/projects/mv-protect-the-throne"
+    },
+    {
+      "id": "9c562d69-f626-4f18-babb-b4c24fe01199",
+      "title": "Husqvarna",
+      "description": "Husqvarna released the 2027 Husqvarna FC 450 with only images to reveal the bike. So we created a spec ad for its release",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_36h4RbM7fNKHSGQnwonqgBv2Hxn/960675fc-ad41-44b4-85ab-d1ac29ae362d.png",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_36h4RbM7fNKHSGQnwonqgBv2Hxn/33cc5eb8-0d77-44b5-8eb5-73249bbde935.mp4",
+      "seconds": null,
+      "by": "nxtgstudio",
+      "views": 563,
+      "likes": 4,
+      "page": "https://higgsfield.ai/@nxtgstudio/projects/husqvarna"
     },
     {
       "id": "1884f7b2-497a-4915-8f7f-6adab5af4faf",
@@ -161,6 +605,18 @@
       "page": "https://higgsfield.ai/@nxtgstudio/projects/rawrr-mantis-spec-ad"
     },
     {
+      "id": "f7195e42-2358-4f45-adde-09a83087486c",
+      "title": "Past and future",
+      "description": "An intimate, ultra-real ocean reverie: older and younger selves face each other in a lone boat, silence heavy with memory and longing.",
+      "poster": "https://d8j0ntlcm91z4.cloudfront.net/user_3DX5nRL3A7CszWj4JqjIn9aEi0N/hf_20260723_191548_0703f3ab-7b2c-47bb-bd00-a5b2ffc8048b_min.webp",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3DX5nRL3A7CszWj4JqjIn9aEi0N/8c5cbc74-17f2-4157-8b16-a1030534657a.mp4",
+      "seconds": 25.008005,
+      "by": "lord-gugushe",
+      "views": 477,
+      "likes": 3,
+      "page": "https://higgsfield.ai/@lord-gugushe/projects/past-and-future"
+    },
+    {
       "id": "dce71423-6f7b-46f4-93e8-8f81638ffb54",
       "title": "Titan Cupsey vs The Bears.",
       "description": "Two mountain-sized titans clash in a storm‑lashed frozen valley as an icy blade ends one giant, leaving a silent, thunderous aftermath.",
@@ -168,7 +624,7 @@
       "src": "https://cdn.higgsfield.ai/hls/video_input/32561742-b39b-46f2-b426-fa44f0464cad/index.m3u8",
       "seconds": 148.625,
       "by": "learningpencil_pico",
-      "views": 431,
+      "views": 433,
       "likes": 8,
       "page": "https://higgsfield.ai/@learningpencil_pico/projects/titan-cupsey-vs-the-bears"
     },
@@ -180,9 +636,21 @@
       "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3GOXWTFOXuw3pz338ZkrMFR5PST/a6a9d36b-cb8f-4ec3-99a4-60e90cc22227.mp4",
       "seconds": 220.2,
       "by": "pascalowl1596",
-      "views": 418,
+      "views": 420,
       "likes": 6,
       "page": "https://higgsfield.ai/@pascalowl1596/projects/siwa-the-craving"
+    },
+    {
+      "id": "0a7dbb7e-d9a6-4ad4-8b9a-dfdc4edbbf3f",
+      "title": "DZKommando - History in black",
+      "description": "\"My History in Black\" — a cinematic reinterpretation of the song by PRIEST, by DZKommando. Shots entirely with AI-powered filmmaking",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BiPkSGMvaAi8UTE5GPRRBg6whv/d43f66a8-84b0-4bfa-80e2-6c4dc7c3a8b8.png",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BiPkSGMvaAi8UTE5GPRRBg6whv/68446d35-3d60-4f63-b01c-06fe3a5b193f.mp4",
+      "seconds": null,
+      "by": "nfavst",
+      "views": 420,
+      "likes": 2,
+      "page": "https://higgsfield.ai/@nfavst/projects/dzkommando-history-in-black"
     },
     {
       "id": "131b9b65-5229-45cb-9728-546beabfc446",
@@ -209,6 +677,18 @@
       "page": "https://higgsfield.ai/@menny_parmar/projects/spotify-ad"
     },
     {
+      "id": "2c0565b8-c48b-42a8-9de5-d7dfa501d571",
+      "title": "Glowia Luxury Serum",
+      "description": "A sunlit, studio-perfect scene of a luxury serum bottle glistening with soft water droplets against a serene high-end spa backdrop.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3GtcT2GHbbabkhnEkBT62wsxx50/eb6853ad-ff12-4101-be11-9c2a3b7a451c.png",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3GtcT2GHbbabkhnEkBT62wsxx50/f86a6a32-8e74-4066-a9c5-da084c2ba976.mp4",
+      "seconds": 5.041667,
+      "by": "toqa_tamer",
+      "views": 369,
+      "likes": 0,
+      "page": "https://higgsfield.ai/@toqa_tamer/projects/glowia-luxury-serum"
+    },
+    {
       "id": "14bc1c61-27de-458b-86f9-b4ab9cc41baf",
       "title": "Husqvarna Product Reveal",
       "description": "A lone driver chases the last analog sunset across a dying salt lake, carrying the only surviving recording of a vanished world.",
@@ -228,9 +708,21 @@
       "src": "https://cdn.higgsfield.ai/hls/video_input/10f0869a-7c24-4a0d-ba77-77dd0d9e99b8/index.m3u8",
       "seconds": 46.79675,
       "by": "amanaulakhcreator",
-      "views": 310,
+      "views": 311,
       "likes": 6,
       "page": "https://higgsfield.ai/@amanaulakhcreator/projects/ghost-of-land"
+    },
+    {
+      "id": "2f048479-7dac-422d-9f8e-0b142c6df6b9",
+      "title": "Woman With Cat",
+      "description": "A quiet, filmic morning: an auburn-haired woman cradles her white cat by a tall window, bathed in warm skin tones and hazy window light.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_2zPyoM0F3gNem5IVuA4d72gX9ee/7ed6e1b5-35d0-42ff-afb3-ff6f8ea1f407.webp",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_2zPyoM0F3gNem5IVuA4d72gX9ee/d12af114-4839-4b18-a46b-df799aedccbb.mp4",
+      "seconds": 5.208333,
+      "by": "ai_director_ryan",
+      "views": 295,
+      "likes": 1,
+      "page": "https://higgsfield.ai/@ai_director_ryan/projects/woman-with-cat"
     },
     {
       "id": "ff250bab-5565-4522-8aaf-1b93a51003b1",
@@ -240,9 +732,33 @@
       "src": "https://cdn.higgsfield.ai/hls/video_input/cf360bcc-9201-489e-9f7e-a5e383c49bba/index.m3u8",
       "seconds": 120.023946,
       "by": "riuvision",
-      "views": 285,
+      "views": 288,
       "likes": 11,
       "page": "https://higgsfield.ai/@riuvision/projects/remnant"
+    },
+    {
+      "id": "581b1281-b6b4-4596-8f40-e2d3803dd777",
+      "title": "DAEMON - Book to Movie Trailer",
+      "description": "DAEMON a book by Daniel Suarez.  Imagined by BookReels as a movie trailer.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3FHKqIQMJtdCp31QYOMnbCJUP1n/2d31405e-5de5-4f1b-99f2-fdbc8528485b.png",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3FHKqIQMJtdCp31QYOMnbCJUP1n/6853bb22-4cc6-4ba1-aa62-6aa8aeb772f9.mp4",
+      "seconds": 69.291667,
+      "by": "bookreels",
+      "views": 283,
+      "likes": 0,
+      "page": "https://higgsfield.ai/@bookreels/projects/daemon-book-to-movietrailer"
+    },
+    {
+      "id": "487ce5e4-a005-4efd-90d6-5dc7b59b8296",
+      "title": "Student 3D Character Portfolio | Cinematic Showcase",
+      "description": "A cinematic showcase of a student 3D character portfolio.\n\nCreated with Higgsfield AI.\n\nOriginal ArtStation Portfolio\nhttps://www.artstation",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BqAzUMdBn5YdBe1mdXxt3mQXMb/e487a3e4-2af4-48f3-beac-cd8f9741c2a7.png",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BqAzUMdBn5YdBe1mdXxt3mQXMb/f8a3fc50-83f5-4a5a-9de8-364ea41e7605.mp4",
+      "seconds": null,
+      "by": "s1academy",
+      "views": 282,
+      "likes": 4,
+      "page": "https://higgsfield.ai/@s1academy/projects/student-3d-character-portfolio-cinematic-showcase"
     },
     {
       "id": "a6684f89-8e9c-4d8e-8c7e-14212c001a85",
@@ -276,9 +792,21 @@
       "src": "https://cdn.higgsfield.ai/hls/video_input/bfe86ad3-eb4c-4880-8015-ee493cea64f3/index.m3u8",
       "seconds": 59.977007,
       "by": "sos_ai_school_studio",
-      "views": 238,
+      "views": 240,
       "likes": 3,
       "page": "https://higgsfield.ai/@sos_ai_school_studio/projects/tigz-after-dark-london-night-drive"
+    },
+    {
+      "id": "2ab1b409-cd8a-4297-af4d-3af2c8706de7",
+      "title": "Pubg 06/2026",
+      "description": "Парень летит с золотыми крыльями по миру. Посвящается к завершению сезона Pubg 06/26",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_36IybOIEyLXkE8lJh9QywMGctCn/8955d1db-6835-4ca8-a3e7-59b3f44decd6.png",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_36IybOIEyLXkE8lJh9QywMGctCn/3600533f-4fe1-4b4f-b734-53f6570db7a7.mp4",
+      "seconds": 42.791667,
+      "by": "sakmarov",
+      "views": 230,
+      "likes": 0,
+      "page": "https://higgsfield.ai/@sakmarov/projects/pubg-06-2026"
     },
     {
       "id": "00eb7730-83f7-4552-9247-c463172ff8c6",
@@ -300,7 +828,7 @@
       "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3HeM44mDTd3xR8ueOYKpECu8dM0/ce97811d-22f0-4ec7-ba25-3d2e87e3aa7b.mp4",
       "seconds": 56.32,
       "by": "neoclassicaldragonfly1761",
-      "views": 203,
+      "views": 204,
       "likes": 11,
       "page": "https://higgsfield.ai/@neoclassicaldragonfly1761/projects/el-pirata-con-poderes"
     },
@@ -312,7 +840,7 @@
       "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_2zXoUv2IJq64B5ltO2ksxaMWt7U/d1bdbeda-ffa9-4eac-ab6e-9c824d701734.mp4",
       "seconds": 73.52,
       "by": "bakha",
-      "views": 175,
+      "views": 176,
       "likes": 8,
       "page": "https://higgsfield.ai/@bakha/projects/nightwick"
     },
@@ -348,9 +876,33 @@
       "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BmIvt86qHxL5SHLKjkeDEzxSV7/bac52e81-c5b4-44fb-af08-d1cabcd290a2.mp4",
       "seconds": 20.041667,
       "by": "enriquegarcia",
-      "views": 130,
+      "views": 132,
       "likes": 4,
       "page": "https://higgsfield.ai/@enriquegarcia/projects/spidey-prompts"
+    },
+    {
+      "id": "dbb38f3f-df9c-4638-bf8b-9e2459116477",
+      "title": "YAFA",
+      "description": "A quiet, cinematic meditation on memory and place as Wajd anchors Jaffa’s past and present with steady resolve.",
+      "poster": "https://d8j0ntlcm91z4.cloudfront.net/user_38O8DnrJBKX0dVkZZpbJ74NucN0/hf_20260726_163151_c559afbd-88f5-4ca5-804d-f3f07b5e0e93_min.webp",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_38O8DnrJBKX0dVkZZpbJ74NucN0/57538003-0218-441e-9b5c-2d04c85fce96.mp4",
+      "seconds": 15.322313,
+      "by": "wajd97",
+      "views": 131,
+      "likes": 0,
+      "page": "https://higgsfield.ai/@wajd97/projects/yafa"
+    },
+    {
+      "id": "f3505b40-7e92-465a-bee8-e5bacfa04171",
+      "title": "The pizza guy ruins everything",
+      "description": "A chaotic, darkly comic pool-party nightmare where a manic delivery man upends wildlife and sanity under a moonlit sky.",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_37MQ17gU5ChLHK378EyOnoSHsmM/322399a6-e413-4b4b-9951-32579f9a811f.jpg",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_37MQ17gU5ChLHK378EyOnoSHsmM/0519ecaf-3922-4936-a87a-3ae1e425651f_trim.mp4",
+      "seconds": 10.007007,
+      "by": "dancingelk_beta",
+      "views": 130,
+      "likes": 0,
+      "page": "https://higgsfield.ai/@dancingelk_beta/projects/the-pizza-guy-ruins-everything"
     },
     {
       "id": "ef6041b9-baec-4919-ac9c-1c127c889f5f",
@@ -389,6 +941,18 @@
       "page": "https://higgsfield.ai/@johnspepper1489/projects/koyla-tralers"
     },
     {
+      "id": "894db977-c4e5-413a-abb4-a9df9a425468",
+      "title": "Demon",
+      "description": "Two demons meet in a gray, misty morning—cinematic 35mm intimacy—one startled as another approaches through the fog.",
+      "poster": "https://cdn.higgsfield.ai/bf016d4b-3b8b-4413-9a19-de31ab79823c_thumb.webp",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3CuLM1JTWUvCPh5z80it1lFaZqh/bf016d4b-3b8b-4413-9a19-de31ab79823c.mp4",
+      "seconds": 4.041667,
+      "by": "victoria7777",
+      "views": 95,
+      "likes": 0,
+      "page": "https://higgsfield.ai/@victoria7777/projects/demon"
+    },
+    {
       "id": "2bc43087-8fe7-4e9b-b073-dbb85e37f978",
       "title": "New project",
       "description": "A lone driver chases the last analog sunset across a dying salt lake, carrying the only surviving recording of a vanished world.",
@@ -399,6 +963,42 @@
       "views": 84,
       "likes": 0,
       "page": "https://higgsfield.ai/@von_neumanndolphin1664/projects/new-project"
+    },
+    {
+      "id": "267f654a-1534-40a3-9372-4ad45b3d9dfe",
+      "title": "יום בחי קרול 7",
+      "description": "היום מתחיל שהוא קם בבוקר והולך למכון לעשות ספורט, הוא מתקלח במכון, חוזר ואוכל בבית, אחר כך הולך לרופא, אחר כך חוזר הביתה ונרדם מול הספה",
+      "poster": "https://d2ol7oe51mr4n9.cloudfront.net/user_3DJwkJqgDO09EsS05kDQyszAsD3/89302864-5331-4c08-8c52-073eaa6139cf.webp",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3DJwkJqgDO09EsS05kDQyszAsD3/77d1eade-6460-4b0b-8638-c0d2810a7264.mp4",
+      "seconds": 12.518333,
+      "by": "homega3d",
+      "views": 63,
+      "likes": 0,
+      "page": "https://higgsfield.ai/@homega3d/projects/7"
+    },
+    {
+      "id": "35903f42-9147-4e3e-a082-9f832e40daa8",
+      "title": "New project",
+      "description": "A lone driver chases the last analog sunset across a dying salt lake, carrying the only surviving recording of a vanished world.",
+      "poster": null,
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3HUIuWuQl0C3w0c9DADhugejAFO/4a5f8ba4-6200-4e52-a0c2-f7490c672450.mp4",
+      "seconds": 30.476667,
+      "by": "picassocloud1748",
+      "views": 46,
+      "likes": 0,
+      "page": "https://higgsfield.ai/@picassocloud1748/projects/new-project"
+    },
+    {
+      "id": "57edf974-e260-45d2-b454-4a9c4be0c039",
+      "title": "RadaR",
+      "description": "A lone driver chases the last analog sunset across a dying salt lake, carrying the only surviving recording of a vanished world.",
+      "poster": "https://cdn.higgsfield.ai/1d13bea3-0358-4782-adaa-c14b4ab94fe8_thumb.webp",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3GVOmoA1ACs5JFZWweQWdTkQcRL/1d13bea3-0358-4782-adaa-c14b4ab94fe8.mp4",
+      "seconds": 10.865,
+      "by": "jammingnarwhal1348",
+      "views": 43,
+      "likes": 0,
+      "page": "https://higgsfield.ai/@jammingnarwhal1348/projects/radar"
     },
     {
       "id": "336fdd2e-015e-4ffb-9340-732741bb53e8",
@@ -423,6 +1023,30 @@
       "views": 29,
       "likes": 0,
       "page": "https://higgsfield.ai/@suarbauhaus/projects/o-do-absoluto"
+    },
+    {
+      "id": "f064c314-a711-4f69-85a8-66bc338cdb31",
+      "title": "New project",
+      "description": "A lone driver chases the last analog sunset across a dying salt lake, carrying the only surviving recording of a vanished world.",
+      "poster": "https://cdn.higgsfield.ai/2a5dab67-cafa-4890-b88b-aac682c4f5a0_thumb.webp",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3HamGiguyTFOFkqEQdplyaN1YAs/2a5dab67-cafa-4890-b88b-aac682c4f5a0.mp4",
+      "seconds": 13.443991,
+      "by": "hopperwalrus1672",
+      "views": 26,
+      "likes": 0,
+      "page": "https://higgsfield.ai/@hopperwalrus1672/projects/new-project"
+    },
+    {
+      "id": "343835ea-be5e-42a7-a6f4-ffb814eee1ba",
+      "title": "New project",
+      "description": "A lone driver chases the last analog sunset across a dying salt lake, carrying the only surviving recording of a vanished world.",
+      "poster": "https://cdn.higgsfield.ai/15646945-8202-4cb6-8d4e-e7250c58e2de_thumb.webp",
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3HhQrlRsjj4S3rx8HWPgMPRI9jl/15646945-8202-4cb6-8d4e-e7250c58e2de_trim.mp4",
+      "seconds": 15,
+      "by": "shiningcloud1416",
+      "views": 19,
+      "likes": 0,
+      "page": "https://higgsfield.ai/@shiningcloud1416/projects/new-project"
     },
     {
       "id": "afc99a69-df82-4e7e-b26d-bcde9321fa58",

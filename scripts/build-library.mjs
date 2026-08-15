@@ -21,8 +21,16 @@ const HERE = path.dirname(fileURLToPath(import.meta.url))
 const OUT = path.join(HERE, '..', 'public', 'library.json')
 
 const FEED = process.env.LIBRARY_FEED || 'https://fnf-api-gw.higgsfield.ai/fnf/project-publications'
-/** Enough for a programme; the feed is paginated and would go on for a while. */
-const WANTED = Number(process.env.LIBRARY_MAX || 36)
+/**
+ * All of them, unless told otherwise.
+ *
+ * This used to stop at 36 and the programme was quietly missing most of the
+ * festival: 191 publications, 88 of them with a film in. A cap that silently
+ * hides two thirds of a catalogue is worse than no cap.
+ */
+const WANTED = Number(process.env.LIBRARY_MAX || Infinity)
+/** The feed answers 403 to anything that does not look like a browser. */
+const HEADERS = { accept: 'application/json', 'user-agent': 'Mozilla/5.0 (virtual-cinema library builder)' }
 
 /** One published project -> one film, or null when there is nothing to play. */
 function toFilm(item) {
@@ -51,7 +59,7 @@ async function main() {
 
   while (films.length < WANTED) {
     const url = cursor ? `${FEED}?cursor=${encodeURIComponent(cursor)}` : FEED
-    const response = await fetch(url, { headers: { accept: 'application/json' } })
+    const response = await fetch(url, { headers: HEADERS })
     if (!response.ok) throw new Error(`${FEED} -> HTTP ${response.status}`)
     const page = await response.json()
     const items = page.items || []
@@ -75,7 +83,7 @@ async function main() {
     source: FEED,
     built: new Date().toISOString(),
     note: 'Point this at your own feed (LIBRARY_FEED) or replace the file, and the cinema fills with your programme.',
-    films: films.slice(0, WANTED),
+    films: Number.isFinite(WANTED) ? films.slice(0, WANTED) : films,
   }
   fs.writeFileSync(OUT, `${JSON.stringify(catalogue, null, 2)}\n`)
   console.log(`[library] ${catalogue.films.length} films -> ${path.relative(process.cwd(), OUT)}`)

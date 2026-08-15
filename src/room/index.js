@@ -509,6 +509,8 @@ export function createRoom(context = {}) {
    */
   let screenShare = null
   let shareButton = null
+  /** Set by the library page, so the transport tick can keep its button honest. */
+  let libraryRefresh = null
 
   function refreshShare() {
     if (!shareButton) return
@@ -680,6 +682,8 @@ export function createRoom(context = {}) {
   }
 
   function refreshTransport() {
+    // The library's own interval button follows the same clock.
+    libraryRefresh?.()
     if (!media || !playButton) return
     const playing = media.isPlaying
     playButton.textContent = playing ? '❚❚' : '▶'
@@ -1168,9 +1172,13 @@ export function createRoom(context = {}) {
           <h3 data-role="title"></h3>
           <div class="rp-hero-facts" data-role="facts"></div>
           <p data-role="desc"></p>
-          <button type="button" class="rp-hero-play" data-role="play"></button>
+          <div class="rp-hero-acts">
+            <button type="button" class="rp-hero-play" data-role="play"></button>
+            <button type="button" class="rp-hero-hold" data-role="hold"></button>
+          </div>
         </div>
       </div>
+      <div class="rp-filters" data-role="filters"></div>
       <div class="rp-rail" data-role="rail"></div>
     `
     libraryPage.appendChild(lib)
@@ -1190,6 +1198,17 @@ export function createRoom(context = {}) {
     }
 
     let featured = null
+
+    /** One button, two jobs: it says which one it is doing right now. */
+    function refreshHold() {
+      const hold = el('hold')
+      if (!hold) return
+      const playing = !!media.isPlaying
+      hold.textContent = playing ? `⏸  ${t('library.hold')}` : `▶  ${t('library.resume')}`
+      hold.hidden = !media.hasSource
+    }
+    libraryRefresh = refreshHold
+
     function feature(film) {
       featured = film
       el('art').style.backgroundImage = film.poster ? `url("${film.poster}")` : ''
@@ -1197,6 +1216,7 @@ export function createRoom(context = {}) {
       el('title').textContent = film.title || t('library.untitled')
       el('desc').textContent = film.description || ''
       el('play').textContent = `▶  ${t('library.startForAll')}`
+      refreshHold()
 
       // Runtime first, then who made it: the two things a person weighs before
       // giving up an hour and a half of their evening.
@@ -1221,7 +1241,47 @@ export function createRoom(context = {}) {
       sound?.click?.()
       flash(featured.title || t('library.untitled'))
       media.load(featured.src, { autoplay: true })
+      // Out of the way. You pressed start to watch a film, not to keep looking
+      // at the programme you just chose from.
+      dock.hide()
     })
+
+    /**
+     * The interval.
+     *
+     * A pause in a cinema is not just a stopped film - the lights come up
+     * enough to find your way out and back. Pressing it again is `play`, and
+     * the ceremony takes the lights back down on its own, so there is nothing
+     * here to undo.
+     */
+    el('hold').addEventListener('click', () => {
+      sound?.click?.()
+      if (media.isPlaying) {
+        media.pause()
+        // Through the ceremony, not around it. Moving the lights by hand while
+        // the opening fade was still running let that fade finish afterwards
+        // and put them straight back down - measured, pressing this a second
+        // after starting a film did nothing you could see. Telling the
+        // ceremony it is an interval makes it stop arguing.
+        if (showtime?.toInterval) showtime.toInterval()
+        else applyPreset('half')
+        flash(t('library.paused'))
+      } else {
+        media.play()
+        flash(t('library.resumed'))
+      }
+    })
+
+    /**
+     * How the programme is sorted. Three ways in, because a catalogue this size
+     * is not one list: what everybody watched, what people actually liked, and
+     * what has just arrived.
+     */
+    const ORDERS = [
+      { key: 'views', label: 'library.byViews', sort: (a, b) => b.views - a.views },
+      { key: 'likes', label: 'library.byLikes', sort: (a, b) => b.likes - a.likes },
+      { key: 'long', label: 'library.byLength', sort: (a, b) => (b.seconds || 0) - (a.seconds || 0) },
+    ]
 
     fetch('library.json', { cache: 'no-store' })
       .then((response) => (response.ok ? response.json() : null))
@@ -1236,28 +1296,53 @@ export function createRoom(context = {}) {
         feature(films[0])
 
         const rail = el('rail')
-        films.forEach((film, index) => {
-          const slide = document.createElement('button')
-          slide.type = 'button'
-          slide.className = `rp-slide${index === 0 ? ' is-on' : ''}`
-          slide.innerHTML = '<span class="art"></span><b></b><span></span>'
-          // Through style rather than an <img>, so a poster that never loads
-          // leaves a clean dark tile instead of a broken picture icon.
-          if (film.poster) slide.querySelector('.art').style.backgroundImage = `url("${film.poster}")`
-          slide.querySelector('b').textContent = film.title || t('library.untitled')
-          slide.querySelector('span:last-child').textContent = [runtime(film.seconds), film.by]
-            .filter(Boolean)
-            .join(' · ')
-          // Brought UP to the hero, not started. A click here would otherwise
-          // change the film for everybody in the hall, mid screening.
-          slide.addEventListener('click', () => {
+        const filters = el('filters')
+
+        function draw(order) {
+          rail.innerHTML = ''
+          for (const film of [...films].sort(order.sort)) {
+            const slide = document.createElement('button')
+            slide.type = 'button'
+            slide.className = `rp-slide${film === featured ? ' is-on' : ''}`
+            slide.innerHTML = '<span class="art"></span><b></b><span></span>'
+            // Through style rather than an <img>, so a poster that never loads
+            // leaves a clean dark tile instead of a broken picture icon.
+            if (film.poster) slide.querySelector('.art').style.backgroundImage = `url("${film.poster}")`
+            slide.querySelector('b').textContent = film.title || t('library.untitled')
+            slide.querySelector('span:last-child').textContent = [runtime(film.seconds), film.by]
+              .filter(Boolean)
+              .join(' · ')
+            // Brought UP to the hero, not started. A click here would otherwise
+            // change the film for everybody in the hall, mid screening.
+            slide.addEventListener('click', () => {
+              sound?.click?.()
+              for (const other of rail.children) other.classList.remove('is-on')
+              slide.classList.add('is-on')
+              feature(film)
+            })
+            rail.appendChild(slide)
+          }
+        }
+
+        ORDERS.forEach((order, index) => {
+          const chip = document.createElement('button')
+          chip.type = 'button'
+          chip.className = `rp-filter${index === 0 ? ' is-on' : ''}`
+          chip.textContent = t(order.label)
+          chip.addEventListener('click', () => {
             sound?.click?.()
-            for (const other of rail.children) other.classList.remove('is-on')
-            slide.classList.add('is-on')
-            feature(film)
+            for (const other of filters.querySelectorAll('.rp-filter')) other.classList.remove('is-on')
+            chip.classList.add('is-on')
+            draw(order)
           })
-          rail.appendChild(slide)
+          filters.appendChild(chip)
         })
+        const count = document.createElement('span')
+        count.className = 'rp-count'
+        count.textContent = `${films.length} ${t('library.films')}`
+        filters.appendChild(count)
+
+        draw(ORDERS[0])
       })
       .catch(() => {
         status.textContent = t('library.empty')

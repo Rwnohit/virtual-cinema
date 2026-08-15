@@ -178,15 +178,34 @@ export const CSS = `
 .rp-hero-facts .sep{opacity:.4;}
 .rp-hero p{margin:0 0 14px;font-size:12.5px;line-height:1.5;color:rgba(242,242,244,.78);
   display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.rp-hero-acts{display:flex;gap:9px;flex-wrap:wrap;align-items:center;}
 .rp-hero-play{appearance:none;border:0;border-radius:999px;cursor:pointer;
   background:var(--lime);color:var(--on-lime);font:600 13.5px/1 inherit;padding:11px 20px;
   display:inline-flex;align-items:center;gap:8px;transition:transform .16s ease,box-shadow .16s ease;}
 .rp-hero-play:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.55);}
 .rp-hero-play:active{transform:translateY(0);}
-.rp-rail{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;
+/* The interval. Quiet on purpose - it is the thing you reach for mid film, not
+   the thing the screen is selling. */
+.rp-hero-hold{appearance:none;border:1px solid rgba(255,255,255,.24);background:rgba(0,0,0,.35);
+  color:#f2f2f4;border-radius:999px;cursor:pointer;font:500 13px/1 inherit;padding:11px 17px;
+  display:inline-flex;align-items:center;gap:8px;transition:border-color .16s ease,background .16s ease;}
+.rp-hero-hold:hover{border-color:rgba(255,255,255,.5);background:rgba(0,0,0,.55);}
+/* A grid that goes DOWN, not a rail that goes right. Ninety films on one
+   horizontal strip is a catalogue you have to drag through; four across and
+   scrolling is one you can read. */
+.rp-rail{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  max-height:min(42vh,320px);overflow-y:auto;padding:2px 4px 4px 2px;
   scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent;}
-.rp-slide{flex:0 0 168px;appearance:none;border:0;background:none;padding:0;cursor:pointer;
+.rp-slide{appearance:none;border:0;background:none;padding:0;cursor:pointer;
   color:#f2f2f4;font:inherit;text-align:left;}
+.rp-filters{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin:0 0 10px;}
+.rp-filter{appearance:none;border:1px solid rgba(255,255,255,.14);background:transparent;
+  color:rgba(242,242,244,.6);border-radius:999px;padding:6px 13px;font:500 12px inherit;
+  cursor:pointer;transition:color .16s ease,border-color .16s ease,background .16s ease;}
+.rp-filter:hover{color:#f2f2f4;border-color:rgba(255,255,255,.32);}
+.rp-filter.is-on{background:var(--lime);color:var(--on-lime);border-color:var(--lime);font-weight:600;}
+.rp-count{margin-left:auto;font-size:11.5px;color:rgba(242,242,244,.4);
+  font-variant-numeric:tabular-nums;}
 .rp-slide .art{aspect-ratio:16/9;border-radius:9px;background:#0c0c10 center/cover no-repeat;
   outline:1px solid rgba(255,255,255,.12);outline-offset:-1px;
   transition:outline-color .22s ease,transform .22s ease;}

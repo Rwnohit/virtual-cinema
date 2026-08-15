@@ -2,6 +2,23 @@
 
 Every version, in plain words. Newest at the top.
 
+## 0.23.0 · 15 August 2026
+
+- **All 88 films, not 36.** The builder stopped early and was quietly hiding
+  two thirds of the festival. It now walks the whole feed.
+- **The programme is a grid that scrolls DOWN**, four across, instead of one
+  long strip you had to drag sideways.
+- **Sort it three ways**: most watched, most liked, feature length. With the
+  count of everything showing.
+- **Pressing start puts the panel away**, so you are looking at the film and
+  not at the menu you just used.
+- **An interval button.** It pauses for the whole hall and brings the house
+  lights up, the way a real one does. Press it again to carry on and the lights
+  go back down on their own.
+- 🐛 The interval used to do nothing visible if you pressed it within a second
+  of starting a film: it moved the lights by hand while the opening fade was
+  still running, and the fade won.
+
 ## 0.22.0 · 15 August 2026
 
 - **The programme is the festival's own.** 36 films from the Higgsfield
