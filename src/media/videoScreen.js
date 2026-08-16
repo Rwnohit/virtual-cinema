@@ -420,6 +420,12 @@ export function createVideoScreen(options = {}) {
 
     destroyHls()
     clearObjectUrl()
+    // A live stream still attached beats anything we are about to set: per the
+    // spec `srcObject` wins over `src`, so putting a film on straight after a
+    // screen share quietly did nothing at all. Measured: the hall was told the
+    // film was playing, and twelve seconds later currentTime was still 0.00
+    // with an empty currentSrc. The room believed a screening was on.
+    if (video.srcObject) video.srcObject = null
     state.corsRetried = false
     surface.visible = false
     video.pause()

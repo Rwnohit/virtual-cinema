@@ -13,7 +13,15 @@ import playwright from 'playwright'
 const ORIGIN = process.env.ORIGIN || 'http://127.0.0.1:8787'
 const out = []
 const errors = []
-const check = (n, ok, d = '') => { out.push(`${ok ? 'PASS' : 'FAIL'}  ${n}${d ? `  (${d})` : ''}`); return ok }
+// The whole list is printed at the end, so it can be read in one piece. With
+// VERBOSE=1 each line goes out as it happens instead, which is the only way to
+// see WHERE a run wedged rather than that it did.
+const check = (n, ok, d = '') => {
+  const line = `${ok ? 'PASS' : 'FAIL'}  ${n}${d ? `  (${d})` : ''}`
+  out.push(line)
+  if (process.env.VERBOSE) console.log(line)
+  return ok
+}
 
 const catalogue = await fetch(`${ORIGIN}/library.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null)
 check('the catalogue is served', Array.isArray(catalogue?.films) && catalogue.films.length > 0, `${catalogue?.films?.length ?? 0} films`)
@@ -251,17 +259,69 @@ await host.waitForTimeout(2500)
 const paintedAfter = await host.evaluate(() => [...document.querySelectorAll('.rp-pop .rp-slide .art')].filter((a) => a.style.backgroundImage).length)
 check('scrolling brings the rest', paintedAfter > paintedBefore, `${paintedBefore} -> ${paintedAfter}`)
 
+// --- moving the film must not start a loop --------------------------------
+/**
+ * The one the user hit, three evenings running.
+ *
+ * Dragging a stream to somewhere it has not buffered drops readyState in the
+ * same breath, so the player briefly reports "not playing" - and that got sent
+ * to the hall as PAUSED AT 900. The hall's clock stopped there for good and
+ * the drift watcher dragged everybody back to that second every nine seconds:
+ * measured, 907 -> 900, 909 -> 900, 910 -> 900, for as long as anyone watched.
+ * So this checks the two things that matter: the hall was told the truth, and
+ * nothing yanks the film backwards afterwards.
+ */
+// Somewhere it certainly has not buffered, with room left to run afterwards:
+// watching past the end would read the honest rewind as a yank.
+const filmLength = await host.evaluate(() => window.__cinema.handles.media.duration)
+const landing = Math.round(Math.min(900, filmLength * 0.3))
+const watchFor = Math.min(25, Math.max(6, Math.floor(filmLength - landing - 10)))
+await host.evaluate((to) => {
+  const m = window.__cinema.handles.media
+  m.play()
+  m.seek(to)
+}, landing)
+await host.waitForTimeout(2500)
+const hallSays = await host.evaluate(() => ({
+  playing: window.__cinema.handles.net.show.show?.playing,
+  time: Math.round(window.__cinema.handles.net.show.show?.time ?? -1),
+}))
+check('the hall is told the film is still running', hallSays.playing === true, JSON.stringify(hallSays))
+
+// Long enough to cross the nine second correction window at least twice.
+let backwards = 0
+let last = await host.evaluate(() => window.__cinema.handles.media.currentTime)
+for (let i = 0; i < watchFor; i++) {
+  await host.waitForTimeout(1000)
+  const now = await host.evaluate(() => window.__cinema.handles.media.currentTime)
+  if (now < last - 2) backwards += 1
+  last = now
+}
+check(
+  'and it is never yanked backwards',
+  backwards === 0,
+  `${backwards} jumps back over ${watchFor}s, ${landing}s -> ${Math.round(last)}s`,
+)
+check(
+  'the guest is watching the same moment after the move',
+  Math.abs(last - (await guest.evaluate(() => window.__cinema.handles.media.currentTime))) < 8,
+  `${Math.round(last)}s vs ${Math.round(await guest.evaluate(() => window.__cinema.handles.media.currentTime))}s`,
+)
+
 // --- the end of a film is not a pause on its last frame -------------------
 // Left as one, the hall's clock said "stopped, at the last second", so the
 // next press of play put everybody back on that second, hit the end again
 // and stopped: the loop.
+// Five seconds out, not two: landing inside the last fragment of a stream is
+// a coin toss between playing it out and stalling on it, and a stall never
+// reaches the end at all.
 await host.evaluate(() => {
   const m = window.__cinema.handles.media
-  m.seek(Math.max(0, m.duration - 2))
+  m.seek(Math.max(0, m.duration - 5))
   m.play()
 })
 
-await poll(host, () => window.__cinema.handles.media.currentTime < 1 && !window.__cinema.handles.media.isPlaying, 30)
+await poll(host, () => window.__cinema.handles.media.currentTime < 1 && !window.__cinema.handles.media.isPlaying, 60)
 check(
   'a finished film rewinds instead of freezing',
   (await host.evaluate(() => window.__cinema.handles.media.currentTime)) < 1,

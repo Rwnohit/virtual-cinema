@@ -156,8 +156,11 @@ export function createShowSync(options = {}) {
       // Not awaited. play() runs the opening ceremony - the curtain, the lights
       // and the pause between them - and a viewer who reaches for the bar while
       // that is happening is a viewer, not an echo.
-      if (next.playing && !media.isPlaying) Promise.resolve(media.play()).catch(() => {});
-      else if (!next.playing && media.isPlaying) media.pause();
+      // isRunning, not isPlaying: a player that is buffering has still been
+      // told to play, and treating it as paused meant a hall that said "stop"
+      // was never obeyed - the two sides then disagreed for ever.
+      if (next.playing && !media.isRunning) Promise.resolve(media.play()).catch(() => {});
+      else if (!next.playing && media.isRunning) media.pause();
       hold();
     } catch (err) {
       console.warn('[net] could not follow the hall', err);
@@ -260,7 +263,16 @@ export function createShowSync(options = {}) {
       const hall = livePosition(show, client.serverNow);
       if (Math.abs(time - hall) <= SHOW_DRIFT_S) return;
     }
-    tellNow({ playing: media.isPlaying, time });
+    /**
+     * `isRunning`, and this is THE line that caused the loop.
+     *
+     * Seeking a stream to somewhere unbuffered drops readyState in the same
+     * breath that the seek is announced, so `isPlaying` was false and the hall
+     * was told "PAUSED at 900". Its clock stopped there forever, and the drift
+     * watcher dragged every viewer back to 900 every nine seconds. Measured:
+     * 907 -> 900, 909 -> 900, 910 -> 900, for as long as anybody watched.
+     */
+    tellNow({ playing: media.isRunning, time });
   };
 
   off.push(
@@ -350,7 +362,7 @@ export function createShowSync(options = {}) {
     },
     /** Say where we are, on purpose: used when the viewer drags the bar. */
     report() {
-      tell({ playing: media.isPlaying, time: media.currentTime || 0 });
+      tell({ playing: media.isRunning, time: media.currentTime || 0 });
     },
     dispose() {
       disposed = true;

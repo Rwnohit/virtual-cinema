@@ -339,10 +339,29 @@ export function createMedia(options = {}) {
     embed,
 
     // state
+    /** Is a picture moving right now - what the transport button should show. */
     get isPlaying() {
       if (embed?.active) return embed.isPlaying
       const video = screen.video
       return !!video && !video.paused && !video.ended && video.readyState > 2
+    },
+    /**
+     * Is this a running screening - what the player has been TOLD to do.
+     *
+     * The difference matters enormously and cost a whole evening. `readyState`
+     * drops the instant you seek a stream to somewhere it has not buffered, so
+     * for a second or two a perfectly healthy screening reports "not playing".
+     * Told that, the hall wrote down "paused, at this second", its clock
+     * stopped, and the drift watcher spent the rest of the night dragging
+     * everybody back to that second every nine seconds. That was the loop.
+     *
+     * Buffering is not a decision. Anything telling the ROOM what is going on
+     * asks this; anything drawing a play/pause icon asks isPlaying.
+     */
+    get isRunning() {
+      if (embed?.active) return embed.isPlaying
+      const video = screen.video
+      return !!video && !video.paused && !video.ended
     },
     get currentTime() {
       if (embed?.active) return embed.currentTime

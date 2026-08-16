@@ -736,9 +736,18 @@ export function createRoom(context = {}) {
    * while its opening fade was still running let that fade finish afterwards
    * and put them straight back down.
    */
+  /**
+   * Hold the screening, or carry it on.
+   *
+   * `isRunning`, not `isPlaying`: a film that is buffering for a moment is
+   * still a screening in progress, and asking the wrong one made the button
+   * quietly change its mind. Pressed during a stutter it RESTARTED the film
+   * and took the house lights back down - the opposite of what the label said,
+   * on the one control that has to be trustworthy in a dark room.
+   */
   function holdOrResume() {
     if (!media) return
-    if (media.isPlaying) {
+    if (media.isRunning) {
       media.pause()
       if (showtime?.toInterval) showtime.toInterval()
       else applyPreset('half')
@@ -762,7 +771,7 @@ export function createRoom(context = {}) {
     // The library's own interval button follows the same clock.
     libraryRefresh?.()
     if (!media || !playButton) return
-    const playing = media.isPlaying
+    const playing = media.isRunning
     if (intervalButton) {
       const canHold = media.hasSource && media.duration > 0
       intervalButton.hidden = !canHold
@@ -1292,7 +1301,7 @@ export function createRoom(context = {}) {
     function refreshHold() {
       const hold = el('hold')
       if (!hold) return
-      const playing = !!media.isPlaying
+      const playing = !!media.isRunning
       hold.textContent = playing ? `⏸  ${t('library.hold')}` : `▶  ${t('library.resume')}`
       // Only once there is a screening to interrupt. `hasSource` is true the
       // moment an element has been handed a film, which is a beat before there

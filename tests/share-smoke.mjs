@@ -71,61 +71,70 @@ check('both are in the hall', (await host.evaluate(() => window.__cinema.handles
 check('the browser can share a screen', await host.evaluate(() => window.__cinema.handles.net.screen.supported()))
 check('the button is on the bar', (await host.locator('.rp-dock [data-role="share"]').count()) === 1)
 
-// Aim the share at THIS tab. A real person picks in the browser's own dialog,
-// which no test can click; the flag that answers it automatically matches by
-// window title, and both windows here are called "Virtual Cinema" - so without
-// this the host cheerfully shared the guest's window and the picture that
-// arrived was the guest's own dark room. Everything after the picker is
-// untouched.
-await host.evaluate(() => {
-  const real = navigator.mediaDevices.getDisplayMedia.bind(navigator.mediaDevices)
-  navigator.mediaDevices.getDisplayMedia = (opts) => real({ ...opts, preferCurrentTab: true })
-})
-
-// Something unmistakable to look at: a full page of one colour, painted over
-// the room, so the frames that arrive can be identified by eye and by number.
-await host.evaluate(() => {
-  const flag = document.createElement('div')
-  flag.id = 'probe-flag'
-  Object.assign(flag.style, {
-    position: 'fixed',
-    inset: '0',
-    zIndex: '999',
-    background: 'rgb(0, 200, 90)',
+/**
+ * The whole thing, from one named side to the other.
+ *
+ * Run BOTH WAYS ROUND, and that is the point of it being a function. This
+ * test used to share from the first visitor only, and passed - about half the
+ * time. Which side of a peer connection you are is decided by comparing two
+ * random ids, not by who joined first, and only one of those sides could
+ * actually send: the other's m-lines were left receive-only, where putting a
+ * track on resolves happily and sends nothing. Measured across four pairs, the
+ * outcome followed the id order 8 times out of 8. A test that only ever tries
+ * one side is a coin toss wearing a lab coat.
+ */
+async function shareFrom(sharer, viewer, who) {
+  // Aim the share at THIS tab. A real person picks in the browser's own dialog,
+  // which no test can click; the flag that answers it automatically matches by
+  // window title, and both windows here are called "Virtual Cinema" - so
+  // without this the sharer cheerfully shared the other's window and the
+  // picture that arrived was their own dark room.
+  await sharer.evaluate(() => {
+    if (navigator.mediaDevices.__aimed) return
+    const real = navigator.mediaDevices.getDisplayMedia.bind(navigator.mediaDevices)
+    navigator.mediaDevices.getDisplayMedia = (opts) => real({ ...opts, preferCurrentTab: true })
+    navigator.mediaDevices.__aimed = true
   })
-  document.body.appendChild(flag)
-})
 
-// A background tab is throttled, and a throttled tab produces no frames to
-// capture. The sharer is the one looking at their own screen, so this is the
-// honest state to test in.
-await host.bringToFront()
-await host.waitForTimeout(600)
+  // Something unmistakable to look at: a full page of one colour, painted over
+  // the room, so the frames that arrive can be identified by eye and by number.
+  await sharer.evaluate(() => {
+    if (document.getElementById('probe-flag')) return
+    const flag = document.createElement('div')
+    flag.id = 'probe-flag'
+    Object.assign(flag.style, { position: 'fixed', inset: '0', zIndex: '999', background: 'rgb(0, 200, 90)' })
+    document.body.appendChild(flag)
+  })
 
-const started = await host.evaluate(async () => {
-  try {
-    await window.__cinema.handles.net.screen.start()
-    return { ok: true }
-  } catch (err) {
-    return { ok: false, error: `${err.reason ?? err.name}: ${err.message}` }
-  }
-})
-check('sharing starts', started.ok === true, started.error ?? '')
+  // A background tab is throttled, and a throttled tab produces no frames to
+  // capture. The sharer is the one looking at their own screen, so this is the
+  // honest state to test in.
+  await sharer.bringToFront()
+  await sharer.waitForTimeout(600)
 
-if (started.ok) {
+  const started = await sharer.evaluate(async () => {
+    try {
+      await window.__cinema.handles.net.screen.start()
+      return { ok: true }
+    } catch (err) {
+      return { ok: false, error: `${err.reason ?? err.name}: ${err.message}` }
+    }
+  })
+  if (!check(`${who}: sharing starts`, started.ok === true, started.error ?? '')) return
+
   // An encoder that has just been handed a screen needs a moment, and a tab
   // that lost focus in between produces no frames to encode. Both cost a run.
-  await host.bringToFront()
-  await host.waitForTimeout(2500)
+  await sharer.bringToFront()
+  await sharer.waitForTimeout(2500)
 
-  const arrived = await poll(guest, () => {
+  const arrived = await poll(viewer, () => {
     const video = document.querySelector('video')
     return !!video?.srcObject && video.videoWidth > 0 ? `${video.videoWidth}x${video.videoHeight}` : ''
   }, 60)
-  check('the picture reaches the other side', !!arrived, String(arrived || 'nothing'))
+  check(`${who}: the picture reaches the other side`, !!arrived, String(arrived || 'nothing'))
 
-  // The decisive one: read the frames the guest is actually being sent.
-  const colour = await poll(guest, () => {
+  // The decisive one: read the frames the viewer is actually being sent.
+  const colour = await poll(viewer, () => {
     const video = document.querySelector('video')
     if (!video || !video.videoWidth) return ''
     const canvas = document.createElement('canvas')
@@ -149,17 +158,45 @@ if (started.ok) {
   }, 40)
   const [r, g, b] = String(colour).split(',').map(Number)
   check(
-    'and they are the sharer\'s own frames',
+    `${who}: and they are the sharer's own frames`,
     g > 120 && g > r + 60 && g > b + 40,
     `average colour ${colour || 'black'} (looking for green)`,
   )
 
-  check('the sharer sees it on the room screen too', await host.evaluate(() => !!document.querySelector('video')?.srcObject))
+  // Frames DECODED, off the connection itself: a still picture on a screen
+  // could be a frozen first frame, and this cannot be.
+  const decoded = await poll(viewer, async () => {
+    for (const conn of window.__cinema.handles.net.voice.connections?.values?.() ?? []) {
+      const stats = await conn.pc?.getStats?.()
+      let best = 0
+      stats?.forEach((s) => {
+        if (s.type === 'inbound-rtp' && s.kind === 'video') best = Math.max(best, s.framesDecoded || 0)
+      })
+      if (best > 0) return best
+    }
+    return 0
+  }, 30)
+  check(`${who}: real frames are being decoded`, Number(decoded) > 0, `${decoded} frames`)
 
-  await host.evaluate(() => window.__cinema.handles.net.screen.stop())
-  const gone = await poll(guest, () => !document.querySelector('video')?.srcObject, 30)
-  check('stopping takes it off every screen', gone === true)
+  check(`${who}: the sharer sees it on the room screen too`, await sharer.evaluate(() => !!document.querySelector('video')?.srcObject))
+
+  await sharer.evaluate(() => window.__cinema.handles.net.screen.stop())
+  const gone = await poll(viewer, () => !document.querySelector('video')?.srcObject, 30)
+  check(`${who}: stopping takes it off every screen`, gone === true)
+  await sharer.evaluate(() => document.getElementById('probe-flag')?.remove())
+  await viewer.waitForTimeout(1000)
 }
+
+const ids = {
+  host: await host.evaluate(() => window.__cinema.handles.net.client.id),
+  guest: await guest.evaluate(() => window.__cinema.handles.net.client.id),
+}
+// Which side offers is decided by comparing these, so both orders are covered
+// by running it both ways - and the ids are printed to make that legible when
+// one direction fails.
+console.log(`  ids: host ${ids.host} · guest ${ids.guest} (the lower one offers)`)
+await shareFrom(host, guest, 'the one who joined first')
+await shareFrom(guest, host, 'the one who joined second')
 
 // --- a phone has no screen to hand over, so it hands over its camera -------
 // `getDisplayMedia` does not exist on iOS or Android at all, and the button

@@ -2,6 +2,33 @@
 
 Every version, in plain words. Newest at the top.
 
+## 0.27.0 · 16 August 2026
+
+- 🐛 **The film stopped looping back on itself.** Dragging a stream to a
+  point it has not buffered drops the browser's readiness in the same breath,
+  so for a second the player reported "not playing" - and that went to the hall
+  as PAUSED at that second. The hall's clock stopped there for good, and the
+  drift correction spent the rest of the screening dragging everybody back:
+  measured, 907 -> 900, 909 -> 900, 910 -> 900, every nine seconds, for as long
+  as anybody watched. Buffering is not a decision, and the room is no longer
+  told that it is.
+- 🐛 **Screen sharing reaches the room now, whoever you are.** One side
+  of every connection could receive everything and send nothing: the channels
+  it was given arrived receive-only, and putting a picture on one of those
+  succeeds silently and sends nothing at all. Which side you were was decided
+  by comparing two random ids, so it worked about half the time and looked
+  haunted. Measured across four pairs, the outcome followed the id order 8
+  times out of 8 and never followed who joined first; with three people it
+  could reach exactly half the room. Voice had the same fault, in every pair,
+  always.
+- 🐛 **Putting a film on straight after a screen share did nothing.** The
+  live picture stays attached until it is taken off, and it beats anything set
+  afterwards, so the room was told a film was playing while the screen sat at
+  second zero.
+- 🐛 **The interval button no longer changes its mind mid-stutter.**
+  Pressed while the film was buffering it restarted the screening and took the
+  house lights back down, which is the opposite of what it said it would do.
+
 ## 0.26.0 · 16 August 2026
 
 - **The library opens instantly.** The posters were the publisher's production
