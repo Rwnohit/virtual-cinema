@@ -71,6 +71,14 @@ export function createScreenShare(options = {}) {
 
   /** What we are sending, when we are the one sharing. */
   let local = null;
+  /**
+   * Every track the mesh has handed us, kept for as long as it exists.
+   *
+   * Because a track arrives once - when the m-line is agreed - and then simply
+   * goes quiet and loud again as people start and stop sharing. Somewhere to
+   * look afterwards is what makes "you shared, then I shared" work.
+   */
+  const known = new Map();
   /** Whose screen we are watching, when somebody else is sharing. */
   let watching = null;
   /** Built from the tracks as they arrive - picture and sound come separately. */
@@ -176,6 +184,14 @@ export function createScreenShare(options = {}) {
     local = null;
     media.showStream(null);
     announce('');
+    // Somebody else may have started while we were the one sharing, in which
+    // case their picture has been arriving all along with nowhere to go.
+    for (const entry of known.values()) {
+      if (entry.kind === 'video' && !entry.track.muted && entry.track.readyState === 'live') {
+        entry.show?.();
+        break;
+      }
+    }
     changed();
     return true;
   }
@@ -204,7 +220,19 @@ export function createScreenShare(options = {}) {
    * @param {'video'|'audio'} kind
    */
   function onTrack(from, track, kind) {
-    if (local) return; // we are the one sharing; our own screen stays ours
+    /**
+     * Remembered even while WE are the one sharing.
+     *
+     * This used to return here if `local` was set, and that threw the track
+     * away for good: the listeners below were never attached, so when that
+     * person later stopped sharing and somebody else started, nothing was
+     * listening and no picture ever appeared. Measured live: 225 frames
+     * decoded off the connection, and a black screen looking at them.
+     *
+     * A track arriving is not a screen to show - that decision is made in
+     * show(), which stays out of the way while we are sharing our own.
+     */
+    known.set(`${from}:${kind}`, { from, track, kind });
 
     /**
      * An m-line that exists is not a screen being shared.
@@ -222,6 +250,7 @@ export function createScreenShare(options = {}) {
      * So the rule is the honest one: a track counts when it carries something.
      */
     const show = () => {
+      if (local) return; // our own screen stays ours while we are sharing
       if (track.muted) return;
       if (!incoming || watching !== from) {
         incoming = new MediaStream();
@@ -248,6 +277,8 @@ export function createScreenShare(options = {}) {
       media.showStream(null);
       changed();
     };
+    // Kept with the track so stop() can put a live one on the screen.
+    known.get(`${from}:${kind}`).show = show;
     track.addEventListener('mute', gone);
     track.addEventListener('ended', gone);
     // The moment it starts carrying something is the moment it counts.

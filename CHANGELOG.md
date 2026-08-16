@@ -21,6 +21,12 @@ Every version, in plain words. Newest at the top.
   times out of 8 and never followed who joined first; with three people it
   could reach exactly half the room. Voice had the same fault, in every pair,
   always.
+- 🐛 **And once you had shared, you could never watch anybody else.** A
+  picture arrives on a channel that is opened once and then simply goes quiet
+  and loud again; while you were the one sharing, that channel was thrown away
+  instead of remembered, so when you stopped and somebody else started there
+  was nothing listening. Measured live: 225 frames arriving, and a black screen
+  looking at them.
 - 🐛 **Putting a film on straight after a screen share did nothing.** The
   live picture stays attached until it is taken off, and it beats anything set
   afterwards, so the room was told a film was playing while the screen sat at

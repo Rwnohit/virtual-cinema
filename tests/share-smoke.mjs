@@ -55,18 +55,31 @@ async function visitor(name, hall) {
   return page
 }
 
-const poll = async (page, fn, tries = 60) => {
+const poll = async (page, fn, tries = 60, arg) => {
   for (let i = 0; i < tries; i++) {
-    const value = await page.evaluate(fn)
+    const value = await page.evaluate(fn, arg)
     if (value) return value
     await page.waitForTimeout(500)
   }
-  return page.evaluate(fn)
+  return page.evaluate(fn, arg)
 }
 
-const host = await visitor('HOST', 'hall-1')
-const guest = await visitor('GUES', 'hall-1')
-check('both are in the hall', (await host.evaluate(() => window.__cinema.handles.net.count)) === 2)
+/**
+ * An empty hall, chosen at the last moment.
+ *
+ * Run against the live server and hall one is not reliably empty - a browser
+ * left open overnight sits there as a peer, and measured, that is exactly what
+ * happened: a stranger called "Reel 62" was in the room and the count was
+ * three. The mesh is fine with that; the test is not, because "the picture
+ * reached the other side" stops meaning anything when there is more than one
+ * other side.
+ */
+const halls = await fetch(`${ORIGIN}/rooms`).then((r) => r.json()).catch(() => null)
+const empty = (halls?.halls ?? []).find((h) => !h.peers)?.id || 'hall-1'
+console.log(`  using ${empty}`)
+const host = await visitor('HOST', empty)
+const guest = await visitor('GUES', empty)
+check('both are in the hall, and nobody else', (await host.evaluate(() => window.__cinema.handles.net.count)) === 2)
 
 check('the browser can share a screen', await host.evaluate(() => window.__cinema.handles.net.screen.supported()))
 check('the button is on the bar', (await host.locator('.rp-dock [data-role="share"]').count()) === 1)
@@ -83,7 +96,22 @@ check('the button is on the bar', (await host.locator('.rp-dock [data-role="shar
  * outcome followed the id order 8 times out of 8. A test that only ever tries
  * one side is a coin toss wearing a lab coat.
  */
+/** Frames this viewer has decoded so far, read fresh: the counter is per
+ *  connection and never resets, so each round is a rise from its own start. */
+const framesSoFar = (page) =>
+  page.evaluate(async () => {
+    let best = 0
+    for (const conn of window.__cinema.handles.net.voice.connections?.values?.() ?? []) {
+      const stats = await conn.pc?.getStats?.()
+      stats?.forEach((s) => {
+        if (s.type === 'inbound-rtp' && s.kind === 'video') best = Math.max(best, s.framesDecoded || 0)
+      })
+    }
+    return best
+  })
+
 async function shareFrom(sharer, viewer, who) {
+  const framesAlready = await framesSoFar(viewer)
   // Aim the share at THIS tab. A real person picks in the browser's own dialog,
   // which no test can click; the flag that answers it automatically matches by
   // window title, and both windows here are called "Virtual Cinema" - so
@@ -165,18 +193,20 @@ async function shareFrom(sharer, viewer, who) {
 
   // Frames DECODED, off the connection itself: a still picture on a screen
   // could be a frozen first frame, and this cannot be.
-  const decoded = await poll(viewer, async () => {
+  // Cumulative on the connection, so the SECOND share has to be read as a
+  // rise from where the first one left off - not as "more than zero", which
+  // stays true long after a share has stopped.
+  const decoded = await poll(viewer, async (since) => {
+    let best = 0
     for (const conn of window.__cinema.handles.net.voice.connections?.values?.() ?? []) {
       const stats = await conn.pc?.getStats?.()
-      let best = 0
       stats?.forEach((s) => {
         if (s.type === 'inbound-rtp' && s.kind === 'video') best = Math.max(best, s.framesDecoded || 0)
       })
-      if (best > 0) return best
     }
-    return 0
-  }, 30)
-  check(`${who}: real frames are being decoded`, Number(decoded) > 0, `${decoded} frames`)
+    return best > since ? best : 0
+  }, 30, framesAlready)
+  check(`${who}: real frames are being decoded`, Number(decoded) > framesAlready, `${framesAlready} -> ${decoded} frames`)
 
   check(`${who}: the sharer sees it on the room screen too`, await sharer.evaluate(() => !!document.querySelector('video')?.srcObject))
 
