@@ -279,8 +279,18 @@ export function createShowSync(options = {}) {
      * second". Press play and every viewer was put back on that second, hit
      * the end again immediately, and stopped. Press play again, same thing.
      * That is the loop, and it is why the room looked stuck after a film.
+     *
+     * Our own player is rewound too, not just the hall's clock. Telling the
+     * room "back to the start" while the player that finished sits on its last
+     * frame leaves the loop in place for the one person who watched to the
+     * end: whether they were rescued depended on the room's echo arriving
+     * before they pressed play, which is a race rather than a fix. Measured
+     * live, the echo lost.
      */
-    media.on('ended', () => tellNow({ playing: false, time: 0 })),
+    media.on('ended', () => {
+      media.seek(0);
+      tellNow({ playing: false, time: 0 });
+    }),
   );
 
   /* ----------------------------------------------------------------------- */

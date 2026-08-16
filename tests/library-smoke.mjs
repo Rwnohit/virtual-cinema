@@ -149,16 +149,24 @@ const apart = Math.abs(
 )
 check('and they are watching the same moment', apart < 6, `${apart.toFixed(1)}s apart`)
 
-// The interval: pauses the hall and brings the lights up.
-await host.waitForTimeout(5000)
+// The interval: pauses the hall and brings the lights up. Both readings come
+// from a hall that has stopped moving - the opening ceremony walks the lights
+// down over several seconds, and a level read while it is still walking is
+// neither the old one nor the new one.
+// And from a hall that is actually SHOWING something: the same button
+// resumes, and a stream that has stalled for a moment reads as paused, so
+// pressing it then starts the film and takes the lights further down. That is
+// the button behaving correctly and the check reading it backwards.
+await poll(host, () => window.__cinema.handles.room.settings.house < 0.05, 40)
+await poll(host, () => window.__cinema.handles.media.isPlaying, 40)
 await host.evaluate(() => window.__cinema.handles.room.open('library'))
 await host.waitForTimeout(600)
 const lightsBefore = await host.evaluate(() => window.__cinema.handles.room.settings.house)
+check('the film is running before the interval', await host.evaluate(() => window.__cinema.handles.media.isPlaying))
 await host.locator('.rp-hero-hold').click()
-await host.waitForTimeout(1200)
 check('the interval stops the film for everybody', (await poll(guest, () => window.__cinema.handles.media.isPlaying === false)) === true)
-const lightsAfter = await host.evaluate(() => window.__cinema.handles.room.settings.house)
-check('and brings the lights up', lightsAfter > lightsBefore, `${lightsBefore} -> ${lightsAfter}`)
+const roseTo = await poll(host, () => window.__cinema.handles.room.settings.house > 0.2, 30)
+check('and brings the lights up', roseTo === true, `${lightsBefore} -> ${await host.evaluate(() => window.__cinema.handles.room.settings.house)}`)
 
 // --- the bar: level, interval, queue -------------------------------------
 await host.evaluate(() => window.__cinema.handles.room.show())
@@ -179,13 +187,27 @@ check(
 )
 
 check('the bar carries an interval button', (await host.locator('.rp-dock [data-role="interval"]').count()) === 1)
+/**
+ * Both readings are taken from a hall that has settled.
+ *
+ * Pressing play starts a ceremony that takes several seconds to walk the
+ * lights down, so a reading snatched during it is neither the old level nor
+ * the new one - measured, this compared 0.40 on the way down against 0.31 on
+ * the way up and called the interval broken when it was working. The film
+ * also has to be genuinely running before the button can hold it: the same
+ * button resumes, so pressing it over a stream that is still buffering
+ * starts the film instead.
+ */
 await host.evaluate(() => window.__cinema.handles.media.play())
-await host.waitForTimeout(2500)
-const litBefore = await host.evaluate(() => window.__cinema.handles.room.settings.house)
+await poll(host, () => window.__cinema.handles.media.isPlaying, 40)
+const dark = await poll(host, () => window.__cinema.handles.room.settings.house < 0.05, 40)
+check('the lights go down for the film', dark === true, `house ${await host.evaluate(() => window.__cinema.handles.room.settings.house)}`)
+
 await host.locator('.rp-dock [data-role="interval"]').click()
-await host.waitForTimeout(1500)
+await poll(host, () => !window.__cinema.handles.media.isPlaying, 20)
 check('it pauses the hall', (await host.evaluate(() => window.__cinema.handles.media.isPlaying)) === false)
-check('and lifts the lights', (await host.evaluate(() => window.__cinema.handles.room.settings.house)) > litBefore)
+const lifted = await poll(host, () => window.__cinema.handles.room.settings.house > 0.2, 30)
+check('and lifts the lights', lifted === true, `house ${await host.evaluate(() => window.__cinema.handles.room.settings.house)}`)
 
 // A film can be queued from its poster without disturbing the screening.
 await host.evaluate(() => window.__cinema.handles.room.open('library'))

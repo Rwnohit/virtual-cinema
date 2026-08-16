@@ -14,6 +14,10 @@ Every version, in plain words. Newest at the top.
 - **Posters load as you scroll**, a screen ahead, instead of all eighty-eight
   starting at once.
 - `npm run library` rebuilds the catalogue and the posters together.
+- 🐛 **The end of a film only rewound the room, not the player that had
+  just finished it.** Whether the person watching to the end was rescued
+  depended on the room's own echo coming back before they pressed play, which
+  is a race; measured live, the echo lost and the loop was still there.
 
 ## 0.25.0 · 16 August 2026
 
