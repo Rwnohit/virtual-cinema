@@ -35,6 +35,9 @@ const browser = await playwright.chromium.launch({
 async function visitor(name, hall) {
   const page = await browser.newPage({ viewport: { width: 1000, height: 760 } })
   page.on('pageerror', (e) => errors.push(`${name} ${e.message}`))
+  // A renderer that dies takes every later check with it and says only
+  // "target closed", which reads like a broken test rather than a broken tab.
+  page.on('crash', () => errors.push(`${name} THE TAB CRASHED`))
   page.on('console', (m) => m.type() === 'error' && errors.push(`${name} ${m.text()}`))
   await page.goto(ORIGIN, { waitUntil: 'domcontentloaded' })
   for (let i = 0; i < 80; i++) { if (await page.evaluate(() => window.__cinema?.ready === true)) break; await page.waitForTimeout(500) }
