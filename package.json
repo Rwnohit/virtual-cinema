@@ -1,7 +1,7 @@
 {
   "name": "virtual-cinema",
   "private": true,
-  "version": "0.27.0",
+  "version": "0.28.0",
   "type": "module",
   "scripts": {
     "version:stamp": "node scripts/write-version.mjs",
@@ -14,6 +14,7 @@
     "test:prod": "node tests/prod-smoke.mjs",
     "test:halls": "node tests/halls-smoke.mjs",
     "test:share": "node tests/share-smoke.mjs",
+    "test:phone": "node tests/phone-smoke.mjs",
     "prebuild": "npm run version:stamp",
     "build": "vite build",
     "preview": "vite preview",

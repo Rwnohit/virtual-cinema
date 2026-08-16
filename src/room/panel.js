@@ -157,10 +157,46 @@ export const CSS = `
 @media (max-width:1100px){
   .rp-dbtn span:not(.ic){display:none;}
 }
+/* A phone. The bar carries a transport, a time, a seek, a volume, a share, a
+   clean screen and seven tabs - measured, 687px of controls with 380px of
+   glass to put them on, and everything past the middle simply ran off the
+   right hand edge where it could not be reached at all. It wraps instead: the
+   transport on one line, the tabs underneath, both centred. */
 @media (max-width:560px){
   .rp-cols{grid-template-columns:1fr;}
-  .rp-track{width:70px;}
   .rp-qual{display:none !important;}
+  /* Edge to edge and no centring transform: a wrapping flex row that is also
+     shrink-to-fit picks a narrow column, and the bar came out 282px wide and
+     184px tall - a tower, not a bar. */
+  .rp-dock{left:6px;right:6px;transform:none;max-width:none;
+    flex-wrap:wrap;justify-content:center;row-gap:6px;padding:8px;}
+  .rp-dock.is-hidden{transform:translateY(12px);}
+  /* The tabs get one line of their own that slides sideways, so the bar stays
+     two rows instead of three and never eats a quarter of the screen. */
+  .rp-tab{order:2;}
+  .rp-dock::after{content:'';flex-basis:100%;order:1;height:0;}
+  .rp-dock{padding-bottom:6px;}
+  /* The total length is on the screen the whole time anyway, and the current
+     time is the one you reach for. Dropping the second number is what buys
+     the seek bar enough room to stay on the transport's own line. */
+  .rp-time .dur{display:none;}
+  .rp-time input[type=text]{width:58px;}
+  .rp-time{gap:4px;padding:0;flex:1 1 100px;min-width:0;}
+  /* Small enough that the speaker fits beside it: with the seek bar any wider,
+     the volume was pushed onto a line of its own and the bar grew a third row
+     for one button. */
+  .rp-track{flex:1 1 56px;width:auto;min-width:48px;}
+  .rp-vol{flex:0 0 auto;}
+  /* The seek bar takes what is left of its line rather than a fixed 70px. */
+  .rp-track{flex:1 1 90px;width:auto;min-width:80px;}
+  .rp-dbtn{padding:10px 10px;}
+  /* Room for a thumb: 44px is the smallest thing a finger can reliably hit. */
+  .rp-dock .rp-dbtn,.rp-dock .rp-play{min-width:40px;min-height:40px;}
+  /* The count moves to the top: with a bar this tall there is no corner left
+     for it down there, and a phone has nothing at the top anyway. */
+  .net-hud{top:calc(10px + env(safe-area-inset-top,0px));bottom:auto !important;}
+  .rp-pop{width:calc(100vw - 12px);max-height:64vh;}
+  .rp-pop.is-library{width:calc(100vw - 12px);max-height:72vh;}
 }
 
 /* --- the library: tonight's programme --------------------------------------
@@ -294,6 +330,7 @@ body.vc-clean .rp-notice{display:none !important;}
    film is a YouTube one, and the readout, which is how the viewer is told
    which key brings everything back. It fades on its own a second later, so
    the screen still ends up completely clear. */
+body.vc-clean .tc-root,
 body.vc-clean .rp-dock,
 body.vc-clean .rp-pop,
 body.vc-clean .pl-hud,
@@ -403,7 +440,8 @@ export function createDock(options = {}) {
   function addPage(spec) {
     const button = document.createElement('button')
     button.type = 'button'
-    button.className = 'rp-dbtn'
+    // Marked as a page opener, so a phone can put the tabs on their own line.
+    button.className = 'rp-dbtn rp-tab'
     button.innerHTML = `${spec.icon ? `<span class="ic">${spec.icon}</span>` : ''}<span></span>`
     button.querySelector('span:last-child').textContent = spec.label
     button.addEventListener('click', () => {

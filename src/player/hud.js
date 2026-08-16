@@ -8,8 +8,16 @@
 
 import { t, onLanguageChange } from '../i18n/index.js'
 
-/** Read fresh every time: the language can change while the room is open. */
-const keysText = () => t('hud.keys')
+/**
+ * Read fresh every time: the language can change while the room is open - and
+ * so can the hands. A list of keys is worse than nothing on a phone, where
+ * there is no W, no Shift and no Esc to press.
+ */
+const touchOnly = () =>
+  typeof window !== 'undefined' &&
+  (window.matchMedia?.('(pointer: coarse)')?.matches || (navigator.maxTouchPoints || 0) > 0)
+const keysText = () => t(touchOnly() ? 'hud.touch' : 'hud.keys')
+const enterText = () => t(touchOnly() ? 'hud.enterTouch' : 'hud.enter')
 
 const CSS = `
 .pl-hud { position:absolute; inset:0; pointer-events:none; z-index:5;
@@ -74,7 +82,7 @@ export class PlayerHud {
 
     this.enter = document.createElement('div')
     this.enter.className = 'pl-enter is-on'
-    this.enter.textContent = t('hud.enter')
+    this.enter.textContent = enterText()
 
     this.root.append(this.crosshair, this.keys, this.enter)
     this.container.appendChild(this.root)
@@ -84,7 +92,7 @@ export class PlayerHud {
     }
 
     this._offLanguage = onLanguageChange(() => {
-      this.enter.textContent = t('hud.enter')
+      this.enter.textContent = enterText()
       this.showKeys()
     })
 

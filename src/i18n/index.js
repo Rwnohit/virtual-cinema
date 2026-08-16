@@ -167,6 +167,8 @@ const STRINGS = {
     /* --- the player ----------------------------------------------------- */
     'hud.keys':
       'W A S D κίνηση · Space άλμα · E κάθισμα · V θέες · C σινεμά · ρόδα ζουμ · Caps σημάδι · L μπάρα · Esc',
+    'hud.touch': 'Σύρε για να κοιτάξεις · το χειριστήριο για να περπατήσεις · πάτα για να καθίσεις',
+    'hud.enterTouch': 'Πάτα για να μπεις στην αίθουσα',
     'hud.enter': 'Κάνε κλικ για να μπεις στην αίθουσα',
     'hud.cinematic': 'Σινεμά · κλικ ή οποιοδήποτε πλήκτρο για έξοδο',
     'hud.firstPerson': 'Πρώτο πρόσωπο',
@@ -280,6 +282,7 @@ const STRINGS = {
     'err.crossOriginAudio':
       'Το link δεν επιτρέπει ανάγνωση ήχου από άλλο site, οπότε ο ήχος παίζει κανονικά αλλά χωρίς χωρικό εφέ.',
     'err.noSpatial': 'Ο ήχος παίζει κανονικά, αλλά χωρίς χωρικό εφέ σε αυτό το αρχείο.',
+    'err.hardwareVolume': 'Σε αυτό το κινητό την ένταση την αλλάζεις με τα κουμπιά της συσκευής.',
     'err.reverb': 'Δεν φορτώθηκε το αρχείο reverb.',
     'err.embedBlocked': 'Αυτό το βίντεο του YouTube δεν επιτρέπει προβολή έξω από το YouTube.',
     'err.embedNoPlayer': 'Δεν φόρτωσε ο player του YouTube. Δες τη σύνδεση ή τυχόν ad blocker.',
@@ -478,6 +481,8 @@ const STRINGS = {
 
     'hud.keys':
       'W A S D move · Space jump · E sit · V views · C cinema · wheel zoom · Caps sight · L bar · Esc',
+    'hud.touch': 'Drag to look around · the stick to walk · tap to sit down',
+    'hud.enterTouch': 'Tap to enter the room',
     'hud.enter': 'Click to enter the room',
     'hud.cinematic': 'Cinema · click or any key to leave',
     'hud.firstPerson': 'First person',
@@ -587,6 +592,7 @@ const STRINGS = {
     'err.crossOriginAudio':
       'The link does not allow another site to read its sound, so it plays normally but without the spatial effect.',
     'err.noSpatial': 'The sound plays normally, but without the spatial effect on this file.',
+    'err.hardwareVolume': "On this phone the volume is changed with the device's own buttons.",
     'err.reverb': 'The reverb file did not load.',
     'err.embedBlocked': 'This YouTube video does not allow playback outside YouTube.',
     'err.embedNoPlayer': 'The YouTube player did not load. Check the connection, or an ad blocker.',

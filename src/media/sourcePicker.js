@@ -43,9 +43,26 @@ const CSS = `
 .ms-veil-box{border:2px dashed rgba(255,255,255,.45);border-radius:18px;padding:34px 46px;text-align:center;
   color:#f2f2f4;font:600 18px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
 .ms-veil-box small{display:block;margin-top:6px;font-weight:400;font-size:13px;opacity:.7;}
-@media (max-width:520px){
-  .ms-dock{top:12px;left:12px;}
-  .ms-input{width:min(220px,52vw);}
+/**
+ * On a phone this was a wall.
+ *
+ * A link field, two buttons, a file button and two lines of explanation, all
+ * fixed to the top of a 390px screen: measured, 139px of a 664px window, sat
+ * over the room and over the player's own hints. Almost none of it is any use
+ * on a phone either - there is no file worth putting on a cinema screen from
+ * a handset, and the library is right there on the bar.
+ *
+ * So it folds down to what a phone actually needs: a paste field and Play, on
+ * one line, with the rest reachable but out of the way.
+ */
+@media (max-width:560px){
+  .ms-dock{top:calc(56px + env(safe-area-inset-top,0px));left:8px;right:8px;gap:6px;}
+  .ms-link{padding:6px;}
+  .ms-input{width:auto;flex:1 1 auto;min-width:0;}
+  .ms-btn{padding:9px 12px;}
+  .ms-dock .ms-row{display:none;}
+  .ms-hint{display:none;}
+  .ms-hint.ms-error{display:block;}
 }
 `
 

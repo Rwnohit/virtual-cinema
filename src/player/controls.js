@@ -103,6 +103,8 @@ export class PlayerControls {
     })
 
     this._locked = false
+    /** No pointer to lock: a finger is the pointer. Set by the player module. */
+    this.touchOnly = false
     this._lockedAt = 0
 
     // --- position -----------------------------------------------------------
@@ -179,6 +181,9 @@ export class PlayerControls {
     this.elapsed = 0
 
     this.keys = new Set()
+    /** How hard the on-screen stick is being pushed, -1..1 each way. */
+    this.touchAhead = 0
+    this.touchSide = 0
     this.listeners = new Map()
 
     this._bind()
@@ -292,8 +297,25 @@ export class PlayerControls {
     // dead and the viewer comes out of the frame looking where they pointed.
 
     const speed = RADIANS_PER_PIXEL * this.config.pointerSpeed
-    this.yaw -= dx * speed
-    this.pitch -= dy * speed
+    this.turnBy(dx * speed, dy * speed)
+  }
+
+  /**
+   * Walk from something that is not a keyboard.
+   *
+   * A thumb on a stick gives a direction AND a strength, which keys cannot:
+   * -1..1 each way, and the length of the pair is how fast. Kept apart from
+   * `keys` so a phone and a desk never fight over the same state.
+   */
+  setTouchMove(ahead, side) {
+    this.touchAhead = Math.max(-1, Math.min(1, Number(ahead) || 0))
+    this.touchSide = Math.max(-1, Math.min(1, Number(side) || 0))
+  }
+
+  /** Turn by an amount somebody has already worked out, in radians. */
+  turnBy(dyaw, dpitch) {
+    this.yaw -= dyaw
+    this.pitch -= dpitch
     this.pitch = clamp(this.pitch, this.config.minPitch, this.config.maxPitch)
   }
 
@@ -328,7 +350,19 @@ export class PlayerControls {
 
   lock() {
     const element = this.domElement
-    if (!element?.requestPointerLock) return
+    /**
+     * A phone has no pointer to lock.
+     *
+     * `requestPointerLock` does not exist on iOS and is refused on most
+     * Android browsers, so "click to enter the room" went nowhere and every
+     * gate downstream - walking, looking, the crosshair - stayed shut. There
+     * is nothing to capture on a touch screen: the finger IS the pointer, so
+     * being in the room is simply a fact we set.
+     */
+    if (this.touchOnly || !element?.requestPointerLock) {
+      if (this.touchOnly) this.setLocked(true)
+      return
+    }
     /**
      * The retry is the point, and so is swallowing what IT throws.
      *
@@ -358,6 +392,10 @@ export class PlayerControls {
   }
 
   unlock() {
+    if (this.touchOnly) {
+      this.setLocked(false)
+      return
+    }
     document.exitPointerLock?.()
   }
 
@@ -713,6 +751,10 @@ export class PlayerControls {
       if (this._down('backward')) ahead -= 1
       if (this._down('right')) side += 1
       if (this._down('left')) side -= 1
+      // The stick adds to the keys rather than replacing them: a tablet with a
+      // keyboard attached is a real thing and neither should win.
+      ahead += this.touchAhead || 0
+      side += this.touchSide || 0
     }
 
     const sin = Math.sin(this.yaw)

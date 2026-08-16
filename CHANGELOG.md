@@ -2,6 +2,31 @@
 
 Every version, in plain words. Newest at the top.
 
+## 0.28.0 · 16 August 2026
+
+- **The cinema works on a phone.** It never really did: the room is walked
+  around with a captured mouse and a keyboard, and a phone has neither. Now a
+  thumb walks and a finger looks.
+  - **Drag anywhere** to look around.
+  - **The stick, bottom left**, to walk - any direction, as fast as you push it.
+  - **Tap** to sit down, and tap again to stand up.
+  - "Click to enter the room" used to do nothing at all on an iPhone, because
+    the thing it asks for does not exist there.
+- **Nothing runs off the edge any more.** The bar carried 687px of controls on
+  380px of glass, so everything past the middle was simply unreachable. It is
+  two tidy rows now: the transport on one, the tabs on the other. The link box
+  went from a 139px wall over the room to a single line, and the room count
+  moved to the top where there is space for it.
+- 🐛 **The volume slider did nothing on an iPhone.** iOS does not let a
+  page change a video's volume - the setting is ignored, silently, with no
+  error. The sound is now routed through the room's own mixer instead, which is
+  the only volume control that platform has. It is listened to before it is
+  trusted: if nothing comes through, it is put straight back and you are told
+  to use the phone's own buttons rather than left with a fader that does
+  nothing.
+- The on-screen hints say what your hands can actually do, instead of listing
+  keys that are not there.
+
 ## 0.27.0 · 16 August 2026
 
 - 🐛 **The film stopped looping back on itself.** Dragging a stream to a

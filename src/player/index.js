@@ -29,6 +29,7 @@ import { PlayerControls } from './controls.js'
 import { PlayerCollider } from './collision.js'
 import { SeatManager } from './seating.js'
 import { PlayerHud } from './hud.js'
+import { createTouchControls, isTouchDevice } from './touch.js'
 import { PLAYER_CONFIG } from './config.js'
 import { FIRST_PERSON, activeViews, makePlace, setActivePlace } from './views.js'
 import { getPlayerHead, getPlayerState, setPlayerSeat } from './state.js'
@@ -77,6 +78,20 @@ export function createPlayer(context = {}) {
   })
 
   const hud = context.hud === false ? null : new PlayerHud({ container })
+
+  /**
+   * A phone gets a thumb stick and drag-to-look instead of a mouse and keys.
+   *
+   * Decided once, here, because the whole rig downstream asks "are we in the
+   * room" and on a touch screen there is nothing to capture: no pointer lock
+   * exists on iOS at all, so without this the answer was always no and the
+   * room could be looked at but never entered.
+   */
+  const touchOnly = isTouchDevice()
+  controls.touchOnly = touchOnly
+  const touch = touchOnly
+    ? createTouchControls({ controls, dom: domElement, player: { toggleSit: () => toggleSeat() } })
+    : null
 
   let targetTimer = 0
   let candidate = null
@@ -217,6 +232,7 @@ export function createPlayer(context = {}) {
     offCross()
     seatManager.dispose()
     controls.dispose()
+    touch?.dispose()
     hud?.dispose()
     setPlayerSeat(null)
   }
@@ -235,6 +251,9 @@ export function createPlayer(context = {}) {
     sit,
     stand,
     toggleSeat,
+    /** True when this is a phone or a tablet: a finger, not a mouse. */
+    touchOnly,
+    touch,
     jump: () => controls.jump(),
     setPlace,
     lock: () => controls.lock(),

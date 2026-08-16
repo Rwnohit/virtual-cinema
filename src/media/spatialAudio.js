@@ -326,7 +326,74 @@ export function createSpatialMovieAudio(options = {}) {
       // No Web Audio path: drive the element itself.
       state.video.volume = level
       state.video.muted = state.muted
+      // ...unless the device does not allow that. See rescueVolume().
+      if (Math.abs(state.video.volume - level) > 0.01) rescueVolume()
     }
+  }
+
+  /**
+   * Some devices refuse to let a page change a media element's volume at all.
+   *
+   * iPhones and iPads are the ones that matter: on iOS, `video.volume` is
+   * read only. Setting it is not an error and does not warn - the assignment
+   * simply does nothing, and the property reads back the value it always had.
+   * Which is exactly what a viewer described: "when I turn the volume down it
+   * does not go down", from a phone.
+   *
+   * Web Audio is the only volume control that exists on that platform, so if
+   * the element will not obey we route through it instead. And because routing
+   * a natively played stream into Web Audio can come out silent on some of the
+   * same devices, the result is LISTENED TO before it is trusted: if nothing
+   * is coming through a second later, it is put back the way it was and the
+   * viewer is told to use the phone's own buttons rather than left with a
+   * fader that quietly does nothing.
+   */
+  let rescuing = false
+  let rescued = null
+  function rescueVolume() {
+    const video = state.video
+    if (rescuing || !video || rescued === video) return
+    rescuing = true
+    rescued = video
+
+    const ok = attach(video)
+    if (!ok) {
+      rescuing = false
+      return
+    }
+
+    const meter = context.createAnalyser()
+    meter.fftSize = 256
+    movieGain.connect(meter)
+    const samples = new Float32Array(meter.fftSize)
+    let heard = false
+    let checks = 0
+    const listen = setInterval(() => {
+      meter.getFloatTimeDomainData(samples)
+      for (let i = 0; i < samples.length; i += 1) {
+        if (Math.abs(samples[i]) > 0.0005) {
+          heard = true
+          break
+        }
+      }
+      checks += 1
+      if (!heard && checks < 8) return
+      clearInterval(listen)
+      try {
+        movieGain.disconnect(meter)
+      } catch {
+        /* already gone */
+      }
+      rescuing = false
+      if (heard) return
+      // Nothing came through: better a fader that cannot move than a film
+      // that cannot be heard.
+      detach()
+      state.video = video
+      state.spatial = false
+      video.volume = 1
+      emitter.emit('degraded', { reason: 'hardwarevolume', message: t('err.hardwareVolume') })
+    }, 250)
   }
 
   /**
