@@ -1414,8 +1414,47 @@ export function createRoom(context = {}) {
           return view.query.split(/\s+/).every((word) => hay.includes(word))
         }
 
+        /**
+         * A poster is fetched when its tile is about to be looked at.
+         *
+         * Eighty-eight tiles are built at once and all eighty-eight used to
+         * start downloading immediately, in a tab that is also running a 3D
+         * room. One screenful is a dozen of them; the rest can wait until the
+         * grid is scrolled, which is when a browser has time for them anyway.
+         *
+         * `rootMargin` fetches one screen ahead, so a normal scroll never
+         * catches up with the loading.
+         */
+        const seen = new WeakMap()
+        const eyes =
+          typeof IntersectionObserver === 'function'
+            ? new IntersectionObserver(
+                (entries) => {
+                  for (const entry of entries) {
+                    if (!entry.isIntersecting) continue
+                    const url = seen.get(entry.target)
+                    if (url) entry.target.style.backgroundImage = `url("${url}")`
+                    eyes.unobserve(entry.target)
+                  }
+                },
+                { root: rail, rootMargin: '400px' },
+              )
+            : null
+        function watchArt(art, url) {
+          if (!eyes) {
+            art.style.backgroundImage = `url("${url}")`
+            return
+          }
+          seen.set(art, url)
+          eyes.observe(art)
+        }
+
         function draw() {
           const order = view.order
+          // Every tile is about to be thrown away, and an observer keeps hold
+          // of what it watches: without this, typing in the search box would
+          // leave a redraw's worth of dead tiles behind on every keystroke.
+          eyes?.disconnect()
           rail.innerHTML = ''
           const showing = [...films].filter(matches).sort(order.sort)
           el('count').textContent = `${showing.length} ${t('library.films')}`
@@ -1443,8 +1482,10 @@ export function createRoom(context = {}) {
               flash(`${t('flash.queued')}: ${film.title || t('library.untitled')}`)
             })
             // Through style rather than an <img>, so a poster that never loads
-            // leaves a clean dark tile instead of a broken picture icon.
-            if (film.poster) slide.querySelector('.art').style.backgroundImage = `url("${film.poster}")`
+            // leaves a clean dark tile instead of a broken picture icon - and
+            // only once the tile is near the window, because the grid is 88
+            // films long and nobody is looking at row twenty.
+            if (film.poster) watchArt(slide.querySelector('.art'), film.poster)
             slide.querySelector('b').textContent = film.title || t('library.untitled')
             slide.querySelector('span:last-child').textContent = [runtime(film.seconds), film.by]
               .filter(Boolean)

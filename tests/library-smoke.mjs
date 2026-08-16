@@ -55,6 +55,17 @@ const poll = async (page, fn, tries = 40) => {
 }
 
 const host = await visitor('ALFA', 1)
+// What opening the library actually costs, in bytes off the wire. This is the
+// check that matters most here: the posters were the publisher's production
+// art, 167 MB of it for 88 films, and a tab asked to fetch and decode all of
+// that while running a 3D room simply died.
+let posterBytes = 0
+let posterCount = 0
+host.on('response', async (r) => {
+  if (r.request().resourceType() !== 'image') return
+  posterCount += 1
+  try { posterBytes += (await r.body()).length } catch { /* still in flight when the page went */ }
+})
 const guest = await visitor('BETA', 1)
 
 await host.evaluate(() => window.__cinema.handles.room.open('library'))
@@ -187,6 +198,36 @@ check(
   (await host.evaluate(() => window.__cinema.handles.room.queue?.length ?? -1)) === before + 1,
   `${before} -> ${await host.evaluate(() => window.__cinema.handles.room.queue?.length ?? -1)}`,
 )
+
+// --- what the library weighs ----------------------------------------------
+check(
+  'the posters are ours and small',
+  catalogue.films.filter((f) => String(f.poster).startsWith('/posters/')).length >= catalogue.films.length - 2,
+  `${catalogue.films.filter((f) => String(f.poster).startsWith('/posters/')).length} of ${catalogue.films.length}`,
+)
+const poster = catalogue.films.find((f) => String(f.poster).startsWith('/posters/'))
+const posterHead = await fetch(`${ORIGIN}${poster.poster}`, { method: 'HEAD' })
+check(
+  'a poster is a small webp',
+  posterHead.ok && /image\/webp/.test(posterHead.headers.get('content-type') || '') && Number(posterHead.headers.get('content-length')) < 200_000,
+  `${Math.round(Number(posterHead.headers.get('content-length')) / 1000)} KB`,
+)
+check(
+  'a poster may be kept for a while',
+  /max-age=\d{4,}/.test(posterHead.headers.get('cache-control') || ''),
+  posterHead.headers.get('cache-control') || 'none',
+)
+check(
+  'opening it fetches a screenful, not the whole festival',
+  posterCount > 0 && posterCount < catalogue.films.length / 2 && posterBytes < 2_000_000,
+  `${posterCount} images, ${(posterBytes / 1e6).toFixed(2)} MB`,
+)
+// The rest arrive when they are scrolled to, rather than never.
+const paintedBefore = await host.evaluate(() => [...document.querySelectorAll('.rp-pop .rp-slide .art')].filter((a) => a.style.backgroundImage).length)
+await host.evaluate(() => { const r = document.querySelector('.rp-rail'); r.scrollTop = r.scrollHeight })
+await host.waitForTimeout(2500)
+const paintedAfter = await host.evaluate(() => [...document.querySelectorAll('.rp-pop .rp-slide .art')].filter((a) => a.style.backgroundImage).length)
+check('scrolling brings the rest', paintedAfter > paintedBefore, `${paintedBefore} -> ${paintedAfter}`)
 
 // --- the end of a film is not a pause on its last frame -------------------
 // Left as one, the hall's clock said "stopped, at the last second", so the

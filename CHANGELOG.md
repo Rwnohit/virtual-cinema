@@ -2,6 +2,19 @@
 
 Every version, in plain words. Newest at the top.
 
+## 0.26.0 · 16 August 2026
+
+- **The library opens instantly.** The posters were the publisher's production
+  art - measured, 167 MB for 88 films, one of them 10.3 MB on its own, several
+  3840x2160 PNGs - and a browser was being asked to fetch and decode all of it
+  at once while already running a 3D room. There is now a small copy of each
+  one, 900px wide: **167 MB became 3.1 MB**, and opening the library pulls
+  0.25 MB instead of hanging the tab. The publisher's original stays on record
+  as `posterSource`, and the films themselves still stream from them.
+- **Posters load as you scroll**, a screen ahead, instead of all eighty-eight
+  starting at once.
+- `npm run library` rebuilds the catalogue and the posters together.
+
 ## 0.25.0 · 16 August 2026
 
 - **The sound lives on the bar again.** Press the speaker and the level opens

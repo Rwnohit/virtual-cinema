@@ -115,9 +115,17 @@ function resolveFile(urlPath) {
  * reinstalled.
  */
 function cacheFor(file) {
-  if (/\/assets\/[^/]+-[A-Za-z0-9_-]{8,}\.[a-z0-9]+$/.test(file.replace(/\\/g, '/'))) {
+  const unix = file.replace(/\\/g, '/');
+  if (/\/assets\/[^/]+-[A-Za-z0-9_-]{8,}\.[a-z0-9]+$/.test(unix)) {
     return 'public, max-age=31536000, immutable';
   }
+  /**
+   * A poster is named after its film, so it can be replaced when the
+   * catalogue is rebuilt and cannot be called immutable - but it is the same
+   * picture from one week to the next, and `no-cache` would mean asking about
+   * all eighty-eight of them every single time the library is opened.
+   */
+  if (unix.includes('/posters/')) return 'public, max-age=604800';
   return 'no-cache';
 }
 

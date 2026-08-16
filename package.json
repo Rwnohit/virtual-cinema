@@ -1,7 +1,7 @@
 {
   "name": "virtual-cinema",
   "private": true,
-  "version": "0.25.0",
+  "version": "0.26.0",
   "type": "module",
   "scripts": {
     "version:stamp": "node scripts/write-version.mjs",
@@ -17,6 +17,7 @@
     "prebuild": "npm run version:stamp",
     "build": "vite build",
     "preview": "vite preview",
+    "library": "node scripts/build-library.mjs && node scripts/build-posters.mjs",
     "ship": "node scripts/ship.mjs",
     "test:library": "node tests/library-smoke.mjs"
   },
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "playwright": "^1.62.1",
+    "sharp": "^0.35.3",
     "vite": "^7.1.0"
   }
 }
