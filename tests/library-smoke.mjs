@@ -146,6 +146,71 @@ check('the interval stops the film for everybody', (await poll(guest, () => wind
 const lightsAfter = await host.evaluate(() => window.__cinema.handles.room.settings.house)
 check('and brings the lights up', lightsAfter > lightsBefore, `${lightsBefore} -> ${lightsAfter}`)
 
+// --- the bar: level, interval, queue -------------------------------------
+await host.evaluate(() => window.__cinema.handles.room.show())
+await host.waitForTimeout(400)
+await host.locator('.rp-dock [data-role="mute"]').click()
+await host.waitForTimeout(400)
+check('the speaker opens a level', await host.evaluate(() => !!document.querySelector('.rp-level.is-open')))
+await host.evaluate(() => {
+  const r = document.querySelector('.rp-level [data-role="vol"]')
+  r.value = '35'
+  r.dispatchEvent(new Event('input', { bubbles: true }))
+})
+await host.waitForTimeout(400)
+check(
+  'and the slider sets it',
+  Math.abs((await host.evaluate(() => window.__cinema.handles.sound.volume)) - 0.35) < 0.02,
+  String(await host.evaluate(() => window.__cinema.handles.sound.volume)),
+)
+
+check('the bar carries an interval button', (await host.locator('.rp-dock [data-role="interval"]').count()) === 1)
+await host.evaluate(() => window.__cinema.handles.media.play())
+await host.waitForTimeout(2500)
+const litBefore = await host.evaluate(() => window.__cinema.handles.room.settings.house)
+await host.locator('.rp-dock [data-role="interval"]').click()
+await host.waitForTimeout(1500)
+check('it pauses the hall', (await host.evaluate(() => window.__cinema.handles.media.isPlaying)) === false)
+check('and lifts the lights', (await host.evaluate(() => window.__cinema.handles.room.settings.house)) > litBefore)
+
+// A film can be queued from its poster without disturbing the screening.
+await host.evaluate(() => window.__cinema.handles.room.open('library'))
+await host.waitForTimeout(700)
+const before = await host.evaluate(() => window.__cinema.handles.room.queue?.length ?? -1)
+await host.locator('.rp-pop .rp-slide .rp-queue-add').nth(1).click()
+await host.waitForTimeout(600)
+check(
+  'a poster can be added to the queue',
+  (await host.evaluate(() => window.__cinema.handles.room.queue?.length ?? -1)) === before + 1,
+  `${before} -> ${await host.evaluate(() => window.__cinema.handles.room.queue?.length ?? -1)}`,
+)
+
+// --- the end of a film is not a pause on its last frame -------------------
+// Left as one, the hall's clock said "stopped, at the last second", so the
+// next press of play put everybody back on that second, hit the end again
+// and stopped: the loop.
+await host.evaluate(() => {
+  const m = window.__cinema.handles.media
+  m.seek(Math.max(0, m.duration - 2))
+  m.play()
+})
+
+await poll(host, () => window.__cinema.handles.media.currentTime < 1 && !window.__cinema.handles.media.isPlaying, 30)
+check(
+  'a finished film rewinds instead of freezing',
+  (await host.evaluate(() => window.__cinema.handles.media.currentTime)) < 1,
+  `at ${await host.evaluate(() => window.__cinema.handles.media.currentTime.toFixed(1))}s`,
+)
+// Rewound to zero, a stream has to refill before it moves again, so this is
+// given room rather than a fixed wait.
+await host.evaluate(() => window.__cinema.handles.media.play())
+const moved = await poll(host, () => window.__cinema.handles.media.currentTime > 0.5, 30)
+check(
+  'and plays again from the top',
+  moved === true && (await host.evaluate(() => window.__cinema.handles.media.isPlaying)),
+  `at ${await host.evaluate(() => window.__cinema.handles.media.currentTime.toFixed(1))}s`,
+)
+
 const real = errors.filter((e) => !/favicon|WebSocket|8787|Permissions policy/i.test(e))
 check('no console errors', real.length === 0, real.slice(0, 2).join(' | '))
 

@@ -500,6 +500,9 @@ export function createRoom(context = {}) {
   let duration = null
   let queueList = null
   let volIcon = null
+  let intervalButton = null
+  let volRange = null
+  let volNumber = null
   /**
    * The other way to watch together: one screen, sent to everybody.
    *
@@ -565,6 +568,25 @@ export function createRoom(context = {}) {
     playButton.addEventListener('click', () => media.toggle())
     dock.addToBar(playButton)
 
+    /**
+     * The interval, on the bar where you can reach it mid film.
+     *
+     * The same act as the one in the library: it stops the screening for
+     * everybody AND brings the house lights up, because that is what a pause
+     * in a cinema is. Pressing it again carries on and the ceremony takes the
+     * lights back down on its own.
+     */
+    intervalButton = document.createElement('button')
+    intervalButton.type = 'button'
+    intervalButton.className = 'rp-dbtn'
+    intervalButton.dataset.role = 'interval'
+    intervalButton.innerHTML = '<span class="ic"></span>'
+    intervalButton.addEventListener('click', () => {
+      sound?.click?.()
+      holdOrResume()
+    })
+    dock.addToBar(intervalButton)
+
     const transport = document.createElement('div')
     transport.className = 'rp-time'
     transport.innerHTML = `
@@ -616,6 +638,11 @@ export function createRoom(context = {}) {
         <button type="button" class="rp-dbtn" data-role="mute" aria-label="${t('dock.volume')}"><span class="ic">🔊</span></button>
         <button type="button" class="rp-dbtn" data-role="share" title="${t('dock.share')}" aria-label="${t('dock.share')}" hidden><span class="ic">📡</span></button>
         <button type="button" class="rp-dbtn" data-role="clean" title="${t('dock.clean')}" aria-label="${t('dock.clean')}"><span class="ic">🎬</span></button>
+        <div class="rp-level" data-role="level">
+          <button type="button" class="rp-dbtn" data-role="silence" aria-label="${t('dock.volume')}"><span class="ic">🔇</span></button>
+          <input type="range" class="rp-range" data-role="vol" min="0" max="100" step="1" aria-label="${t('dock.volume')}">
+          <output data-role="volnum"></output>
+        </div>
       `
       dock.addToBar(vol)
       shareButton = vol.querySelector('[data-role="share"]')
@@ -625,17 +652,44 @@ export function createRoom(context = {}) {
       })
       refreshShare()
       volIcon = vol.querySelector('[data-role="mute"] .ic')
-      // The speaker is a mute, and a mute has to remember where you were.
+      volRange = vol.querySelector('[data-role="vol"]')
+      volNumber = vol.querySelector('[data-role="volnum"]')
+      const levelBox = vol.querySelector('[data-role="level"]')
+
+      /**
+       * The speaker opens the level, on a press.
+       *
+       * It was a mute and nothing else, with the slider a panel away - which
+       * is a long walk for the one thing you reach for without wanting to open
+       * anything. On a press and not a hover, because hovering opened it every
+       * time somebody reached past it for the buttons next door.
+       */
       vol.querySelector('[data-role="mute"]').addEventListener('click', () => {
-        const level = sound.volume ?? 0
-        if (level > 0.001) {
-          volBefore = level
+        sound.click?.()
+        levelBox.classList.toggle('is-open')
+        refreshVolume()
+      })
+      volRange.addEventListener('input', () => {
+        const next = Number(volRange.value) / 100
+        sound.setVolume(next)
+        if (next > 0) volBefore = next
+        refreshVolume()
+        tick('volume', next)
+      })
+      // The mute lives inside it now, and still remembers where you were.
+      vol.querySelector('[data-role="silence"]').addEventListener('click', () => {
+        const now = sound.volume ?? 0
+        if (now > 0.001) {
+          volBefore = now
           sound.setVolume(0)
         } else {
           sound.setVolume(volBefore || 0.8)
         }
         refreshVolume()
         sound.click?.()
+      })
+      dock.bar.addEventListener('pointerdown', (event) => {
+        if (!vol.contains(event.target)) levelBox.classList.remove('is-open')
       })
       // Where the volume slider used to unroll. It was asked for by name: the
       // level itself is one row down under "Sound", and the thing you actually
@@ -675,10 +729,33 @@ export function createRoom(context = {}) {
   }
 
   /** The speaker icon says how loud the room is, without a number. */
+  /**
+   * Pause the whole hall and put the lights up, or carry on.
+   *
+   * Through the ceremony rather than around it: moving the lights by hand
+   * while its opening fade was still running let that fade finish afterwards
+   * and put them straight back down.
+   */
+  function holdOrResume() {
+    if (!media) return
+    if (media.isPlaying) {
+      media.pause()
+      if (showtime?.toInterval) showtime.toInterval()
+      else applyPreset('half')
+      flash(t('library.paused'))
+    } else {
+      media.play()
+      flash(t('library.resumed'))
+    }
+    refreshTransport()
+  }
+
   function refreshVolume() {
     if (!volIcon || !sound) return
     const level = sound.volume ?? 0
     volIcon.textContent = level < 0.005 ? '🔇' : level < 0.45 ? '🔈' : '🔊'
+    if (volRange && document.activeElement !== volRange) volRange.value = String(Math.round(level * 100))
+    if (volNumber) volNumber.textContent = `${Math.round(level * 100)}%`
   }
 
   function refreshTransport() {
@@ -686,6 +763,14 @@ export function createRoom(context = {}) {
     libraryRefresh?.()
     if (!media || !playButton) return
     const playing = media.isPlaying
+    if (intervalButton) {
+      const canHold = media.hasSource && media.duration > 0
+      intervalButton.hidden = !canHold
+      intervalButton.title = t(playing ? 'library.hold' : 'library.resume')
+      intervalButton.setAttribute('aria-label', intervalButton.title)
+      intervalButton.querySelector('.ic').textContent = playing ? '💡' : '▶'
+      intervalButton.classList.toggle('is-on', !playing && canHold)
+    }
     playButton.textContent = playing ? '❚❚' : '▶'
     playButton.setAttribute('aria-label', playing ? t('dock.pause') : t('dock.play'))
     const at = media.currentTime
@@ -1264,20 +1349,8 @@ export function createRoom(context = {}) {
      */
     el('hold').addEventListener('click', () => {
       sound?.click?.()
-      if (media.isPlaying) {
-        media.pause()
-        // Through the ceremony, not around it. Moving the lights by hand while
-        // the opening fade was still running let that fade finish afterwards
-        // and put them straight back down - measured, pressing this a second
-        // after starting a film did nothing you could see. Telling the
-        // ceremony it is an interval makes it stop arguing.
-        if (showtime?.toInterval) showtime.toInterval()
-        else applyPreset('half')
-        flash(t('library.paused'))
-      } else {
-        media.play()
-        flash(t('library.resumed'))
-      }
+      holdOrResume()
+      refreshHold()
     })
 
     /**
@@ -1357,7 +1430,18 @@ export function createRoom(context = {}) {
             const slide = document.createElement('button')
             slide.type = 'button'
             slide.className = `rp-slide${film === featured ? ' is-on' : ''}`
-            slide.innerHTML = '<span class="art"></span><b></b><span></span>'
+            slide.innerHTML =
+              '<span class="art"></span>' +
+              (queue ? `<button type="button" class="rp-queue-add" title="${t('picker.queue')}">+</button>` : '') +
+              '<b></b><span></span>'
+            // Queueing is a different act from choosing: it must not also
+            // promote the film to the hero or start anything.
+            slide.querySelector('.rp-queue-add')?.addEventListener('click', (event) => {
+              event.stopPropagation()
+              sound?.click?.()
+              queue.add(film.src, film.title || t('library.untitled'))
+              flash(`${t('flash.queued')}: ${film.title || t('library.untitled')}`)
+            })
             // Through style rather than an <img>, so a poster that never loads
             // leaves a clean dark tile instead of a broken picture icon.
             if (film.poster) slide.querySelector('.art').style.backgroundImage = `url("${film.poster}")`

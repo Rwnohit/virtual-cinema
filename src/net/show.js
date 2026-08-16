@@ -270,7 +270,17 @@ export function createShowSync(options = {}) {
     media.on('play', onPlay),
     media.on('pause', onPause),
     media.on('seeked', onSeeked),
-    media.on('ended', onPause),
+    /**
+     * A screening that has finished is not a screening paused on its last
+     * frame - it is over, and the next thing anybody does with it is watch it
+     * again from the top.
+     *
+     * Left at the end, the hall's clock said "not playing, at the last
+     * second". Press play and every viewer was put back on that second, hit
+     * the end again immediately, and stopped. Press play again, same thing.
+     * That is the loop, and it is why the room looked stuck after a film.
+     */
+    media.on('ended', () => tellNow({ playing: false, time: 0 })),
   );
 
   /* ----------------------------------------------------------------------- */

@@ -76,17 +76,37 @@ export function createScreenShare(options = {}) {
   /** Built from the tracks as they arrive - picture and sound come separately. */
   let incoming = null;
 
-  const supported = () => typeof navigator !== 'undefined' && !!navigator.mediaDevices?.getDisplayMedia;
+  /** Either road counts: a screen on a computer, a camera on a phone. */
+  const supported = () =>
+    typeof navigator !== 'undefined' && !!(navigator.mediaDevices?.getDisplayMedia || navigator.mediaDevices?.getUserMedia);
 
   /* ----------------------------------------------------------------------- */
   /* sending                                                                  */
   /* ----------------------------------------------------------------------- */
 
+  /**
+   * A phone cannot hand over its screen, so it hands over its camera.
+   *
+   * `getDisplayMedia` does not exist on iOS or Android at all - the button was
+   * simply missing there, which made sharing something only the person on a
+   * desktop could ever do. A camera is a picture the room can watch just the
+   * same, it goes down exactly the same two m-lines, and everybody watching
+   * cannot tell which one they were given.
+   */
+  const canShareScreen = () => typeof navigator !== 'undefined' && !!navigator.mediaDevices?.getDisplayMedia;
+  const canShareCamera = () => typeof navigator !== 'undefined' && !!navigator.mediaDevices?.getUserMedia;
+
   async function start() {
     if (local) return true;
-    if (!supported()) throw new ScreenShareRefused('unsupported', 'this browser cannot share a screen');
+    if (!supported()) throw new ScreenShareRefused('unsupported', 'this browser cannot share anything');
 
-    const stream = await navigator.mediaDevices.getDisplayMedia(WANTED);
+    const stream = canShareScreen()
+      ? await navigator.mediaDevices.getDisplayMedia(WANTED)
+      : await navigator.mediaDevices.getUserMedia({
+          // The back camera, which is the one somebody points at a thing.
+          video: { facingMode: { ideal: 'environment' }, frameRate: { ideal: 30, max: 30 } },
+          audio: true,
+        });
     const video = stream.getVideoTracks()[0] || null;
     const audio = stream.getAudioTracks()[0] || null;
     if (!video) {
@@ -237,6 +257,8 @@ export function createScreenShare(options = {}) {
 
   return {
     supported,
+    /** True when this device can only offer a camera, not its screen. */
+    cameraOnly: () => !canShareScreen() && canShareCamera(),
     start,
     stop,
     onTrack,

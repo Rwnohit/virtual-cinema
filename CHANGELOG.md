@@ -2,6 +2,30 @@
 
 Every version, in plain words. Newest at the top.
 
+## 0.25.0 · 16 August 2026
+
+- **The sound lives on the bar again.** Press the speaker and the level opens
+  right there, with the number next to it, instead of sending you into a panel
+  for it.
+- **Interval and carry on, on the bar too.** The button next to play holds the
+  screening for the whole hall and brings the house lights up; press it again
+  and the film carries on with the lights going back down on their own.
+- **A queue button on every poster.** The little + in the corner puts a film
+  next in line without touching what is on now.
+- **A bigger library, and you can make it bigger still.** The panel is wider,
+  and the grid itself has a handle at the bottom right: drag it as tall as you
+  want it.
+- **Sharing works from a phone.** A phone cannot hand over its screen - the
+  browser has no such thing there - so it hands over its camera instead, down
+  exactly the same road. The button is no longer only for people at a desktop.
+- 🐛 **A film that ended put the hall in a loop.** Left at the end, the
+  hall's clock said "stopped, on the last second". Pressing play put everybody
+  back on that second, which ended the film again immediately, which stopped it
+  again. A finished screening now rewinds instead of freezing.
+- 🐛 **The room count sat on top of the bar's left end** and swallowed
+  the clicks meant for it on anything narrower than a wide desktop. It moved up
+  out of the way.
+
 ## 0.24.0 · 15 August 2026
 
 - **Search.** Type a title, a creator or a bit of the plot. Accents are

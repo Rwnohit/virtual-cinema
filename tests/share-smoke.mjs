@@ -161,6 +161,62 @@ if (started.ok) {
   check('stopping takes it off every screen', gone === true)
 }
 
+// --- a phone has no screen to hand over, so it hands over its camera -------
+// `getDisplayMedia` does not exist on iOS or Android at all, and the button
+// was simply missing there: sharing was something only the person at a desktop
+// could do. Taking it away here is exactly what a phone looks like.
+{
+  // Its own browser: the fake camera flags below turn desktop capture black,
+  // measured, so they must not be in the air while the real share is checked.
+  const handset = await playwright.chromium.launch({
+    headless: process.env.HEADLESS === '1',
+    args: [
+      '--autoplay-policy=no-user-gesture-required',
+      '--use-fake-device-for-media-stream',
+      '--use-fake-ui-for-media-stream',
+      ...(process.env.HEADLESS === '1' ? ['--use-gl=swiftshader', '--enable-unsafe-swiftshader'] : []),
+    ],
+  })
+  const phone = await handset.newPage({ viewport: { width: 390, height: 780 } })
+  phone.on('pageerror', (e) => errors.push(`PHONE PAGEERROR ${e.message}`))
+  await phone.addInitScript(() => {
+    // Off the prototype, which is where it actually lives - deleting it from
+    // the instance is a no-op and the check silently passes down the desktop
+    // road instead.
+    delete MediaDevices.prototype.getDisplayMedia
+  })
+  await phone.goto(ORIGIN, { waitUntil: 'domcontentloaded' })
+  for (let i = 0; i < 80; i++) {
+    if (await phone.evaluate(() => window.__cinema?.ready === true)) break
+    await phone.waitForTimeout(500)
+  }
+  await phone.fill('.mo-overlay [data-role="name"]', 'PHONE')
+  await phone.locator('.mo-overlay .mo-hall').nth(3).click()
+  await phone.click('.mo-overlay [data-role="cta"]')
+  await phone.waitForTimeout(2500)
+  await phone.evaluate(() => document.exitPointerLock?.())
+  await phone.evaluate(() => window.__cinema.handles.room.show())
+  await phone.waitForTimeout(500)
+  check(
+    'a phone is still offered the share button',
+    await phone.evaluate(() => window.__cinema.handles.net.screen.supported()),
+  )
+  check(
+    'and it is offered as a camera',
+    await phone.evaluate(() => window.__cinema.handles.net.screen.cameraOnly()),
+  )
+  const started = await phone.evaluate(() =>
+    window.__cinema.handles.net.screen.start().then(() => true, (e) => e.message),
+  )
+  check('the camera really opens', started === true, String(started))
+  check(
+    'and the hall is told somebody is live',
+    await phone.evaluate(() => window.__cinema.handles.net.screen.sharing),
+  )
+  await phone.evaluate(() => window.__cinema.handles.net.screen.stop())
+  await handset.close()
+}
+
 const real = errors.filter((e) => !/favicon|WebSocket|8787|Permissions policy/i.test(e))
 check('no console errors', real.length === 0, real.slice(0, 3).join(' | '))
 

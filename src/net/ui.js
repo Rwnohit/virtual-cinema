@@ -9,7 +9,13 @@ import { t, onLanguageChange } from '../i18n/index.js';
 const STYLE_ID = 'net-hud-style';
 
 const CSS = `
-.net-hud{position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));
+/* Above the bar, not beside it. The bar is centred and grows with what it
+   carries, so on anything narrower than a wide desktop its left end reaches
+   this corner - measured, the microphone button sat on top of the transport
+   and swallowed the clicks meant for it. The bar is the thing you press, so
+   the count moves up out of its way. Clean mode hides both, so they only ever
+   share a screen when both are wanted. */
+.net-hud{position:fixed;left:14px;bottom:calc(76px + env(safe-area-inset-bottom,0px));
   z-index:40;display:flex;align-items:center;gap:8px;pointer-events:none;
   font:600 13px/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#e9edf5}
 .net-hud__pill{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;

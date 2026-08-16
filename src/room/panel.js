@@ -111,7 +111,17 @@ export const CSS = `
 /* The little run of round buttons on the bar: mute, share a screen, clear the
    screen. It used to hold a volume slider that unrolled on hover, which is
    why it is called this. */
-.rp-vol{display:flex;align-items:center;}
+.rp-vol{display:flex;align-items:center;position:relative;}
+/* The level, on a press rather than on a hover. Hovering opened it by accident
+   every time you reached past it for something else. */
+.rp-level{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%);
+  display:none;align-items:center;gap:10px;padding:11px 14px;border-radius:14px;white-space:nowrap;
+  background:rgba(12,12,14,.94);border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 16px 40px rgba(0,0,0,.6);backdrop-filter:blur(14px);}
+.rp-level.is-open{display:flex;}
+.rp-level .rp-range{width:150px;}
+.rp-level output{font-size:12px;min-width:36px;text-align:right;font-variant-numeric:tabular-nums;
+  color:rgba(242,242,244,.7);}
 /* Quality only appears when the film is a YouTube one, so it is hidden by
    default rather than laid out and emptied. */
 .rp-qual{display:none;align-items:center;gap:3px;padding:0 2px;}
@@ -159,7 +169,15 @@ export const CSS = `
    rather than starting it: in here a click starts the film for everybody in
    the hall, and that is not something to do by brushing past a thumbnail.
    The accent is the venue's, read off their own site. */
-.rp-pop.is-library{width:min(760px,calc(100vw - 24px));}
+.rp-pop.is-library{width:min(980px,calc(100vw - 24px));max-height:min(84vh,880px);}
+/* Room for a queue button in the corner of every poster. */
+.rp-slide{position:relative;}
+.rp-queue-add{position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:50%;
+  border:0;cursor:pointer;background:rgba(10,11,14,.82);color:#f2f2f4;font:600 15px/1 inherit;
+  display:grid;place-items:center;opacity:0;transform:scale(.8);
+  transition:opacity .18s ease,transform .18s ease,background .18s ease;}
+.rp-slide:hover .rp-queue-add,.rp-queue-add:focus{opacity:1;transform:scale(1);}
+.rp-queue-add:hover{background:var(--lime);color:var(--on-lime);}
 .rp-lib{--lime:#D1FE17;--on-lime:#0B0C0E;}
 .rp-hero{position:relative;border-radius:14px;overflow:hidden;min-height:250px;isolation:isolate;
   display:flex;align-items:flex-end;padding:20px;margin-bottom:12px;}
@@ -194,7 +212,11 @@ export const CSS = `
    horizontal strip is a catalogue you have to drag through; four across and
    scrolling is one you can read. */
 .rp-rail{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
-  max-height:min(42vh,320px);overflow-y:auto;padding:2px 4px 4px 2px;
+  height:clamp(220px,46vh,560px);overflow-y:auto;padding:2px 4px 4px 2px;
+  /* Drag the bottom edge. Eighty eight films is a lot to judge four rows at a
+     time, and how much of the room somebody wants to give the programme is
+     their business, not ours. */
+  resize:vertical;min-height:150px;max-height:76vh;
   scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent;}
 .rp-slide{appearance:none;border:0;background:none;padding:0;cursor:pointer;
   color:#f2f2f4;font:inherit;text-align:left;}
